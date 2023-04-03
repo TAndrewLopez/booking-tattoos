@@ -1,16 +1,21 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
-import { signIn, signOut, useSession } from "next-auth/react";
-
+import MultiForm from "@/components/Form/MultiForm";
 import { api } from "@/utils/api";
-import ContactForm from "@/components/Form/ContactForm";
+
+const newAppointment = {
+  name: "Andrew Dobson",
+  preferredPronouns: "he/him",
+  email: "andrew@email.com",
+  phoneNumber: "8088889671",
+  description: "Dealers choice",
+  size: "6",
+  placement: "forearm",
+  color: "colored",
+};
 
 const Home: NextPage = () => {
-  const { data: sessionData } = useSession();
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
-
-  console.log(sessionData);
+  const createAppointment = api.appointment.create.useMutation({});
 
   return (
     <>
@@ -20,7 +25,13 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <ContactForm />
+        <MultiForm />
+        <button
+          className="rounded-md bg-sky-200 px-2 py-2"
+          onClick={() => createAppointment.mutate(newAppointment)}
+        >
+          Test Logic
+        </button>
       </main>
     </>
   );

@@ -1,4 +1,5 @@
 interface InputProps {
+  error?: boolean;
   placeholder?: string;
   type?: string;
   value?: string;
@@ -7,6 +8,7 @@ interface InputProps {
 }
 
 const Input: React.FC<InputProps> = ({
+  error,
   placeholder,
   type,
   value,
@@ -20,7 +22,9 @@ const Input: React.FC<InputProps> = ({
       value={value}
       onChange={onChange}
       disabled={disabled}
-      className="w-full rounded-md border-2 border-neutral-200 bg-neutral-200 p-4 text-lg text-neutral-700 outline-none transition focus:border-2 focus:border-neutral-400 disabled:cursor-not-allowed disabled:bg-neutral-900 disabled:opacity-70"
+      className={`w-full rounded-md border-2 border-neutral-200 bg-neutral-200 p-4 text-lg text-neutral-700 outline-none transition focus:border-2 focus:border-neutral-400 disabled:cursor-not-allowed disabled:bg-neutral-900 disabled:opacity-70 
+      ${error ? "border-red-600" : ""}
+      `}
     />
   );
 };

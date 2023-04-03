@@ -76,9 +76,9 @@ model Appointment {
     name              String
     preferredPronouns String?
     email             String
-    phone             String
+    phoneNumber       String
     description       String
-    inches            Int
+    size              String
     placement         String
     color             String
 
