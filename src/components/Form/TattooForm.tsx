@@ -1,6 +1,6 @@
+import useAppointmentStore from "@/state/appointmentStore";
 import Input from "./Inputs/Input";
 import Select from "./Inputs/Select";
-import useAppointmentStore from "@/state/store";
 
 interface TattooFormProps {
   inputError?: string;

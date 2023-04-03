@@ -1,6 +1,6 @@
 import Input from "./Inputs/Input";
 import Select from "./Inputs/Select";
-import useAppointmentStore from "@/state/store";
+import useAppointmentStore from "@/state/appointmentStore";
 
 interface ContactFormProps {
   inputError?: string;
@@ -42,7 +42,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
       <Select
         label="Select Pronouns (optional)"
         options={["he/him", "she/her", "they/them"]}
-        value={preferredPronouns}
+        value={preferredPronouns ?? ""}
         disabled={isLoading}
         onChange={(evt) => void setPreferredPronouns(evt.target.value)}
       />

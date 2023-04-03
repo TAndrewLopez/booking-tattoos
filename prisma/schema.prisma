@@ -72,9 +72,9 @@ model VerificationToken {
 }
 
 model Appointment {
-    id                String  @id @default(auto()) @map("_id") @db.ObjectId
+    id                String @id @default(auto()) @map("_id") @db.ObjectId
     name              String
-    preferredPronouns String?
+    preferredPronouns String
     email             String
     phoneNumber       String
     description       String

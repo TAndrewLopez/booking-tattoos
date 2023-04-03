@@ -1,6 +1,6 @@
+import MultiForm from "@/components/Form/MultiForm";
 import { type NextPage } from "next";
 import Head from "next/head";
-import MultiForm from "@/components/Form/MultiForm";
 
 const Home: NextPage = () => {
   return (

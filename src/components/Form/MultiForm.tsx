@@ -1,10 +1,10 @@
 import ContactForm from "@/components/Form/ContactForm";
 import TattooForm from "@/components/Form/TattooForm";
+import useAppointmentStore from "@/state/appointmentStore";
 import Image from "next/image";
 import { useCallback, useState } from "react";
-import ReviewAptEntries from "./ReviewAptEntries";
 import MultiFormButtons from "./MultiFormButtons";
-import useAppointmentStore from "@/state/store";
+import ReviewAptEntries from "./ReviewAptEntries";
 
 const MultiForm = () => {
   // LOCAL STATE

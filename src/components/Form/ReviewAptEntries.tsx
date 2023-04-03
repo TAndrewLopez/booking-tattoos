@@ -9,8 +9,8 @@ const ReviewAptEntries: React.FC<ReviewAptEntriesProps> = ({ values }) => {
         <p>Please review your information before submitting.</p>
       </div>
       <ul>
-        {values.map((item) => (
-          <li key={item}>{item}</li>
+        {values.map((item, i) => (
+          <li key={item + String(i)}>{item}</li>
         ))}
       </ul>
     </div>
