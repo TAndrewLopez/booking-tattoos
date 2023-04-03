@@ -1,6 +1,6 @@
-import { useState } from "react";
-import Input from "./Input";
-import Select from "./Select";
+import Input from "./Inputs/Input";
+import Select from "./Inputs/Select";
+import useAppointmentStore from "@/state/store";
 
 interface ContactFormProps {
   inputError?: string;
@@ -13,14 +13,19 @@ const ContactForm: React.FC<ContactFormProps> = ({
   setInputError,
   isLoading,
 }) => {
-  // FORM INPUTS
-  const [name, setName] = useState("");
-  const [pronouns, setPronouns] = useState("");
-  const [email, setEmail] = useState("");
-  const [number, setNumber] = useState("");
+  const {
+    name,
+    setName,
+    preferredPronouns,
+    setPreferredPronouns,
+    email,
+    setEmail,
+    phoneNumber,
+    setPhoneNumber,
+  } = useAppointmentStore();
 
   return (
-    <form className="flex flex-col gap-4 p-5">
+    <form className="flex flex-col gap-4">
       {/* NAME */}
       <Input
         error={inputError === "Name"}
@@ -37,9 +42,9 @@ const ContactForm: React.FC<ContactFormProps> = ({
       <Select
         label="Select Pronouns (optional)"
         options={["he/him", "she/her", "they/them"]}
-        value={pronouns}
+        value={preferredPronouns}
         disabled={isLoading}
-        onChange={(evt) => void setPronouns(evt.target.value)}
+        onChange={(evt) => void setPreferredPronouns(evt.target.value)}
       />
 
       {/* EMAIL */}
@@ -59,12 +64,11 @@ const ContactForm: React.FC<ContactFormProps> = ({
       <Input
         error={inputError === "Number"}
         placeholder="Phone Number"
-        type="number"
-        value={number}
+        value={phoneNumber}
         disabled={isLoading}
         onChange={(evt) => {
           if (inputError === "Number") setInputError("");
-          setNumber(evt.target.value);
+          setPhoneNumber(evt.target.value);
         }}
       />
     </form>

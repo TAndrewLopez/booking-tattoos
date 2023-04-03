@@ -1,6 +1,6 @@
-import { useState } from "react";
-import Input from "./Input";
-import Select from "./Select";
+import Input from "./Inputs/Input";
+import Select from "./Inputs/Select";
+import useAppointmentStore from "@/state/store";
 
 interface TattooFormProps {
   inputError?: string;
@@ -13,14 +13,18 @@ const TattooForm: React.FC<TattooFormProps> = ({
   setInputError,
   isLoading,
 }) => {
-  // FORM INPUTS
-  const [description, setDescription] = useState("");
-  const [size, setSize] = useState("");
-  const [placement, setPlacement] = useState("");
-  const [color, setColor] = useState("");
-
+  const {
+    description,
+    setDescription,
+    size,
+    setSize,
+    placement,
+    setPlacement,
+    color,
+    setColor,
+  } = useAppointmentStore();
   return (
-    <form className="flex flex-col gap-4 px-5">
+    <form className="flex flex-col gap-4">
       {/* DESCRIPTION */}
       <Input
         error={inputError === "Description"}
@@ -37,7 +41,6 @@ const TattooForm: React.FC<TattooFormProps> = ({
       <Input
         error={inputError === "Size"}
         placeholder="Size of Tattoo (inches)"
-        type="number"
         value={size}
         disabled={isLoading}
         onChange={(evt) => {
