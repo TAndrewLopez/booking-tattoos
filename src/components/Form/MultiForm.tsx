@@ -1,12 +1,16 @@
 import ContactForm from "@/components/Form/ContactForm";
 import TattooForm from "@/components/Form/TattooForm";
 import useAppointmentStore from "@/state/appointmentStore";
+import { api } from "@/utils/api";
 import Image from "next/image";
-import { useCallback, useState } from "react";
+import { useCallback, useState, type SyntheticEvent } from "react";
 import MultiFormButtons from "./MultiFormButtons";
 import ReviewAptEntries from "./ReviewAptEntries";
+import toast from "react-hot-toast";
 
 const MultiForm = () => {
+  const createAppointment = api.appointment.create.useMutation({});
+
   // LOCAL STATE
   const [page, setPage] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -22,36 +26,46 @@ const MultiForm = () => {
     size,
     placement,
     color,
+    resetStore,
   } = useAppointmentStore();
 
-  const handleSubmit = useCallback(() => {
-    try {
-      setIsLoading(true);
-      console.log({
-        name,
-        preferredPronouns,
-        email,
-        phoneNumber,
-        description,
-        size,
-        placement,
-        color,
-      });
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [
-    name,
-    preferredPronouns,
-    email,
-    phoneNumber,
-    description,
-    size,
-    placement,
-    color,
-  ]);
+  const handleSubmit = useCallback(
+    (evt: SyntheticEvent) => {
+      evt.preventDefault();
+      try {
+        setIsLoading(true);
+        createAppointment.mutate({
+          name,
+          preferredPronouns,
+          email,
+          phoneNumber,
+          description,
+          size,
+          placement,
+          color,
+        });
+        resetStore();
+        setPage(0);
+        toast.success("Form submission successful!");
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [
+      name,
+      preferredPronouns,
+      email,
+      phoneNumber,
+      description,
+      size,
+      placement,
+      color,
+      createAppointment,
+      resetStore,
+    ]
+  );
 
   return (
     <div className="mx-5 ">
@@ -158,6 +172,7 @@ const MultiForm = () => {
         `}
       >
         <MultiFormButtons
+          isLoading={isLoading}
           inputError={setInputError}
           handleSubmit={handleSubmit}
           page={page}

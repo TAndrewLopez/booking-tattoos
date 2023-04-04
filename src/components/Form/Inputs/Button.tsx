@@ -1,6 +1,8 @@
+import { type SyntheticEvent, type ReactNode } from "react";
+
 interface FormButtonProps {
-  label: string;
-  onClick: () => void;
+  label: string | ReactNode;
+  onClick: (evt: SyntheticEvent) => void;
   disabled?: boolean;
 }
 

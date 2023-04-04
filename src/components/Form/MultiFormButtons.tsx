@@ -1,21 +1,29 @@
 import useAppointmentStore from "@/state/appointmentStore";
-import React, { type SetStateAction, type Dispatch, useMemo } from "react";
-import FormButton from "./Inputs/Button";
+import React, {
+  useMemo,
+  type Dispatch,
+  type SetStateAction,
+  type SyntheticEvent,
+} from "react";
 import { toast } from "react-hot-toast";
+import { ClipLoader } from "react-spinners";
+import FormButton from "./Inputs/Button";
 import {
-  validateNumber,
   validateEmail,
+  validateNumber,
   validateSize,
 } from "./helper/validation";
 
 interface MultiFormButtonsProps {
+  isLoading: boolean;
   inputError: (val: string) => void;
   page: number;
   setPage: Dispatch<SetStateAction<number>>;
-  handleSubmit: () => void;
+  handleSubmit: (evt: SyntheticEvent) => void;
 }
 
 const MultiFormButtons: React.FC<MultiFormButtonsProps> = ({
+  isLoading,
   inputError,
   page,
   setPage,
@@ -93,19 +101,8 @@ const MultiFormButtons: React.FC<MultiFormButtonsProps> = ({
       {/* REVIEW BEFORE SUBMIT BUTTON */}
       {page === 2 && (
         <FormButton
-          label="Submit"
-          onClick={() =>
-            console.log({
-              name,
-              preferredPronouns,
-              email,
-              phoneNumber,
-              description,
-              placement,
-              size,
-              color,
-            })
-          }
+          label={isLoading ? <ClipLoader color="red" /> : "Submit"}
+          onClick={handleSubmit}
           disabled={tattooFormCompleted}
         />
       )}

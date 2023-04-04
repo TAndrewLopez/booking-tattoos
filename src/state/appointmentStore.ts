@@ -17,6 +17,7 @@ export interface AppointmentStoreInterface {
   setSize: (val: string) => void;
   setPlacement: (val: string) => void;
   setColor: (val: string) => void;
+  resetStore: () => void;
 }
 
 const useAppointmentStore = create<AppointmentStoreInterface>((set) => ({
@@ -28,6 +29,17 @@ const useAppointmentStore = create<AppointmentStoreInterface>((set) => ({
   size: "",
   placement: "",
   color: "",
+  resetStore: () =>
+    set(() => ({
+      name: "",
+      preferredPronouns: "",
+      email: "",
+      phoneNumber: "",
+      description: "",
+      size: "",
+      placement: "",
+      color: "",
+    })),
   setName: (val: string) =>
     set(() => ({
       name: val,
