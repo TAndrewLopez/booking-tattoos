@@ -24,57 +24,69 @@ const TattooForm: React.FC<TattooFormProps> = ({
     setColor,
   } = useAppointmentStore();
   return (
-    <form className="flex flex-col gap-4">
+    <form className="flex h-full flex-col justify-between gap-4">
       {/* DESCRIPTION */}
-      <Input
-        id="Description"
-        error={inputError === "Description"}
-        label="Description"
-        value={description}
-        disabled={isLoading}
-        onChange={(evt) => {
-          if (inputError === "Description") setInputError("");
-          setDescription(evt.target.value);
-        }}
-      />
+      <div>
+        <p className="mb-3">Provide a description of your desired tattoo</p>
+        <Input
+          id="Description"
+          error={inputError === "Description"}
+          label="Description"
+          value={description}
+          disabled={isLoading}
+          onChange={(evt) => {
+            if (inputError === "Description") setInputError("");
+            setDescription(evt.target.value);
+          }}
+        />
+      </div>
 
       {/* SIZE */}
-      <Input
-        id="Size"
-        error={inputError === "Size"}
-        label="Size of Tattoo (inches)"
-        value={size}
-        disabled={isLoading}
-        onChange={(evt) => {
-          if (inputError === "Size") setInputError("");
-          setSize(evt.target.value);
-        }}
-      />
+      <div>
+        <p className="mb-3">Enter the size of your tattoo in inches</p>
+        <Input
+          id="Size"
+          error={inputError === "Size"}
+          label="Size of Tattoo (inches)"
+          value={size}
+          disabled={isLoading}
+          onChange={(evt) => {
+            if (inputError === "Size") setInputError("");
+            setSize(evt.target.value);
+          }}
+        />
+      </div>
 
       {/* PLACEMENT */}
-      <Input
-        id="Placement"
-        error={inputError === "Placement"}
-        label="Tattoo Placement"
-        value={placement}
-        disabled={isLoading}
-        onChange={(evt) => {
-          if (inputError === "Placement") setInputError("");
-          setPlacement(evt.target.value);
-        }}
-      />
+      <div>
+        <p className="mb-3">Enter where you want your tattoo</p>
+        <Input
+          id="Placement"
+          error={inputError === "Placement"}
+          label="Tattoo Placement"
+          value={placement}
+          disabled={isLoading}
+          onChange={(evt) => {
+            if (inputError === "Placement") setInputError("");
+            setPlacement(evt.target.value);
+          }}
+        />
+      </div>
 
       {/* COLOR */}
-      <Select
-        label="Select Colors"
-        options={["Black & Grey", "Colored"]}
-        value={color}
-        disabled={isLoading}
-        onChange={(evt) => {
-          if (inputError === "Color") setInputError("");
-          setColor(evt.target.value);
-        }}
-      />
+      <div>
+        <p className="mb-3">Select your color palette</p>
+        <Select
+          label="Select Colors"
+          options={["Black & Grey", "Colored"]}
+          value={color}
+          disabled={isLoading}
+          onChange={(evt) => {
+            if (inputError === "Color") setInputError("");
+            setColor(evt.target.value);
+          }}
+        />
+      </div>
     </form>
   );
 };
