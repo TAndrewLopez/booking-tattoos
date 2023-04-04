@@ -27,8 +27,9 @@ const TattooForm: React.FC<TattooFormProps> = ({
     <form className="flex flex-col gap-4">
       {/* DESCRIPTION */}
       <Input
+        id="Description"
         error={inputError === "Description"}
-        placeholder="Description"
+        label="Description"
         value={description}
         disabled={isLoading}
         onChange={(evt) => {
@@ -39,8 +40,9 @@ const TattooForm: React.FC<TattooFormProps> = ({
 
       {/* SIZE */}
       <Input
+        id="Size"
         error={inputError === "Size"}
-        placeholder="Size of Tattoo (inches)"
+        label="Size of Tattoo (inches)"
         value={size}
         disabled={isLoading}
         onChange={(evt) => {
@@ -51,8 +53,9 @@ const TattooForm: React.FC<TattooFormProps> = ({
 
       {/* PLACEMENT */}
       <Input
+        id="Placement"
         error={inputError === "Placement"}
-        placeholder="Tattoo Placement"
+        label="Tattoo Placement"
         value={placement}
         disabled={isLoading}
         onChange={(evt) => {

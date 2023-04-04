@@ -28,8 +28,9 @@ const ContactForm: React.FC<ContactFormProps> = ({
     <form className="flex flex-col gap-4">
       {/* NAME */}
       <Input
+        id="Name"
         error={inputError === "Name"}
-        placeholder="Name"
+        label="Name"
         value={name}
         disabled={isLoading}
         onChange={(evt) => {
@@ -49,8 +50,9 @@ const ContactForm: React.FC<ContactFormProps> = ({
 
       {/* EMAIL */}
       <Input
+        id="Email"
         error={inputError === "Email"}
-        placeholder="Email"
+        label="Email"
         type="email"
         value={email}
         disabled={isLoading}
@@ -62,8 +64,9 @@ const ContactForm: React.FC<ContactFormProps> = ({
 
       {/* PHONE */}
       <Input
+        id={"Number"}
         error={inputError === "Number"}
-        placeholder="Phone Number"
+        label="Phone Number (no dashes)"
         value={phoneNumber}
         disabled={isLoading}
         onChange={(evt) => {

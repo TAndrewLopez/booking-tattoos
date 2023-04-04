@@ -1,14 +1,22 @@
 import useAppointmentStore from "@/state/appointmentStore";
 import React, { type SetStateAction, type Dispatch, useMemo } from "react";
-import FormButton from "./Inputs/FormButton";
+import FormButton from "./Inputs/Button";
+import { toast } from "react-hot-toast";
+import {
+  validateNumber,
+  validateEmail,
+  validateSize,
+} from "./helper/validation";
 
 interface MultiFormButtonsProps {
+  inputError: (val: string) => void;
   page: number;
   setPage: Dispatch<SetStateAction<number>>;
   handleSubmit: () => void;
 }
 
 const MultiFormButtons: React.FC<MultiFormButtonsProps> = ({
+  inputError,
   page,
   setPage,
   handleSubmit,
@@ -45,24 +53,47 @@ const MultiFormButtons: React.FC<MultiFormButtonsProps> = ({
           Back
         </button>
       )}
-      {/* NEXT BUTTONS */}
+
+      {/* PAGE 1 NEXT BUTTON */}
       {page === 0 && (
         <FormButton
           label="Next"
-          onClick={() => setPage((prev: number) => prev + 1)}
+          onClick={() => {
+            // VALIDATING INPUTS
+            if (!validateEmail(email)) {
+              inputError("Email");
+              return toast.error("Invalid Email");
+            }
+            if (!validateNumber(phoneNumber)) {
+              inputError("Number");
+              return toast.error("Invalid Phone Number");
+            }
+            setPage((prev: number) => prev + 1);
+          }}
           disabled={contactFormCompleted}
         />
       )}
+
+      {/* PAGE 2 NEXT BUTTON */}
       {page === 1 && (
         <FormButton
           label="Next"
-          onClick={() => setPage((prev: number) => prev + 1)}
+          onClick={() => {
+            // VALIDATING INPUTS
+            if (!validateSize(size)) {
+              inputError("Size");
+              return toast.error("Invalid Size");
+            }
+            setPage((prev: number) => prev + 1);
+          }}
           disabled={tattooFormCompleted}
         />
       )}
+
+      {/* REVIEW BEFORE SUBMIT BUTTON */}
       {page === 2 && (
         <FormButton
-          label="Review"
+          label="Submit"
           onClick={() =>
             console.log({
               name,

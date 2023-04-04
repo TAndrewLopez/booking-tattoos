@@ -18,7 +18,7 @@ const Select: React.FC<SelectProps> = ({
       onChange={onChange}
       value={value}
       disabled={disabled}
-      className="w-full rounded-md border-2 border-neutral-200 bg-neutral-200 p-4 text-center text-lg text-neutral-700 outline-none transition focus:border-2 focus:border-neutral-400 disabled:cursor-not-allowed disabled:bg-neutral-900 disabled:opacity-70 sm:text-left"
+      className="w-full rounded-md border-2 border-neutral-200 bg-neutral-200 p-4 text-lg text-neutral-700 outline-none transition focus:border-2 focus:border-neutral-400 disabled:cursor-not-allowed disabled:bg-neutral-900 disabled:opacity-70"
     >
       <option value={undefined}>{label}</option>
       {options.map((option, i) => (
