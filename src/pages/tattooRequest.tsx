@@ -1,17 +1,20 @@
+import MultiForm from "@/components/Form/MultiForm";
 import { type NextPage } from "next";
 import Head from "next/head";
 
-const Home: NextPage = () => {
+const TattooRequest: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Booking Tattoos</title>
+        <title>Tattoo Request</title>
         <meta name="description" content="Booking Tattoos" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>Home Page</main>
+      <main>
+        <MultiForm />
+      </main>
     </>
   );
 };
 
-export default Home;
+export default TattooRequest;

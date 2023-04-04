@@ -38,11 +38,14 @@ declare module "next-auth" {
 export const authOptions: NextAuthOptions = {
   callbacks: {
     session({ session, user }) {
-      if (session.user) {
-        session.user.id = user.id;
-        // session.user.role = user.role; <-- put other properties on the session here
-      }
-      return session;
+      // if (session.user) {
+      //   session.user.id = user.id;
+      //   // session.user.role = user.role; <-- put other properties on the session here
+      // }
+      // return session;
+
+      // UPDATED SESSION TO CONTAIN ALL USER INFORMATION
+      return { ...session, user: { ...session.user, ...user } };
     },
   },
   adapter: PrismaAdapter(prisma),
