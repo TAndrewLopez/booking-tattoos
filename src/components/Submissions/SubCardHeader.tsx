@@ -49,8 +49,7 @@ const CardHeader: React.FC<CardHeaderProps> = ({
           Response
         </button>
       </li>
-      <li className="mr-2 flex items-center gap-4">
-        <p className="inline-block p-4">Created At: 4/4/2023</p>
+      <li className="flex items-center gap-4">
         <div onClick={() => setEditEnabled(!editEnabled)}>
           <EditIcon twClass="w-5 cursor-pointer hover:fill-neutral-500" />
         </div>
