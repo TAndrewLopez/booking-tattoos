@@ -3,7 +3,11 @@ import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
 export const appointmentRouter = createTRPCRouter({
   getAll: protectedProcedure.query(({ ctx }) => {
-    return ctx.prisma.appointment.findMany();
+    return ctx.prisma.appointment.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
   }),
   create: publicProcedure
     .input(
