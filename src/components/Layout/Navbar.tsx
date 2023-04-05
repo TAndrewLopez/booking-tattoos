@@ -4,7 +4,6 @@ import { useSession } from "next-auth/react";
 
 const Navbar = () => {
   const { data: sessionData } = useSession();
-  console.log(sessionData);
 
   return (
     <div className="flex items-center justify-between p-4">
@@ -15,9 +14,9 @@ const Navbar = () => {
         {sessionData?.user && (
           <>
             <Link href="/submissions">Submissions</Link>
-            <Link href="/">Schedule</Link>
-            <Link href="/">Billing</Link>
-            <Link href="/">Messages</Link>
+            <Link href="/schedule">Schedule</Link>
+            <Link href="/billing">Billing</Link>
+            <Link href="/messages">Messages</Link>
           </>
         )}
         <AuthButtons />

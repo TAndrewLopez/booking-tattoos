@@ -16,6 +16,7 @@ export const appointmentRouter = createTRPCRouter({
         size: z.string(),
         placement: z.string(),
         color: z.string(),
+        userId: z.string().nullish(),
       })
     )
     .mutation(async ({ ctx, input }) => {
