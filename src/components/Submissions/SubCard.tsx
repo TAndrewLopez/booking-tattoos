@@ -2,6 +2,9 @@ import { type AppointmentData } from "@/types";
 import { useEffect, useState } from "react";
 import Input from "../Form/Inputs/Input";
 import SubCardHeader from "./SubCardHeader";
+import { formatPhoneNumber } from "../Form/helper/formatPhoneNumber";
+import TextArea from "../Form/Inputs/TextArea";
+import Button from "@/components/Form/Inputs/Button";
 
 interface SubCardProps {
   data: AppointmentData;
@@ -21,11 +24,15 @@ const SubCard: React.FC<SubCardProps> = ({ data }) => {
   const [placement, setPlacement] = useState("");
   const [color, setColor] = useState("");
 
+  // RESPONSE STATES
+  const [consultation, setConsultation] = useState(false);
+  const [notes, setNotes] = useState("");
+
   useEffect(() => {
     setName(data.name);
     setPreferredPronouns(data.preferredPronouns);
     setEmail(data.email);
-    setNumber(data.phoneNumber);
+    setNumber(formatPhoneNumber(data.phoneNumber));
     setDescription(data.description);
     setSize(data.size);
     setPlacement(data.placement);
@@ -85,7 +92,7 @@ const SubCard: React.FC<SubCardProps> = ({ data }) => {
             value={number}
             disabled={editEnabled}
             onChange={(evt) => {
-              setEmail(evt.target.value);
+              setNumber(evt.target.value);
             }}
           />
         </div>
@@ -133,11 +140,70 @@ const SubCard: React.FC<SubCardProps> = ({ data }) => {
       )}
 
       {displaySection === "Response" && (
-        <div>
+        <div className="space-y-2 p-3">
+          <div className="flex flex-col gap-5 sm:flex-row">
+            <div className="flex items-center">
+              <label className="mr-2" htmlFor="consultation">
+                Requires Consultation
+              </label>
+              <input
+                disabled={editEnabled}
+                className="h-4 w-4"
+                id="consultation"
+                type="checkbox"
+                checked={consultation}
+                onChange={() => setConsultation(!consultation)}
+              />
+            </div>
+            {consultation && (
+              <div className="flex items-center">
+                <label className="mr-2" htmlFor="consultation-date">
+                  Suggested Consultation Date:
+                </label>
+                <input
+                  id="consultation-date"
+                  className="px-2 outline-dashed outline-1"
+                  type="date"
+                  disabled={editEnabled}
+                />
+              </div>
+            )}
+          </div>
+          <TextArea
+            id="Notes"
+            label="Notes"
+            value={notes}
+            onChange={(evt) => setNotes(evt.target.value)}
+            disabled={editEnabled}
+          />
           <p>Number of Appointments</p>
-          <p>Requires Consultation?</p>
-          <p>Notes Field</p>
-          <p>Accept/Reject</p>
+
+          <div className="flex justify-end gap-4">
+            <button disabled={editEnabled}>Reject</button>
+            <button disabled={editEnabled}>Accept</button>
+          </div>
+        </div>
+      )}
+      {!editEnabled && (
+        <div className="flex items-center justify-center px-3 pb-3">
+          <Button
+            label="Save"
+            type="submit"
+            disabled={editEnabled}
+            onClick={() => {
+              console.log("save update", {
+                name,
+                preferredPronouns,
+                email,
+                number,
+                description,
+                placement,
+                size,
+                color,
+              });
+            }}
+            fullSize
+          />
         </div>
       )}
     </div>

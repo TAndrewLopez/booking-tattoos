@@ -10,7 +10,8 @@ const Submissions: NextPage = () => {
   });
 
   return (
-    <main className="flex flex-wrap gap-4 p-5">
+    <main className="flex flex-wrap gap-4 p-4">
+      {/* SEARCH AND FILTER FEATURES */}
       {aptData?.map((data) => (
         <SubCard data={data} key={data.id} />
       ))}

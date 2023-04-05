@@ -69,6 +69,9 @@ const MultiForm = () => {
 
   return (
     <div className="mx-5 ">
+      <h2 className="mb-5 text-2xl font-bold text-neutral-700">
+        Request a Tattoo
+      </h2>
       <div className="mb-4 md:grid md:grid-cols-4">
         <Sidebar page={page} />
         <div className="md:col-span-3">

@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { toast } from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
-import FormButton from "./Inputs/Button";
+import Button from "./Inputs/Button";
 import {
   validateEmail,
   validateNumber,
@@ -54,17 +54,17 @@ const MultiFormButtons: React.FC<MultiFormButtonsProps> = ({
     <>
       {/* BACK BUTTON */}
       {page > 0 && (
-        <button
+        <Button
+          type="error"
+          label="Back"
           onClick={() => setPage((prev: number) => prev - 1)}
-          className="rounded-md bg-red-200 px-3 py-2 text-red-900 hover:bg-red-900 hover:text-white"
-        >
-          Back
-        </button>
+        />
       )}
 
       {/* PAGE 1 NEXT BUTTON */}
       {page === 0 && (
-        <FormButton
+        <Button
+          type="submit"
           label="Next"
           onClick={() => {
             // VALIDATING INPUTS
@@ -84,7 +84,8 @@ const MultiFormButtons: React.FC<MultiFormButtonsProps> = ({
 
       {/* PAGE 2 NEXT BUTTON */}
       {page === 1 && (
-        <FormButton
+        <Button
+          type="submit"
           label="Next"
           onClick={() => {
             // VALIDATING INPUTS
@@ -100,7 +101,8 @@ const MultiFormButtons: React.FC<MultiFormButtonsProps> = ({
 
       {/* REVIEW BEFORE SUBMIT BUTTON */}
       {page === 2 && (
-        <FormButton
+        <Button
+          type="submit"
           label={isLoading ? <ClipLoader color="red" /> : "Submit"}
           onClick={handleSubmit}
           disabled={tattooFormCompleted}
