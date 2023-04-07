@@ -2,7 +2,7 @@ import { type NextPageContext, type NextPage } from "next";
 import { getSession } from "next-auth/react";
 
 const Schedule: NextPage = () => {
-  return <main>Schedule</main>;
+  return <main className="p-4">Schedule</main>;
 };
 
 export async function getServerSideProps(context: NextPageContext) {

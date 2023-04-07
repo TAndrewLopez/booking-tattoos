@@ -1,35 +1,46 @@
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { useCallback, useState } from "react";
-import { RxHamburgerMenu } from "react-icons/rx";
+import { AiOutlineClose } from "react-icons/ai";
 import AuthButtons from "../Auth/AuthButtons";
-import MobileNav from "./MobileNav";
 
-const Navbar = () => {
-  const { pathname } = useRouter();
+interface MobileNavProps {
+  showMobileNav: boolean;
+  setShowMobileNav: (val: boolean) => void;
+  handleMobileNav: () => void;
+  pathname: string;
+}
+
+const MobileNav: React.FC<MobileNavProps> = ({
+  showMobileNav,
+  setShowMobileNav,
+  handleMobileNav,
+  pathname,
+}) => {
   const { data: sessionData } = useSession();
-  const [showMobileNav, setShowMobileNav] = useState(false);
-
-  const handleMobileNav = useCallback(() => {
-    setShowMobileNav(!showMobileNav);
-  }, [showMobileNav]);
-
   return (
-    <div className="flex items-center justify-between p-4">
-      <div>Raquel Tattoos</div>
-      <div className="hidden items-center gap-4 md:flex">
+    <div
+      className={`fixed right-0 top-0 z-50 flex h-full w-full items-center justify-center bg-neutral-100 duration-300 ease-in
+      ${showMobileNav ? "translate-x-0" : "translate-x-full"}`}
+    >
+      <AiOutlineClose
+        onClick={() => setShowMobileNav(!showMobileNav)}
+        className="absolute right-4 top-4"
+        size={24}
+      />
+      <div className="flex flex-col items-center gap-4">
         <Link
+          onClick={handleMobileNav}
           href="/"
-          className={`
-          ${pathname === "/" ? "border-b-2 border-neutral-700" : ""}`}
+          className={`${
+            pathname === "/" ? "border-b-2 border-neutral-700" : ""
+          }`}
         >
           Home
         </Link>
         <Link
+          onClick={handleMobileNav}
           href="/tattooRequest"
-          className={`
-          ${
+          className={`${
             pathname === "/tattooRequest" ? "border-b-2 border-neutral-700" : ""
           }`}
         >
@@ -38,9 +49,9 @@ const Navbar = () => {
         {sessionData?.user && (
           <>
             <Link
+              onClick={handleMobileNav}
               href="/submissions"
-              className={`
-              ${
+              className={`${
                 pathname === "/submissions"
                   ? "border-b-2 border-neutral-700"
                   : ""
@@ -49,27 +60,27 @@ const Navbar = () => {
               Submissions
             </Link>
             <Link
+              onClick={handleMobileNav}
               href="/schedule"
-              className={`
-              ${
+              className={`${
                 pathname === "/schedule" ? "border-b-2 border-neutral-700" : ""
               }`}
             >
               Schedule
             </Link>
             <Link
+              onClick={handleMobileNav}
               href="/billing"
-              className={`
-              ${
+              className={`${
                 pathname === "/billing" ? "border-b-2 border-neutral-700" : ""
               }`}
             >
               Billing
             </Link>
             <Link
+              onClick={handleMobileNav}
               href="/messages"
-              className={`
-              ${
+              className={`${
                 pathname === "/messages" ? "border-b-2 border-neutral-700" : ""
               }`}
             >
@@ -79,21 +90,8 @@ const Navbar = () => {
         )}
         <AuthButtons />
       </div>
-
-      <RxHamburgerMenu
-        onClick={() => setShowMobileNav(!showMobileNav)}
-        className="md:hidden"
-        size={24}
-      />
-
-      <MobileNav
-        pathname={pathname}
-        handleMobileNav={handleMobileNav}
-        setShowMobileNav={setShowMobileNav}
-        showMobileNav={showMobileNav}
-      />
     </div>
   );
 };
 
-export default Navbar;
+export default MobileNav;

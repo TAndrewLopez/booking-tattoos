@@ -24,10 +24,10 @@ const TattooForm: React.FC<TattooFormProps> = ({
     setColor,
   } = useAppointmentStore();
   return (
-    <form className="flex h-full flex-col justify-between gap-4">
+    <form className="flex h-full flex-col gap-4">
       {/* DESCRIPTION */}
       <div>
-        <p className="mb-3">Provide a description of your desired tattoo</p>
+        {/* <p className="mb-3">Provide a description of your desired tattoo</p> */}
         <Input
           id="Description"
           error={inputError === "Description"}
@@ -43,7 +43,7 @@ const TattooForm: React.FC<TattooFormProps> = ({
 
       {/* SIZE */}
       <div>
-        <p className="mb-3">Enter the size of your tattoo in inches</p>
+        {/* <p className="mb-3">Enter the size of your tattoo in inches</p> */}
         <Input
           id="Size"
           error={inputError === "Size"}
@@ -59,7 +59,7 @@ const TattooForm: React.FC<TattooFormProps> = ({
 
       {/* PLACEMENT */}
       <div>
-        <p className="mb-3">Enter where you want your tattoo</p>
+        {/* <p className="mb-3">Enter where you want your tattoo</p> */}
         <Input
           id="Placement"
           error={inputError === "Placement"}
@@ -75,7 +75,7 @@ const TattooForm: React.FC<TattooFormProps> = ({
 
       {/* COLOR */}
       <div>
-        <p className="mb-3">Select your color palette</p>
+        {/* <p className="mb-3">Select your color palette</p> */}
         <Select
           label="Select Colors"
           options={["Black & Grey", "Colored"]}

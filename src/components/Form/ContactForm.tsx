@@ -25,10 +25,10 @@ const ContactForm: React.FC<ContactFormProps> = ({
   } = useAppointmentStore();
 
   return (
-    <form className="flex h-full flex-col justify-between gap-4">
+    <form className="flex h-full flex-col gap-4">
       {/* NAME */}
       <div>
-        <p className="mb-3">Enter your first and last name:</p>
+        {/* <p className="mb-3">Enter your first and last name:</p> */}
         <Input
           id="Name"
           error={inputError === "Name"}
@@ -44,7 +44,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
 
       {/* PREFERRED PRONOUNS */}
       <div>
-        <p className="mb-3">Select your preferred pronouns:</p>
+        {/* <p className="mb-3">Select your preferred pronouns:</p> */}
         <Select
           label="Select Pronouns"
           options={["he/him", "she/her", "they/them"]}
@@ -56,7 +56,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
 
       {/* EMAIL */}
       <div>
-        <p className="mb-3">Enter the best email address for correspondence:</p>
+        {/* <p className="mb-3">Enter the best email address for correspondence:</p> */}
         <Input
           id="Email"
           error={inputError === "Email"}
@@ -73,10 +73,10 @@ const ContactForm: React.FC<ContactFormProps> = ({
 
       {/* PHONE */}
       <div>
-        <p className="mb-3">
+        {/* <p className="mb-3">
           Enter the best phone number for correspondence:{" "}
           <span className="text-sm text-neutral-600">(no dashes)</span>
-        </p>
+        </p> */}
         <Input
           id={"Number"}
           error={inputError === "Number"}

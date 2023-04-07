@@ -1,18 +1,26 @@
 import { type AppointmentData } from "@/types";
-import { useEffect, useState } from "react";
+import { type SyntheticEvent, useCallback, useEffect, useState } from "react";
 import Input from "../Form/Inputs/Input";
 import SubCardHeader from "./SubCardHeader";
-import { formatPhoneNumber } from "../Form/helper/formatPhoneNumber";
 import TextArea from "../Form/Inputs/TextArea";
 import Button from "@/components/Form/Inputs/Button";
+import { api } from "@/utils/api";
+import { toast } from "react-hot-toast";
+import { ClipLoader } from "react-spinners";
 
 interface SubCardProps {
   data: AppointmentData;
 }
 
+// TODO: CONSULTATION DATE NEEDS TO BE ADDED TO DATABASE
+// TODO: NUMBER OF APPOINTMENT AND DATES PROVIDE ONCE DATABASE IS ADDED TO APPOINTMENT
+
 const SubCard: React.FC<SubCardProps> = ({ data }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [editEnabled, setEditEnabled] = useState(true);
   const [displaySection, setDisplaySection] = useState("Contact");
+
+  const updateApt = api.appointment.update.useMutation();
 
   // INPUT STATES
   const [name, setName] = useState("");
@@ -27,16 +35,64 @@ const SubCard: React.FC<SubCardProps> = ({ data }) => {
   // RESPONSE STATES
   const [consultation, setConsultation] = useState(false);
   const [notes, setNotes] = useState("");
+  const [accepted, setAccepted] = useState(false);
+
+  const submitUpdate = useCallback(
+    (evt: SyntheticEvent) => {
+      evt.preventDefault();
+      try {
+        setIsLoading(true);
+        updateApt.mutate({
+          id: data.id,
+          name,
+          preferredPronouns,
+          email,
+          phoneNumber: number,
+          description,
+          placement,
+          size,
+          color,
+          requiresConsultation: consultation,
+          notes,
+        });
+        setEditEnabled(true);
+        toast.success("Update successful.");
+      } catch (error) {
+        console.log(error);
+        toast.error("Something went wrong.");
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [
+      data.id,
+      name,
+      preferredPronouns,
+      email,
+      number,
+      description,
+      placement,
+      size,
+      color,
+      notes,
+      updateApt,
+      consultation,
+    ]
+  );
 
   useEffect(() => {
     setName(data.name);
     setPreferredPronouns(data.preferredPronouns);
     setEmail(data.email);
-    setNumber(formatPhoneNumber(data.phoneNumber));
+    setNumber(data.phoneNumber);
     setDescription(data.description);
     setSize(data.size);
     setPlacement(data.placement);
     setColor(data.color);
+
+    // RESPONSE STATES
+    setConsultation(data.requiresConsultation ?? false);
+    setNotes(data.notes ?? "");
   }, [
     data.name,
     data.preferredPronouns,
@@ -46,6 +102,9 @@ const SubCard: React.FC<SubCardProps> = ({ data }) => {
     data.size,
     data.placement,
     data.color,
+    data.notes,
+    data.requiresConsultation,
+    data.consultationDate,
   ]);
 
   return (
@@ -158,7 +217,7 @@ const SubCard: React.FC<SubCardProps> = ({ data }) => {
             {consultation && (
               <div className="flex items-center">
                 <label className="mr-2" htmlFor="consultation-date">
-                  Suggested Consultation Date:
+                  Consultation Date:
                 </label>
                 <input
                   id="consultation-date"
@@ -179,29 +238,28 @@ const SubCard: React.FC<SubCardProps> = ({ data }) => {
           <p>Number of Appointments</p>
 
           <div className="flex justify-end gap-4">
-            <button disabled={editEnabled}>Reject</button>
-            <button disabled={editEnabled}>Accept</button>
+            <Button
+              label="Reject"
+              type="error"
+              disabled={editEnabled}
+              onClick={() => setAccepted(false)}
+            />
+            <Button
+              label="Accept"
+              type="submit"
+              disabled={editEnabled}
+              onClick={() => setAccepted(true)}
+            />
           </div>
         </div>
       )}
       {!editEnabled && (
         <div className="flex items-center justify-center px-3 pb-3">
           <Button
-            label="Save"
+            label={isLoading ? <ClipLoader color="red" /> : "Save"}
             type="submit"
             disabled={editEnabled}
-            onClick={() => {
-              console.log("save update", {
-                name,
-                preferredPronouns,
-                email,
-                number,
-                description,
-                placement,
-                size,
-                color,
-              });
-            }}
+            onClick={submitUpdate}
             fullSize
           />
         </div>

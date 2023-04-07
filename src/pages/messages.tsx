@@ -1,7 +1,7 @@
 import { type NextPage } from "next";
 
 const Messages: NextPage = () => {
-  return <div>Messages</div>;
+  return <main className="p-4">Messages</main>;
 };
 
 export default Messages;
