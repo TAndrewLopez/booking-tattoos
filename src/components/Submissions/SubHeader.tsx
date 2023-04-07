@@ -11,7 +11,7 @@ const SubHeader: React.FC<SubHeaderProps> = ({ filters, setFilters }) => {
   return (
     <div className="flex w-full items-center justify-between">
       <SubFilter filters={filters} setFilters={setFilters} />
-      <SubSearch />
+      {/* <SubSearch /> */}
     </div>
   );
 };

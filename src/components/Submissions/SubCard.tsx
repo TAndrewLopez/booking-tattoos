@@ -35,7 +35,7 @@ const SubCard: React.FC<SubCardProps> = ({ data }) => {
   // RESPONSE STATES
   const [consultation, setConsultation] = useState(false);
   const [notes, setNotes] = useState("");
-  const [accepted, setAccepted] = useState(false);
+  const [accepted, setAccepted] = useState<boolean | null>(true);
 
   const submitUpdate = useCallback(
     (evt: SyntheticEvent) => {
@@ -93,6 +93,7 @@ const SubCard: React.FC<SubCardProps> = ({ data }) => {
     // RESPONSE STATES
     setConsultation(data.requiresConsultation ?? false);
     setNotes(data.notes ?? "");
+    setAccepted(data.accepted);
   }, [
     data.name,
     data.preferredPronouns,
@@ -105,6 +106,7 @@ const SubCard: React.FC<SubCardProps> = ({ data }) => {
     data.notes,
     data.requiresConsultation,
     data.consultationDate,
+    data.accepted,
   ]);
 
   return (
@@ -237,19 +239,55 @@ const SubCard: React.FC<SubCardProps> = ({ data }) => {
           />
           <p>Number of Appointments</p>
 
-          <div className="flex justify-end gap-4">
-            <Button
-              label="Reject"
-              type="error"
+          <div className="flex justify-between gap-4 md:justify-end">
+            <button
+              onClick={() =>
+                setAccepted((prev) => {
+                  if (accepted === false) {
+                    return null;
+                  } else {
+                    return false;
+                  }
+                })
+              }
+              className={`
+              rounded-md px-3 py-2
+              hover:text-white 
+              disabled:cursor-not-allowed disabled:bg-neutral-400 disabled:text-neutral-50
+              ${
+                accepted === false
+                  ? "bg-red-900 text-white"
+                  : "bg-red-200 text-red-900 hover:bg-red-900"
+              }
+              `}
               disabled={editEnabled}
-              onClick={() => setAccepted(false)}
-            />
-            <Button
-              label="Accept"
-              type="submit"
+            >
+              Rejected
+            </button>
+            <button
+              onClick={() =>
+                setAccepted((prev) => {
+                  if (accepted) {
+                    return null;
+                  } else {
+                    return true;
+                  }
+                })
+              }
+              className={`
+              rounded-md px-3 py-2
+              hover:text-white 
+              disabled:cursor-not-allowed disabled:bg-neutral-400 disabled:text-neutral-50
+              ${
+                accepted
+                  ? "bg-emerald-900 text-white"
+                  : "bg-emerald-200 text-emerald-900 hover:bg-emerald-900"
+              }
+              `}
               disabled={editEnabled}
-              onClick={() => setAccepted(true)}
-            />
+            >
+              Accept
+            </button>
           </div>
         </div>
       )}

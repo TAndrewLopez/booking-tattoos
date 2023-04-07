@@ -1,7 +1,7 @@
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import AuthButtons from "../Auth/AuthButtons";
 import MobileNav from "./MobileNav";
@@ -10,19 +10,26 @@ const Navbar = () => {
   const { pathname } = useRouter();
   const { data: sessionData } = useSession();
   const [showMobileNav, setShowMobileNav] = useState(false);
+  const [textColor, setTextColor] = useState("");
 
   const handleMobileNav = useCallback(() => {
     setShowMobileNav(!showMobileNav);
   }, [showMobileNav]);
 
+  // useEffect(() => {}, []);
+
   return (
-    <div className="flex items-center justify-between p-4">
-      <div>Raquel Tattoos</div>
+    <div
+      className={`relative z-50 flex items-center justify-between p-4
+      ${pathname === "/" ? "text-white" : ""}
+      `}
+    >
+      <div>Raquel&apos;s Tattoos</div>
       <div className="hidden items-center gap-4 md:flex">
         <Link
           href="/"
           className={`
-          ${pathname === "/" ? "border-b-2 border-neutral-700" : ""}`}
+          ${pathname === "/" ? "border-b-2 border-emerald-700" : ""}`}
         >
           Home
         </Link>
@@ -30,7 +37,7 @@ const Navbar = () => {
           href="/tattooRequest"
           className={`
           ${
-            pathname === "/tattooRequest" ? "border-b-2 border-neutral-700" : ""
+            pathname === "/tattooRequest" ? "border-b-2 border-emerald-700" : ""
           }`}
         >
           Tattoo Request
@@ -42,7 +49,7 @@ const Navbar = () => {
               className={`
               ${
                 pathname === "/submissions"
-                  ? "border-b-2 border-neutral-700"
+                  ? "border-b-2 border-emerald-700"
                   : ""
               }`}
             >
@@ -52,7 +59,7 @@ const Navbar = () => {
               href="/schedule"
               className={`
               ${
-                pathname === "/schedule" ? "border-b-2 border-neutral-700" : ""
+                pathname === "/schedule" ? "border-b-2 border-emerald-700" : ""
               }`}
             >
               Schedule
@@ -61,7 +68,7 @@ const Navbar = () => {
               href="/billing"
               className={`
               ${
-                pathname === "/billing" ? "border-b-2 border-neutral-700" : ""
+                pathname === "/billing" ? "border-b-2 border-emerald-700" : ""
               }`}
             >
               Billing
@@ -70,7 +77,7 @@ const Navbar = () => {
               href="/messages"
               className={`
               ${
-                pathname === "/messages" ? "border-b-2 border-neutral-700" : ""
+                pathname === "/messages" ? "border-b-2 border-emerald-700" : ""
               }`}
             >
               Messages
