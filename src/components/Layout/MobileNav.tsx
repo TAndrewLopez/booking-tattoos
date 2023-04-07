@@ -31,9 +31,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
         <Link
           onClick={handleMobileNav}
           href="/"
-          className={`${
-            pathname === "/" ? "border-b-2 border-neutral-700" : ""
-          }`}
+          className={`${pathname === "/" ? "border-b-2 border-sky-500" : ""}`}
         >
           Home
         </Link>
@@ -41,7 +39,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
           onClick={handleMobileNav}
           href="/tattooRequest"
           className={`${
-            pathname === "/tattooRequest" ? "border-b-2 border-neutral-700" : ""
+            pathname === "/tattooRequest" ? "border-b-2 border-sky-500" : ""
           }`}
         >
           Tattoo Request
@@ -52,9 +50,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
               onClick={handleMobileNav}
               href="/submissions"
               className={`${
-                pathname === "/submissions"
-                  ? "border-b-2 border-neutral-700"
-                  : ""
+                pathname === "/submissions" ? "border-b-2 border-sky-500" : ""
               }`}
             >
               Submissions
@@ -63,7 +59,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
               onClick={handleMobileNav}
               href="/schedule"
               className={`${
-                pathname === "/schedule" ? "border-b-2 border-neutral-700" : ""
+                pathname === "/schedule" ? "border-b-2 border-sky-500" : ""
               }`}
             >
               Schedule
@@ -72,7 +68,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
               onClick={handleMobileNav}
               href="/billing"
               className={`${
-                pathname === "/billing" ? "border-b-2 border-neutral-700" : ""
+                pathname === "/billing" ? "border-b-2 border-sky-500" : ""
               }`}
             >
               Billing
@@ -81,7 +77,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
               onClick={handleMobileNav}
               href="/messages"
               className={`${
-                pathname === "/messages" ? "border-b-2 border-neutral-700" : ""
+                pathname === "/messages" ? "border-b-2 border-sky-500" : ""
               }`}
             >
               Messages

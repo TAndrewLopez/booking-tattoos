@@ -19,13 +19,15 @@ const Navbar = () => {
   // useEffect(() => {}, []);
 
   return (
-    <div
-      className={`relative z-50 flex items-center justify-between p-4
-      ${pathname === "/" ? "text-white" : ""}
-      `}
-    >
-      <div>Raquel&apos;s Tattoos</div>
-      <div className="hidden items-center gap-4 md:flex">
+    <div className="relative z-50 flex items-center justify-between p-4">
+      <div className={`${pathname === "/" ? "text-white" : ""}`}>
+        Raquel&apos;s Tattoos
+      </div>
+      <div
+        className={`hidden items-center gap-4 md:flex
+        ${pathname === "/" ? "text-white" : ""}
+        `}
+      >
         <Link
           href="/"
           className={`
@@ -80,6 +82,7 @@ const Navbar = () => {
       <RxHamburgerMenu
         onClick={() => setShowMobileNav(!showMobileNav)}
         className="md:hidden"
+        color={`${pathname === "/" ? "white" : ""}`}
         size={24}
       />
 
