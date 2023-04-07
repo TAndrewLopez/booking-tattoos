@@ -29,16 +29,14 @@ const Navbar = () => {
         <Link
           href="/"
           className={`
-          ${pathname === "/" ? "border-b-2 border-emerald-700" : ""}`}
+          ${pathname === "/" ? "border-b-2 border-sky-500" : ""}`}
         >
           Home
         </Link>
         <Link
           href="/tattooRequest"
           className={`
-          ${
-            pathname === "/tattooRequest" ? "border-b-2 border-emerald-700" : ""
-          }`}
+          ${pathname === "/tattooRequest" ? "border-b-2 border-sky-500" : ""}`}
         >
           Tattoo Request
         </Link>
@@ -48,9 +46,7 @@ const Navbar = () => {
               href="/submissions"
               className={`
               ${
-                pathname === "/submissions"
-                  ? "border-b-2 border-emerald-700"
-                  : ""
+                pathname === "/submissions" ? "border-b-2 border-sky-500" : ""
               }`}
             >
               Submissions
@@ -58,27 +54,21 @@ const Navbar = () => {
             <Link
               href="/schedule"
               className={`
-              ${
-                pathname === "/schedule" ? "border-b-2 border-emerald-700" : ""
-              }`}
+              ${pathname === "/schedule" ? "border-b-2 border-sky-500" : ""}`}
             >
               Schedule
             </Link>
             <Link
               href="/billing"
               className={`
-              ${
-                pathname === "/billing" ? "border-b-2 border-emerald-700" : ""
-              }`}
+              ${pathname === "/billing" ? "border-b-2 border-sky-500" : ""}`}
             >
               Billing
             </Link>
             <Link
               href="/messages"
               className={`
-              ${
-                pathname === "/messages" ? "border-b-2 border-emerald-700" : ""
-              }`}
+              ${pathname === "/messages" ? "border-b-2 border-sky-500" : ""}`}
             >
               Messages
             </Link>
