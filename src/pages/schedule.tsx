@@ -1,8 +1,13 @@
+import Calendar from "@/components/Schedule/Calendar";
 import { type NextPageContext, type NextPage } from "next";
 import { getSession } from "next-auth/react";
 
 const Schedule: NextPage = () => {
-  return <main className="p-4">Schedule</main>;
+  return (
+    <main className="p-4">
+      <Calendar />
+    </main>
+  );
 };
 
 export async function getServerSideProps(context: NextPageContext) {

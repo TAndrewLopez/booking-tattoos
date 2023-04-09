@@ -22,11 +22,13 @@ const MobileNav: React.FC<MobileNavProps> = ({
       className={`fixed right-0 top-0 z-50 flex h-full w-full items-center justify-center bg-neutral-100 duration-300 ease-in
       ${showMobileNav ? "translate-x-0" : "translate-x-full"}`}
     >
-      <AiOutlineClose
-        onClick={() => setShowMobileNav(!showMobileNav)}
-        className="absolute right-4 top-4"
-        size={24}
-      />
+      <div className="absolute top-0 flex w-full justify-between p-4">
+        <p className="font-domine text-2xl">Raquel Cude</p>
+        <AiOutlineClose
+          onClick={() => setShowMobileNav(!showMobileNav)}
+          size={24}
+        />
+      </div>
       <div className="flex flex-col items-center gap-4">
         <Link
           onClick={handleMobileNav}
@@ -34,15 +36,6 @@ const MobileNav: React.FC<MobileNavProps> = ({
           className={`${pathname === "/" ? "border-b-2 border-sky-500" : ""}`}
         >
           Home
-        </Link>
-        <Link
-          onClick={handleMobileNav}
-          href="/tattooRequest"
-          className={`${
-            pathname === "/tattooRequest" ? "border-b-2 border-sky-500" : ""
-          }`}
-        >
-          Tattoo Request
         </Link>
         {sessionData?.user && (
           <>

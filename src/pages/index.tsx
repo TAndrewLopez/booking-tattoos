@@ -1,7 +1,15 @@
+import useTattooModal from "@/hooks/useTattooModal";
 import { type NextPage } from "next";
-import Link from "next/link";
+
+import { useCallback } from "react";
 
 const Home: NextPage = () => {
+  const { isOpen, openModal, closeModal } = useTattooModal();
+  const toggleModal = useCallback(() => {
+    if (isOpen) return closeModal();
+    openModal();
+  }, [isOpen, openModal, closeModal]);
+
   return (
     <main className="absolute left-0 top-0 z-40 h-full w-full bg-[url('/images/shop.jpg')] bg-cover bg-center bg-no-repeat p-4">
       <div className="absolute left-0 top-0 z-40 h-full w-full bg-black/60"></div>
@@ -15,11 +23,11 @@ const Home: NextPage = () => {
             </p>
           </h1>
 
-          <Link
-            href={"/tattooRequest"}
+          <button
+            onClick={toggleModal}
             className="text-shade-1 bg-accent hover:bg-highlight hover:text-shade-9 inline-flex items-center justify-center rounded-lg px-5 py-3 text-center text-base font-medium transition hover:border-2 hover:font-extrabold focus:ring-4 focus:ring-blue-300"
           >
-            Book Appointment
+            Request Tattoo
             <svg
               className="-mr-1 ml-2 h-5 w-5"
               fill="currentColor"
@@ -32,7 +40,7 @@ const Home: NextPage = () => {
                 clipRule="evenodd"
               ></path>
             </svg>
-          </Link>
+          </button>
         </div>
       </div>
     </main>

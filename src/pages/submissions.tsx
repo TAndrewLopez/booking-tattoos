@@ -12,27 +12,28 @@ const Submissions: NextPage = () => {
     enabled: sessionData?.user !== undefined,
   });
 
-  const [filters, setFilters] = useState<Array<string>>([]);
+  const [filter, setFilter] = useState("");
 
-  /*
-    TODO : I WANT MULTIPLE FILTERS TO RETURN ONLY ITEMS THAT MEET ALL REQUIREMENTS
-    TODO : POSSIBLE SOLUTION, ONLY ALLOW ONE FILTER
-  */
   const filteredSubmissions = useMemo(() => {
     const submissions: AppointmentData[] = [];
-    if (filters.includes("accepted")) {
+    if (filter === "accepted") {
       aptData?.forEach((item) => {
         if (item.accepted === true) submissions.push(item);
       });
     }
-    if (filters.includes("rejected")) {
+    if (filter === "rejected") {
       aptData?.forEach((item) => {
         if (item.accepted === false) submissions.push(item);
       });
     }
-    if (filters.includes("colored")) {
+    if (filter === "colored") {
       aptData?.forEach((item) => {
         if (item.color === "Colored") submissions.push(item);
+      });
+    }
+    if (filter === "black & grey") {
+      aptData?.forEach((item) => {
+        if (item.color === "Black & Grey") submissions.push(item);
       });
     }
     return submissions.reduce((acc: AppointmentData[], el: AppointmentData) => {
@@ -41,19 +42,19 @@ const Submissions: NextPage = () => {
       }
       return acc;
     }, []);
-  }, [filters, aptData]);
+  }, [filter, aptData]);
 
   return (
     <main className="flex flex-wrap gap-4 p-4">
       {/* SEARCH AND FILTER FEATURES */}
-      <SubHeader filters={filters} setFilters={setFilters} />
+      <SubHeader filter={filter} setFilter={setFilter} />
 
       {/* UNFILTERED APPOINTMENT DATA */}
-      {!filters.length &&
+      {!filter.length &&
         aptData?.map((data) => <SubCard data={data} key={data.id} />)}
 
       {/* FILTERED APPOINTMENT DATA */}
-      {filters.length &&
+      {!!filter.length &&
         filteredSubmissions?.map((data) => (
           <SubCard data={data} key={data.id} />
         ))}

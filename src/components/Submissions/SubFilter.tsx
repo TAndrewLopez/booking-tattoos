@@ -1,17 +1,17 @@
 import { type Dispatch, type SetStateAction } from "react";
 
 interface SubFilterProps {
-  filters: string[];
-  setFilters: Dispatch<SetStateAction<string[]>>;
+  filter: string;
+  setFilter: Dispatch<SetStateAction<string>>;
 }
 
-const SubFilter: React.FC<SubFilterProps> = ({ filters, setFilters }) => {
+const SubFilter: React.FC<SubFilterProps> = ({ filter, setFilter }) => {
   const toggleFilterOption = (val: string) => {
-    if (filters.includes(val)) {
-      setFilters(() => filters.filter((filter) => filter !== val));
+    if (filter === val) {
+      setFilter("");
       return;
     }
-    setFilters((prev) => [...prev, val]);
+    setFilter(val);
   };
 
   return (
@@ -25,6 +25,7 @@ const SubFilter: React.FC<SubFilterProps> = ({ filters, setFilters }) => {
           <input
             id="accepted"
             type="checkbox"
+            checked={filter === "accepted"}
             onChange={() => toggleFilterOption("accepted")}
           />
         </div>
@@ -35,6 +36,7 @@ const SubFilter: React.FC<SubFilterProps> = ({ filters, setFilters }) => {
           <input
             id="response"
             type="checkbox"
+            checked={filter === "rejected"}
             onChange={() => toggleFilterOption("rejected")}
           />
         </div>
@@ -45,7 +47,19 @@ const SubFilter: React.FC<SubFilterProps> = ({ filters, setFilters }) => {
           <input
             id="response"
             type="checkbox"
+            checked={filter === "colored"}
             onChange={() => toggleFilterOption("colored")}
+          />
+        </div>
+        <div className="flex flex-col items-center gap-1">
+          <label className="text-xs font-semibold" htmlFor="response">
+            Black & Grey
+          </label>
+          <input
+            id="response"
+            type="checkbox"
+            checked={filter === "black & grey"}
+            onChange={() => toggleFilterOption("black & grey")}
           />
         </div>
       </div>

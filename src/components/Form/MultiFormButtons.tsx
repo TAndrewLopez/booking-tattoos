@@ -1,4 +1,4 @@
-import useAppointmentStore from "@/state/appointmentStore";
+import useAppointmentStore from "@/hooks/appointmentStore";
 import React, {
   useMemo,
   type Dispatch,

@@ -1,15 +1,17 @@
 import ContactForm from "@/components/Form/ContactForm";
 import TattooForm from "@/components/Form/TattooForm";
-import useAppointmentStore from "@/state/appointmentStore";
+import useAppointmentStore from "@/hooks/appointmentStore";
 import { api } from "@/utils/api";
 import { useCallback, useState, type SyntheticEvent } from "react";
 import toast from "react-hot-toast";
 import MultiFormButtons from "./MultiFormButtons";
 import ReviewAptEntries from "./ReviewEntry";
 import Sidebar from "./Sidebar";
+import useTattooModal from "@/hooks/useTattooModal";
 
 const MultiForm = () => {
   const createAppointment = api.appointment.create.useMutation();
+  const { closeModal } = useTattooModal();
 
   // LOCAL STATE
   const [page, setPage] = useState(0);
@@ -46,6 +48,7 @@ const MultiForm = () => {
         });
         resetStore();
         setPage(0);
+        closeModal();
         toast.success("Form submission successful!");
       } catch (error) {
         console.log(error);
@@ -68,11 +71,8 @@ const MultiForm = () => {
   );
 
   return (
-    <div className="mx-5 ">
-      <h2 className="mb-5 text-2xl font-bold text-neutral-700">
-        Request a Tattoo
-      </h2>
-      <div className="mb-4 md:grid md:grid-cols-4">
+    <div className="mx-5">
+      <div>
         <Sidebar page={page} />
         <div className="md:col-span-3">
           {page === 0 && (

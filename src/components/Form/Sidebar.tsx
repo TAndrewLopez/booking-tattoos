@@ -13,14 +13,13 @@ const Sidebar: React.FC<SidebarProps> = ({ page }) => {
         style={{
           objectFit: "cover",
           objectPosition: "bottom",
-          // borderRadius: "10px",
         }}
         alt="form-image"
         src="/images/tattooTray.jpg"
       />
 
-      <div className="absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2 sm:top-1/3 ">
-        <ul className="flex gap-4 md:flex-col">
+      <div className="absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2">
+        <ul className="flex gap-4">
           <div className="flex items-center gap-3">
             <li
               className={`flex h-6 w-6 items-center justify-center rounded-full border-2  px-2 text-sm transition
@@ -29,12 +28,6 @@ const Sidebar: React.FC<SidebarProps> = ({ page }) => {
             >
               1
             </li>
-            <label
-              className={`m-auto hidden text-xs text-neutral-100 transition sm:block
-                  ${page === 0 ? "underline" : ""}`}
-            >
-              Personal
-            </label>
           </div>
           <div className="flex items-center gap-3">
             <li
@@ -44,12 +37,6 @@ const Sidebar: React.FC<SidebarProps> = ({ page }) => {
             >
               2
             </li>
-            <label
-              className={`m-auto hidden text-xs text-neutral-100 transition sm:block
-                  ${page === 1 ? "underline" : ""}`}
-            >
-              Tattoo
-            </label>
           </div>
           <div className="flex items-center gap-3">
             <li
@@ -59,12 +46,6 @@ const Sidebar: React.FC<SidebarProps> = ({ page }) => {
             >
               3
             </li>
-            <label
-              className={`m-auto hidden text-xs text-neutral-100 transition sm:block
-                  ${page === 2 ? "underline" : ""}`}
-            >
-              Review
-            </label>
           </div>
         </ul>
       </div>

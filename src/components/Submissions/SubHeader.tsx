@@ -3,15 +3,15 @@ import SubFilter from "./SubFilter";
 import SubSearch from "./SubSearch";
 
 interface SubHeaderProps {
-  filters: string[];
-  setFilters: Dispatch<SetStateAction<string[]>>;
+  filter: string;
+  setFilter: Dispatch<SetStateAction<string>>;
 }
 
-const SubHeader: React.FC<SubHeaderProps> = ({ filters, setFilters }) => {
+const SubHeader: React.FC<SubHeaderProps> = ({ filter, setFilter }) => {
   return (
     <div className="flex w-full items-center justify-between">
-      <SubFilter filters={filters} setFilters={setFilters} />
-      {/* <SubSearch /> */}
+      <SubFilter filter={filter} setFilter={setFilter} />
+      <SubSearch />
     </div>
   );
 };
