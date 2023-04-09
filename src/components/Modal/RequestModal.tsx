@@ -16,9 +16,7 @@ const RequestModal = () => {
       isOpen={isOpen}
       title="Request Tattoo"
       body={<MultiForm />}
-      actionLabeL="Send Request"
       disabled={isLoading}
-      onSubmit={handleSubmit}
       onClose={closeModal}
     />
   );
