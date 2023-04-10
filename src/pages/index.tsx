@@ -1,6 +1,5 @@
 import useTattooModal from "@/hooks/useTattooModal";
 import { type NextPage } from "next";
-
 import { useCallback } from "react";
 
 const Home: NextPage = () => {
@@ -14,7 +13,6 @@ const Home: NextPage = () => {
     <main className="absolute left-0 top-0 z-40 h-full w-full bg-[url('/images/shop.jpg')] bg-cover bg-center bg-no-repeat p-4">
       <div className="absolute left-0 top-0 z-40 h-full w-full bg-black/60"></div>
       <div className="flex h-full w-full items-center justify-center">
-        {/* <div className="relative z-50 font-bold text-white">Content</div> */}
         <div className="absolute top-1/2 z-50 flex -translate-y-1/2 flex-col items-center p-5 text-center text-white">
           <h1 className="mb-4 text-3xl font-extrabold text-white md:text-5xl lg:text-6xl">
             Schedule your tattoo with{" "}

@@ -13,8 +13,18 @@ const Submissions: NextPage = () => {
   });
 
   const [filter, setFilter] = useState("");
+  const [filterArray, setFilterArray] = useState<Array<string>>([]);
+  const [searchName, setSearchName] = useState("");
 
-  const filteredSubmissions = useMemo(() => {
+  const searchNameSubmissions = useMemo(() => {
+    if (!aptData || !searchName.length) return [];
+
+    return aptData?.filter((apt) =>
+      apt.name.toLowerCase().includes(searchName.toLowerCase())
+    );
+  }, [searchName, aptData]);
+
+  const filteredSubmissions: AppointmentData[] = useMemo(() => {
     const submissions: AppointmentData[] = [];
     if (filter === "accepted") {
       aptData?.forEach((item) => {
@@ -44,18 +54,47 @@ const Submissions: NextPage = () => {
     }, []);
   }, [filter, aptData]);
 
+  const filteredSearchNameSubmissions = useMemo(() => {
+    if (!filteredSubmissions.length || !searchName.length) return [];
+
+    return filteredSubmissions?.filter((apt) =>
+      apt.name.toLowerCase().includes(searchName.toLowerCase())
+    );
+  }, [searchName, filteredSubmissions]);
+
   return (
     <main className="flex flex-wrap gap-4 p-4">
       {/* SEARCH AND FILTER FEATURES */}
-      <SubHeader filter={filter} setFilter={setFilter} />
-
+      <SubHeader
+        filter={filter}
+        setFilter={setFilter}
+        filterArray={filterArray}
+        setFilterArray={setFilterArray}
+        search={searchName}
+        setSearch={setSearchName}
+      />
       {/* UNFILTERED APPOINTMENT DATA */}
       {!filter.length &&
+        !searchNameSubmissions.length &&
         aptData?.map((data) => <SubCard data={data} key={data.id} />)}
 
       {/* FILTERED APPOINTMENT DATA */}
       {!!filter.length &&
+        !searchNameSubmissions.length &&
         filteredSubmissions?.map((data) => (
+          <SubCard data={data} key={data.id} />
+        ))}
+
+      {/* SEARCHED SUBMISSIONS */}
+      {!!searchNameSubmissions.length &&
+        !filter.length &&
+        searchNameSubmissions?.map((data) => (
+          <SubCard data={data} key={data.id} />
+        ))}
+
+      {!!filter.length &&
+        !!searchNameSubmissions.length &&
+        filteredSearchNameSubmissions?.map((data) => (
           <SubCard data={data} key={data.id} />
         ))}
     </main>
