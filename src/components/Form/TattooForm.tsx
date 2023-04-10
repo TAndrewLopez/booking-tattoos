@@ -25,7 +25,7 @@ const TattooForm: React.FC<TattooFormProps> = ({
   } = useAppointmentStore();
 
   return (
-    <form className="flex h-full flex-col gap-4">
+    <form className="mt-4 flex h-full flex-col gap-4">
       {/* DESCRIPTION */}
       <div>
         {/* <p className="mb-3">Provide a description of your desired tattoo</p> */}

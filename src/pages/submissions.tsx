@@ -62,12 +62,6 @@ const Submissions: NextPage = () => {
     );
   }, [searchName, filteredSubmissions]);
 
-  console.log({
-    filteredSubmissions,
-    searchNameSubmissions,
-    filteredSearchNameSubmissions,
-  });
-
   return (
     <main className="flex flex-wrap gap-4 p-4">
       {/* SEARCH AND FILTER FEATURES */}

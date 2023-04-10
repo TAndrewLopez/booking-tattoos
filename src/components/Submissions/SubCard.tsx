@@ -7,6 +7,7 @@ import Button from "@/components/Form/Inputs/Button";
 import { api } from "@/utils/api";
 import { toast } from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
+import moment from "moment";
 
 interface SubCardProps {
   data: AppointmentData;
@@ -36,6 +37,7 @@ const SubCard: React.FC<SubCardProps> = ({ data }) => {
   const [consultation, setConsultation] = useState(false);
   const [notes, setNotes] = useState("");
   const [accepted, setAccepted] = useState<boolean | null>(true);
+  const [consultationDate, setConsultationDate] = useState("");
 
   const submitUpdate = useCallback(
     (evt: SyntheticEvent) => {
@@ -54,6 +56,9 @@ const SubCard: React.FC<SubCardProps> = ({ data }) => {
           color,
           requiresConsultation: consultation,
           notes,
+          consultationDate: new Date(
+            new Date(`${consultationDate} 12:30:00`).toISOString()
+          ),
         });
         setEditEnabled(true);
         toast.success("Update successful.");
@@ -77,6 +82,7 @@ const SubCard: React.FC<SubCardProps> = ({ data }) => {
       notes,
       updateApt,
       consultation,
+      consultationDate,
     ]
   );
 
@@ -94,6 +100,11 @@ const SubCard: React.FC<SubCardProps> = ({ data }) => {
     setConsultation(data.requiresConsultation ?? false);
     setNotes(data.notes ?? "");
     setAccepted(data.accepted);
+    setConsultationDate(
+      String(
+        moment(data.consultationDate?.toLocaleString()).format("yyyy-MM-DD")
+      )
+    );
   }, [
     data.name,
     data.preferredPronouns,
@@ -225,6 +236,11 @@ const SubCard: React.FC<SubCardProps> = ({ data }) => {
                   id="consultation-date"
                   className="px-2 outline-dashed outline-1"
                   type="date"
+                  value={consultationDate}
+                  onChange={(evt) => {
+                    console.log(evt.target.valueAsNumber);
+                    setConsultationDate(evt.target.value);
+                  }}
                   disabled={editEnabled}
                 />
               </div>
@@ -242,7 +258,7 @@ const SubCard: React.FC<SubCardProps> = ({ data }) => {
           <div className="flex justify-between gap-4 md:justify-end">
             <button
               onClick={() =>
-                setAccepted((prev) => {
+                setAccepted(() => {
                   if (accepted === false) {
                     return null;
                   } else {
@@ -266,7 +282,7 @@ const SubCard: React.FC<SubCardProps> = ({ data }) => {
             </button>
             <button
               onClick={() =>
-                setAccepted((prev) => {
+                setAccepted(() => {
                   if (accepted) {
                     return null;
                   } else {
@@ -291,6 +307,7 @@ const SubCard: React.FC<SubCardProps> = ({ data }) => {
           </div>
         </div>
       )}
+
       {!editEnabled && (
         <div className="flex items-center justify-center px-3 pb-3">
           <Button

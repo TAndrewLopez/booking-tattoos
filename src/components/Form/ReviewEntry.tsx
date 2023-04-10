@@ -4,7 +4,7 @@ interface ReviewAptEntriesProps {
 
 const ReviewAptEntries: React.FC<ReviewAptEntriesProps> = ({ values }) => {
   return (
-    <div>
+    <div className="mt-4">
       <p className="mb-5">Please review your information before submitting.</p>
       <ul className="flex flex-col gap-2">
         {values.map(({ label, value }, i) => (

@@ -67,6 +67,7 @@ const MultiForm = () => {
       color,
       createAppointment,
       resetStore,
+      closeModal,
     ]
   );
 
