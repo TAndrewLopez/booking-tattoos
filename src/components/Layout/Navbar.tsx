@@ -16,9 +16,9 @@ const Navbar = () => {
   }, [showMobileNav]);
 
   return (
-    <div className="relative z-50 flex items-center justify-between p-4 font-domine">
+    <div className="relative z-50 flex items-center justify-between p-4">
       <div className={`${pathname === "/" ? "text-white" : ""}`}>
-        <Link className="text-2xl" href="/">
+        <Link className="font-domine text-2xl" href="/">
           Raquel Cude
         </Link>
       </div>

@@ -62,6 +62,12 @@ const Submissions: NextPage = () => {
     );
   }, [searchName, filteredSubmissions]);
 
+  console.log({
+    filteredSubmissions,
+    searchNameSubmissions,
+    filteredSearchNameSubmissions,
+  });
+
   return (
     <main className="flex flex-wrap gap-4 p-4">
       {/* SEARCH AND FILTER FEATURES */}
@@ -78,6 +84,7 @@ const Submissions: NextPage = () => {
 
       {/* FILTERED APPOINTMENT DATA */}
       {!!filter.length &&
+        !searchName.length &&
         !searchNameSubmissions.length &&
         filteredSubmissions?.map((data) => (
           <SubCard data={data} key={data.id} />
