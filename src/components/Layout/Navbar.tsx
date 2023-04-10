@@ -46,11 +46,11 @@ const Navbar = () => {
               Submissions
             </Link>
             <Link
-              href="/schedule"
+              href="/calendar"
               className={`
-              ${pathname === "/schedule" ? "border-b-2 border-sky-500" : ""}`}
+              ${pathname === "/calendar" ? "border-b-2 border-sky-500" : ""}`}
             >
-              Schedule
+              Calendar
             </Link>
             <Link
               href="/billing"

@@ -1,8 +1,10 @@
-import Calendar from "@/components/Schedule/Calendar";
-import { type NextPageContext, type NextPage } from "next";
+import Calendar from "@/components/Calendar/Calendar";
+import { getMonth } from "@/utils/calendar";
+import { type NextPage, type NextPageContext } from "next";
 import { getSession } from "next-auth/react";
 
 const Schedule: NextPage = () => {
+  console.table(getMonth(11));
   return (
     <main className="p-4">
       <Calendar />

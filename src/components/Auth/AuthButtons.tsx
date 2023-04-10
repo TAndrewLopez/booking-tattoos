@@ -2,7 +2,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 
 const AuthButtons = () => {
   const { data: sessionData } = useSession();
-
+  // TODO UPDATE AUTH TO BE EMAIL CREDENTIALS INSTEAD OF GOOGLE LOGIN
   return (
     <>
       {sessionData?.user ? (

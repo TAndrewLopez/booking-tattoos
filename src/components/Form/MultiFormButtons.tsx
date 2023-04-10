@@ -12,7 +12,7 @@ import {
   validateEmail,
   validateNumber,
   validateSize,
-} from "./helper/validation";
+} from "../../utils/validation";
 
 interface MultiFormButtonsProps {
   isLoading: boolean;

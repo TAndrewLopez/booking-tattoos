@@ -19,7 +19,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
   const { data: sessionData } = useSession();
   return (
     <div
-      className={`fixed right-0 top-0 z-50 flex h-full w-full items-center justify-center bg-neutral-100 duration-300 ease-in
+      className={`fixed right-0 top-0 z-50 flex h-full w-full items-center justify-center bg-[#e3d8e9] duration-300 ease-in
       ${showMobileNav ? "translate-x-0" : "translate-x-full"}`}
     >
       <div className="absolute top-0 flex w-full justify-between p-4">
@@ -50,12 +50,12 @@ const MobileNav: React.FC<MobileNavProps> = ({
             </Link>
             <Link
               onClick={handleMobileNav}
-              href="/schedule"
+              href="/calendar"
               className={`${
-                pathname === "/schedule" ? "border-b-2 border-sky-500" : ""
+                pathname === "/calendar" ? "border-b-2 border-sky-500" : ""
               }`}
             >
-              Schedule
+              Calendar
             </Link>
             <Link
               onClick={handleMobileNav}

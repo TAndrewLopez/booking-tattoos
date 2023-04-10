@@ -5,7 +5,11 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        domine: ["Domine"],
+        domine: ["Domine", "serif"],
+        openSans: ["'Open Sans', sans-serif"],
+      },
+      gridTemplateColumns: {
+        "1/5": "1fr 5fr",
       },
     },
   },

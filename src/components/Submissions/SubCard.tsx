@@ -101,9 +101,7 @@ const SubCard: React.FC<SubCardProps> = ({ data }) => {
     setNotes(data.notes ?? "");
     setAccepted(data.accepted);
     setConsultationDate(
-      String(
-        moment(data.consultationDate?.toLocaleString()).format("yyyy-MM-DD")
-      )
+      moment(data.consultationDate?.toISOString()).format("yyyy-MM-DD")
     );
   }, [
     data.name,
@@ -253,7 +251,7 @@ const SubCard: React.FC<SubCardProps> = ({ data }) => {
             onChange={(evt) => setNotes(evt.target.value)}
             disabled={editEnabled}
           />
-          <p>Number of Appointments</p>
+          {/* <p>Number of Appointments</p> */}
 
           <div className="flex justify-between gap-4 md:justify-end">
             <button
