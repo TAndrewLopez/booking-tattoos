@@ -13,7 +13,7 @@ const Submissions: NextPage = () => {
   });
 
   const [filter, setFilter] = useState("");
-  const [filterArray, setFilterArray] = useState<Array<string>>([]);
+
   const [searchName, setSearchName] = useState("");
 
   const searchNameSubmissions = useMemo(() => {
@@ -68,8 +68,6 @@ const Submissions: NextPage = () => {
       <SubHeader
         filter={filter}
         setFilter={setFilter}
-        filterArray={filterArray}
-        setFilterArray={setFilterArray}
         search={searchName}
         setSearch={setSearchName}
       />
