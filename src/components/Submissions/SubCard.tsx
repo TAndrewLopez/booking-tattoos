@@ -87,6 +87,7 @@ const SubCard: React.FC<SubCardProps> = ({ data }) => {
   );
 
   useEffect(() => {
+    // INPUT STATES
     setName(data.name);
     setPreferredPronouns(data.preferredPronouns);
     setEmail(data.email);
@@ -97,12 +98,14 @@ const SubCard: React.FC<SubCardProps> = ({ data }) => {
     setColor(data.color);
 
     // RESPONSE STATES
-    setConsultation(data.requiresConsultation ?? false);
-    setNotes(data.notes ?? "");
-    setAccepted(data.accepted);
-    setConsultationDate(
-      moment(data.consultationDate?.toISOString()).format("yyyy-MM-DD")
-    );
+    if (data.notes) setNotes(data.notes);
+    if (data.accepted === true || data.accepted === false)
+      setAccepted(data.accepted);
+    if (data.requiresConsultation) setConsultation(data.requiresConsultation);
+    if (data.consultationDate)
+      setConsultationDate(
+        moment(data.consultationDate?.toISOString()).format("yyyy-MM-DD")
+      );
   }, [
     data.name,
     data.preferredPronouns,
@@ -236,7 +239,6 @@ const SubCard: React.FC<SubCardProps> = ({ data }) => {
                   type="date"
                   value={consultationDate}
                   onChange={(evt) => {
-                    console.log(evt.target.valueAsNumber);
                     setConsultationDate(evt.target.value);
                   }}
                   disabled={editEnabled}

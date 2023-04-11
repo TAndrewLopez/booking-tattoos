@@ -1,6 +1,6 @@
 import ContactForm from "@/components/Form/ContactForm";
 import TattooForm from "@/components/Form/TattooForm";
-import useAppointmentStore from "@/hooks/appointmentStore";
+import useAppointmentStore from "@/hooks/useAppointmentStore";
 import { api } from "@/utils/api";
 import { useCallback, useState, type SyntheticEvent } from "react";
 import toast from "react-hot-toast";

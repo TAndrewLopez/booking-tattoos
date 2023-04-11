@@ -1,6 +1,7 @@
 import moment from "moment";
 
 export const getMonth = (month: number = moment().month()) => {
+  month = Math.floor(month);
   const year = moment().year();
   const firstDayOfTheMonth = moment(new Date(year, month, 1)).day();
 
