@@ -4,6 +4,8 @@ import { create } from "zustand";
 export interface CalendarStoreInterface {
   monthIndex: number;
   setMonthIndex: (val: number) => void;
+  daySelected: moment.Moment | null;
+  setDaySelected: (day: moment.Moment) => void;
 }
 
 const useCalendarStore = create<CalendarStoreInterface>((set) => ({
@@ -11,6 +13,11 @@ const useCalendarStore = create<CalendarStoreInterface>((set) => ({
   setMonthIndex: (val: number) =>
     set({
       monthIndex: val,
+    }),
+  daySelected: moment(),
+  setDaySelected: (day) =>
+    set({
+      daySelected: day,
     }),
 }));
 

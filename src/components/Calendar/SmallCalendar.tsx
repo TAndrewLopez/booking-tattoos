@@ -3,17 +3,34 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import NavigateCalendar from "./NavigateCalendar";
 import useCalendarStore from "@/hooks/useCalendarStore";
+import React from "react";
 
 const SmallCalendar = () => {
   const [currentMonthIndex, setCurrentMonthIndex] = useState(moment().month());
   const [currentMonth, setCurrentMonth] = useState(getMonth());
-  const { monthIndex } = useCalendarStore();
+  const { monthIndex, setMonthIndex, daySelected, setDaySelected } =
+    useCalendarStore();
 
   const handlePrevMonth = () => {
     setCurrentMonthIndex(currentMonthIndex - 1);
   };
   const handleNextMonth = () => {
     setCurrentMonthIndex(currentMonthIndex + 1);
+  };
+
+  const getCurrentDayClass = (day: moment.Moment) => {
+    const format = "DD-MM-YY";
+    const today = moment().format(format);
+    const currDay = day.format(format);
+    const selDay = daySelected && daySelected.format(format);
+
+    if (today === currDay) {
+      return "bg-blue-500 rounded-full text-white";
+    } else if (currDay === selDay) {
+      return " bg-blue-100 rounded-full text-blue-600 font-semibold";
+    } else {
+      return "";
+    }
   };
 
   useEffect(() => {
@@ -27,16 +44,42 @@ const SmallCalendar = () => {
   return (
     <div className="mt-9">
       <header className="flex items-center justify-between">
-        <p className="font-semibold text-gray-500">
+        <p className="text-sm font-semibold text-gray-500">
           {moment(new Date(moment().year(), currentMonthIndex)).format(
             "MMMM YYYY"
           )}
         </p>
-        <NavigateCalendar
-          handlePrevMonth={handlePrevMonth}
-          handleNextMonth={handleNextMonth}
-        />
+        <div>
+          <NavigateCalendar
+            handlePrevMonth={handlePrevMonth}
+            handleNextMonth={handleNextMonth}
+          />
+        </div>
       </header>
+      <div className="grid grid-cols-7 grid-rows-6">
+        {currentMonth[0]?.map((day, i) => (
+          <span className="py-1 text-center text-sm" key={i}>
+            {day.format("dd").charAt(0)}
+          </span>
+        ))}
+
+        {currentMonth.map((row, i) => (
+          <React.Fragment key={i}>
+            {row.map((day, idx) => (
+              <button
+                onClick={() => {
+                  setMonthIndex(currentMonthIndex);
+                  setDaySelected(day);
+                }}
+                className={`w-full py-1 ${getCurrentDayClass(day)}`}
+                key={idx}
+              >
+                <span className="text-sm">{day.format("D")}</span>
+              </button>
+            ))}
+          </React.Fragment>
+        ))}
+      </div>
     </div>
   );
 };

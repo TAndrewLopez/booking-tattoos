@@ -6,6 +6,8 @@ interface SubSearchProps {
   setSearch: Dispatch<SetStateAction<string>>;
 }
 
+// TODO : CREATE UI FOR MOBILE SEARCH BAR
+
 const SubSearch: React.FC<SubSearchProps> = ({ search, setSearch }) => {
   return (
     <div className="md:grow">

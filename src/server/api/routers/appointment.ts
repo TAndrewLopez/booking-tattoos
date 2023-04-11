@@ -9,6 +9,13 @@ export const appointmentRouter = createTRPCRouter({
       },
     });
   }),
+  getConsultations: protectedProcedure.query(({ ctx }) => {
+    return ctx.prisma.appointment.findMany({
+      where: {
+        requiresConsultation: true,
+      },
+    });
+  }),
   create: publicProcedure
     .input(
       z.object({

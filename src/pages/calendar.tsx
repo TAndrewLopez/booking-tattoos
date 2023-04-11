@@ -4,7 +4,6 @@ import { type NextPage, type NextPageContext } from "next";
 import { getSession } from "next-auth/react";
 
 const Schedule: NextPage = () => {
-  console.table(getMonth(11));
   return (
     <main className="h-[90%] p-4">
       <Calendar />

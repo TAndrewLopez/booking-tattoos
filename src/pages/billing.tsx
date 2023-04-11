@@ -2,7 +2,13 @@ import { type NextPage, type NextPageContext } from "next";
 import { getSession } from "next-auth/react";
 
 const Billing: NextPage = () => {
-  return <main className="p-4">Billing</main>;
+  return (
+    <main className="p-4">
+      <p className="font-bold">Billing</p>
+      <p>Paypal API</p>
+      <p>Get deposit information and store data on appointment data modeal</p>
+    </main>
+  );
 };
 
 export async function getServerSideProps(context: NextPageContext) {

@@ -8,6 +8,7 @@ import "@/styles/globals.css";
 import Layout from "@/components/Layout/Layout";
 import { Toaster } from "react-hot-toast";
 import RequestModal from "@/components/Modal/RequestModal";
+import EventModal from "@/components/Modal/EventModal";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -17,6 +18,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
     <SessionProvider session={session}>
       <Layout>
         <RequestModal />
+        <EventModal />
         <Toaster />
         <Component {...pageProps} />
       </Layout>

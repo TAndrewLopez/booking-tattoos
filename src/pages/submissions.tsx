@@ -13,7 +13,6 @@ const Submissions: NextPage = () => {
   });
 
   const [filter, setFilter] = useState("");
-
   const [searchName, setSearchName] = useState("");
 
   const searchNameSubmissions = useMemo(() => {
@@ -26,6 +25,11 @@ const Submissions: NextPage = () => {
 
   const filteredSubmissions: AppointmentData[] = useMemo(() => {
     const submissions: AppointmentData[] = [];
+    if (filter === "consultation") {
+      aptData?.forEach((item) => {
+        if (item.requiresConsultation) submissions.push(item);
+      });
+    }
     if (filter === "accepted") {
       aptData?.forEach((item) => {
         if (item.accepted === true) submissions.push(item);
@@ -73,6 +77,7 @@ const Submissions: NextPage = () => {
       />
       {/* UNFILTERED APPOINTMENT DATA */}
       {!filter.length &&
+        !searchName.length &&
         !searchNameSubmissions.length &&
         aptData?.map((data) => <SubCard data={data} key={data.id} />)}
 
@@ -91,6 +96,7 @@ const Submissions: NextPage = () => {
           <SubCard data={data} key={data.id} />
         ))}
 
+      {/* SEARCHED SUBMISSIONS WITH FILTERS */}
       {!!filter.length &&
         !!searchNameSubmissions.length &&
         filteredSearchNameSubmissions?.map((data) => (

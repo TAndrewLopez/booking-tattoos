@@ -20,6 +20,17 @@ const SubFilter: React.FC<SubFilterProps> = ({ filter, setFilter }) => {
       <div className="flex flex-wrap items-center gap-3">
         <div className="flex flex-col items-center gap-1">
           <label className="text-xs font-semibold" htmlFor="accepted">
+            Consultations
+          </label>
+          <input
+            id="consultation"
+            type="checkbox"
+            checked={filter === "consultation"}
+            onChange={() => toggleFilterOption("consultation")}
+          />
+        </div>
+        <div className="flex flex-col items-center gap-1">
+          <label className="text-xs font-semibold" htmlFor="accepted">
             Accepted
           </label>
           <input
@@ -27,7 +38,6 @@ const SubFilter: React.FC<SubFilterProps> = ({ filter, setFilter }) => {
             type="checkbox"
             checked={filter === "accepted"}
             onChange={() => toggleFilterOption("accepted")}
-            // onChange={() => testToggleFilterOption("accepted")}
           />
         </div>
         <div className="flex flex-col items-center gap-1">
@@ -39,7 +49,6 @@ const SubFilter: React.FC<SubFilterProps> = ({ filter, setFilter }) => {
             type="checkbox"
             checked={filter === "rejected"}
             onChange={() => toggleFilterOption("rejected")}
-            // onChange={() => testToggleFilterOption("rejected")}
           />
         </div>
         <div className="flex flex-col items-center gap-1">
@@ -51,7 +60,6 @@ const SubFilter: React.FC<SubFilterProps> = ({ filter, setFilter }) => {
             type="checkbox"
             checked={filter === "colored"}
             onChange={() => toggleFilterOption("colored")}
-            // onChange={() => testToggleFilterOption("colored")}
           />
         </div>
         <div className="flex flex-col items-center gap-1">
@@ -63,7 +71,6 @@ const SubFilter: React.FC<SubFilterProps> = ({ filter, setFilter }) => {
             type="checkbox"
             checked={filter === "black & grey"}
             onChange={() => toggleFilterOption("black & grey")}
-            // onChange={() => testToggleFilterOption("black & grey")}
           />
         </div>
       </div>
