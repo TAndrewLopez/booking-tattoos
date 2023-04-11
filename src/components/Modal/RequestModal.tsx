@@ -8,6 +8,13 @@ const RequestModal = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = useCallback(() => {
+    try {
+      setIsLoading(true);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
     return null;
   }, []);
 

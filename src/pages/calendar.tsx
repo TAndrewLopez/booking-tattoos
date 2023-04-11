@@ -1,5 +1,4 @@
 import Calendar from "@/components/Calendar/Calendar";
-import { getMonth } from "@/utils/calendar";
 import { type NextPage, type NextPageContext } from "next";
 import { getSession } from "next-auth/react";
 
