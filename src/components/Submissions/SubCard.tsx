@@ -1,4 +1,4 @@
-import { type AppointmentData } from "@/types";
+import { type Appointment } from "@/types";
 import { type SyntheticEvent, useCallback, useEffect, useState } from "react";
 import Input from "../Form/Inputs/Input";
 import SubCardHeader from "./SubCardHeader";
@@ -10,10 +10,11 @@ import { ClipLoader } from "react-spinners";
 import moment from "moment";
 
 interface SubCardProps {
-  data: AppointmentData;
+  data: Appointment;
 }
 
-// TODO : STORE CONSULTATION AND TATTOO APPOINTMENT DATES IN DATABASE
+// TODO: STORE CONSULTATION AND TATTOO APPOINTMENT DATES IN DATABASE
+// TODO: REPLACE USE EFFECT WITH CONDITIONAL LOGIC FOR INITIAL VALUES ON STATE
 
 const SubCard: React.FC<SubCardProps> = ({ data }) => {
   const [isLoading, setIsLoading] = useState(false);

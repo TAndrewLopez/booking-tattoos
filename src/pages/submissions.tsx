@@ -1,6 +1,6 @@
 import SubCard from "@/components/Submissions/SubCard";
 import SubHeader from "@/components/Submissions/SubHeader";
-import { type AppointmentData } from "@/types";
+import { type Appointment } from "@/types";
 import { api } from "@/utils/api";
 import { type NextPage, type NextPageContext } from "next";
 import { getSession, useSession } from "next-auth/react";
@@ -23,8 +23,8 @@ const Submissions: NextPage = () => {
     );
   }, [searchName, aptData]);
 
-  const filteredSubmissions: AppointmentData[] = useMemo(() => {
-    const submissions: AppointmentData[] = [];
+  const filteredSubmissions: Appointment[] = useMemo(() => {
+    const submissions: Appointment[] = [];
     if (filter === "consultation") {
       aptData?.forEach((item) => {
         if (item.requiresConsultation) submissions.push(item);
@@ -50,7 +50,7 @@ const Submissions: NextPage = () => {
         if (item.color === "Black & Grey") submissions.push(item);
       });
     }
-    return submissions.reduce((acc: AppointmentData[], el: AppointmentData) => {
+    return submissions.reduce((acc: Appointment[], el: Appointment) => {
       if (!acc.includes(el)) {
         acc.push(el);
       }

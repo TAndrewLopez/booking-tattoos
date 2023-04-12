@@ -2,7 +2,7 @@ import useCalendarStore from "@/hooks/useCalendarStore";
 import useEventModal from "@/hooks/useEventModal";
 import { api } from "@/utils/api";
 import moment from "moment";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 
 interface DayProps {
   day: moment.Moment;
@@ -13,11 +13,11 @@ interface DayProps {
 
 const Day: React.FC<DayProps> = ({ day, rowIndex }) => {
   const { setDaySelected } = useCalendarStore();
-  const { openModal } = useEventModal();
+  const { openModal, setSelectedAppointment, setSelectedEvent } =
+    useEventModal();
 
-  const { data: calendarEvents, refetch: refetchCalendarEvents } =
-    api.calendarEvents.getAll.useQuery();
-
+  // EVENTS FROM DATABASE
+  const { data: calendarEvents } = api.calendarEvents.getAll.useQuery();
   const { data: consultations } = api.appointment.getConsultations.useQuery();
 
   const daysConsultation = useMemo(() => {
@@ -59,21 +59,31 @@ const Day: React.FC<DayProps> = ({ day, rowIndex }) => {
           openModal();
         }}
       >
-        {daysCalEvents?.map((evt) => (
+        {daysCalEvents?.map((calEvt) => (
           <div
-            className={`bg-${evt.label}-200 mb-1 mr-3 truncate rounded p-1 text-sm text-gray-600`}
-            key={evt.id}
+            onClick={(e) => {
+              e.stopPropagation();
+              setSelectedEvent(calEvt);
+              openModal();
+              // console.log(calEvt);
+            }}
+            className={`bg-${calEvt.label}-200 mb-1 mr-3 truncate rounded p-1 text-sm text-gray-600`}
+            key={calEvt.id}
           >
-            {evt.title}
+            {calEvt.title}
           </div>
         ))}
 
-        {daysConsultation?.map((evt) => (
+        {daysConsultation?.map((aptEvt) => (
           <div
+            onClick={(e) => {
+              e.stopPropagation();
+              setSelectedAppointment(aptEvt);
+            }}
             className="mb-1 mr-3 truncate rounded bg-orange-200 p-1 text-sm text-gray-600"
-            key={evt.id}
+            key={aptEvt.id}
           >
-            {`${evt.name} Consultation`}
+            {`${aptEvt.name} Consultation`}
           </div>
         ))}
       </div>
