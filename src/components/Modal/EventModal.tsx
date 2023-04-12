@@ -25,6 +25,10 @@ const EventModal = () => {
     onSuccess: () => void refetchCalendarEvents(),
   });
 
+  const deleteEvent = api.calendarEvents.remove.useMutation({
+    onSuccess: () => void refetchCalendarEvents(),
+  });
+
   // FORM STATES
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -79,6 +83,16 @@ const EventModal = () => {
     ]
   );
 
+  const handleDelete = useCallback(
+    (evt: SyntheticEvent) => {
+      evt.preventDefault();
+      if (!selectedEvent) return;
+      deleteEvent.mutate({ id: selectedEvent.id });
+      closeModal();
+    },
+    [selectedEvent, deleteEvent, closeModal]
+  );
+
   // CLOSES MODAL IF OPEN WHEN SWITCHING PAGES
   useEffect(() => {
     if (pathname !== "/calendar" && isOpen) closeModal();
@@ -111,7 +125,7 @@ const EventModal = () => {
           {/* <p className="text-sm font-semibold text-gray-500">Create Event</p> */}
           <div className="flex items-center gap-3">
             {selectedEvent && (
-              <button>
+              <button onClick={handleDelete}>
                 <FiTrash className="text-gray-500" size={18} />
               </button>
             )}
