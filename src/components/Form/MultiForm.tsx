@@ -49,7 +49,7 @@ const MultiForm = () => {
         resetStore();
         setPage(0);
         closeModal();
-        toast.success("Form submission successful!");
+        toast.success("Form submitted successfully!");
       } catch (error) {
         console.log(error);
       } finally {

@@ -19,6 +19,7 @@ const Button: React.FC<ButtonProps> = ({
     <button
       onClick={onClick}
       className={`
+      flex items-center justify-center
       rounded-md px-3 py-2 hover:text-white
       disabled:cursor-not-allowed disabled:bg-neutral-400 disabled:text-neutral-50
       ${

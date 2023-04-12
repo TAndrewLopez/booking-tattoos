@@ -4,7 +4,7 @@ import { create } from "zustand";
 export interface CalendarStoreInterface {
   monthIndex: number;
   setMonthIndex: (val: number) => void;
-  daySelected: moment.Moment | null;
+  daySelected: moment.Moment;
   setDaySelected: (day: moment.Moment) => void;
 }
 

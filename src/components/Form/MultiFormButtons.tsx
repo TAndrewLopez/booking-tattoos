@@ -103,9 +103,9 @@ const MultiFormButtons: React.FC<MultiFormButtonsProps> = ({
       {page === 2 && (
         <Button
           type="submit"
-          label={isLoading ? <ClipLoader color="red" /> : "Submit"}
+          label={isLoading ? <ClipLoader size={22} color="#fff" /> : "Submit"}
           onClick={handleSubmit}
-          disabled={tattooFormCompleted}
+          disabled={isLoading || tattooFormCompleted}
         />
       )}
     </>

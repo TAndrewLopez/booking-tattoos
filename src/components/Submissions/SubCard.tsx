@@ -56,9 +56,9 @@ const SubCard: React.FC<SubCardProps> = ({ data }) => {
           requiresConsultation: consultation,
           notes,
           accepted: accepted ?? undefined,
-          consultationDate: new Date(
-            new Date(`${consultationDate} 12:30:00`).toISOString()
-          ),
+          consultationDate: consultationDate
+            ? new Date(new Date(`${consultationDate} 12:30:00`).toISOString())
+            : undefined,
         });
         setEditEnabled(true);
         toast.success("Update successful.");
@@ -316,7 +316,7 @@ const SubCard: React.FC<SubCardProps> = ({ data }) => {
       {!editEnabled && (
         <div className="flex items-center justify-center px-3 pb-3">
           <Button
-            label={isLoading ? <ClipLoader color="red" /> : "Save"}
+            label={isLoading ? <ClipLoader color="blue" /> : "Save"}
             type="submit"
             disabled={editEnabled}
             onClick={submitUpdate}

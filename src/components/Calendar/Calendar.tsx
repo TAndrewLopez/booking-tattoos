@@ -11,8 +11,11 @@ import { api } from "@/utils/api";
 const Calendar = () => {
   const [currentMonth, setCurrentMonth] = useState(getMonth());
   const { monthIndex } = useCalendarStore();
-  const consultationAppointments = api.appointment.getConsultations.useQuery();
-  console.log(consultationAppointments);
+  const { data: consultationAppointments } =
+    api.appointment.getConsultations.useQuery();
+  const { data: calendarEvents } = api.calendarEvents.getAll.useQuery();
+
+  console.log({ consultationAppointments, calendarEvents });
 
   useEffect(() => {
     setCurrentMonth(getMonth(monthIndex));

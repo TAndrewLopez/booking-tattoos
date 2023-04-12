@@ -6,7 +6,6 @@ interface ModalProps {
   title?: string;
   body?: React.ReactElement;
   footer?: React.ReactElement;
-  disabled?: boolean;
   onClose: () => void;
 }
 
@@ -15,13 +14,11 @@ const Modal: React.FC<ModalProps> = ({
   title,
   body,
   footer,
-  disabled,
   onClose,
 }) => {
   const handleClose = useCallback(() => {
-    if (disabled) return;
     onClose();
-  }, [disabled, onClose]);
+  }, [onClose]);
 
   if (!isOpen) return null;
   return (

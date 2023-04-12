@@ -87,3 +87,13 @@ model Appointment {
     User   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId String? @db.ObjectId
 }
+
+model CalendarEvent {
+    id          String   @id @default(auto()) @map("_id") @db.ObjectId
+    title       String
+    date        DateTime
+    description String
+    label       String
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+}
