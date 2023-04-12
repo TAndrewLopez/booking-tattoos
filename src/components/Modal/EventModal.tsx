@@ -17,7 +17,12 @@ const EventModal = () => {
   const { daySelected } = useCalendarStore();
   const [isLoading, setIsLoading] = useState(false);
 
-  const createEvent = api.calendarEvents.create.useMutation();
+  const { refetch: refetchCalendarEvents } =
+    api.calendarEvents.getAll.useQuery();
+
+  const createEvent = api.calendarEvents.create.useMutation({
+    onSuccess: () => void refetchCalendarEvents(),
+  });
 
   // FORM STATES
   const [title, setTitle] = useState("");
@@ -45,11 +50,10 @@ const EventModal = () => {
           label: selectedLabel,
         });
 
-        closeModal();
         setTitle("");
         setDescription("");
         setSelectedLabel("");
-
+        closeModal();
         toast.success("Calendar event created successfully!");
       } catch (error) {
         console.log(error);
@@ -141,7 +145,7 @@ const EventModal = () => {
 
         <footer className="mt-5 flex justify-end border-t p-3">
           <button
-            onClick={handleSubmit}
+            onClick={(evt) => void handleSubmit(evt)}
             type="submit"
             disabled={isLoading}
             className="flex h-10 w-20 items-center justify-center rounded bg-blue-500 text-white hover:bg-blue-600 disabled:bg-neutral-400"

@@ -1,15 +1,38 @@
 import useCalendarStore from "@/hooks/useCalendarStore";
 import useEventModal from "@/hooks/useEventModal";
+import { api } from "@/utils/api";
 import moment from "moment";
+import { useEffect, useMemo } from "react";
 
 interface DayProps {
   day: moment.Moment;
   rowIndex: number;
 }
 
+// TODO: DISPLAY CALENDAR EVENTS, CONSULTATION APTS, AND TATTOO APTS
+
 const Day: React.FC<DayProps> = ({ day, rowIndex }) => {
   const { setDaySelected } = useCalendarStore();
   const { openModal } = useEventModal();
+
+  const { data: calendarEvents, refetch: refetchCalendarEvents } =
+    api.calendarEvents.getAll.useQuery();
+
+  const { data: consultations } = api.appointment.getConsultations.useQuery();
+
+  const daysConsultation = useMemo(() => {
+    return consultations?.filter(
+      (evt) =>
+        moment(evt.consultationDate).format("MM-DD-YY") ===
+        day.format("MM-DD-YY")
+    );
+  }, [consultations, day]);
+
+  const daysCalEvents = useMemo(() => {
+    return calendarEvents?.filter(
+      (evt) => moment(evt.date).format("MM-DD-YY") === day.format("MM-DD-YY")
+    );
+  }, [calendarEvents, day]);
 
   const getCurrentDayClass = () => {
     return day.format("DD-MM-YY") === moment().format("DD-MM-YY")
@@ -36,7 +59,23 @@ const Day: React.FC<DayProps> = ({ day, rowIndex }) => {
           openModal();
         }}
       >
-        {" "}
+        {daysCalEvents?.map((evt) => (
+          <div
+            className={`bg-${evt.label}-200 mb-1 mr-3 truncate rounded p-1 text-sm text-gray-600`}
+            key={evt.id}
+          >
+            {evt.title}
+          </div>
+        ))}
+
+        {daysConsultation?.map((evt) => (
+          <div
+            className="mb-1 mr-3 truncate rounded bg-orange-200 p-1 text-sm text-gray-600"
+            key={evt.id}
+          >
+            {`${evt.name} Consultation`}
+          </div>
+        ))}
       </div>
     </div>
   );
