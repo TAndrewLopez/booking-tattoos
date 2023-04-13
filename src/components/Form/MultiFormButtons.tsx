@@ -1,4 +1,4 @@
-import useAppointmentStore from "@/hooks/useAppointmentStore";
+import useFormStore from "@/hooks/useFormStore";
 import React, {
   useMemo,
   type Dispatch,
@@ -38,7 +38,7 @@ const MultiFormButtons: React.FC<MultiFormButtonsProps> = ({
     size,
     placement,
     color,
-  } = useAppointmentStore();
+  } = useFormStore();
 
   const contactFormCompleted = useMemo(() => {
     if (!name || !preferredPronouns || !email || !phoneNumber) return true;

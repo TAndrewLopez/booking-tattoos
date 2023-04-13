@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export interface AppointmentStoreInterface {
+export interface FormStoreInterface {
   name: string;
   preferredPronouns: string;
   email: string;
@@ -20,7 +20,7 @@ export interface AppointmentStoreInterface {
   resetStore: () => void;
 }
 
-const useAppointmentStore = create<AppointmentStoreInterface>((set) => ({
+const useFormStore = create<FormStoreInterface>((set) => ({
   name: "",
   preferredPronouns: "",
   email: "",
@@ -74,4 +74,4 @@ const useAppointmentStore = create<AppointmentStoreInterface>((set) => ({
     })),
 }));
 
-export default useAppointmentStore;
+export default useFormStore;

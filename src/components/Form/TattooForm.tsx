@@ -1,4 +1,4 @@
-import useAppointmentStore from "@/hooks/useAppointmentStore";
+import useFormStore from "@/hooks/useFormStore";
 import Input from "./Inputs/Input";
 import Select from "./Inputs/Select";
 
@@ -22,7 +22,7 @@ const TattooForm: React.FC<TattooFormProps> = ({
     setPlacement,
     color,
     setColor,
-  } = useAppointmentStore();
+  } = useFormStore();
 
   return (
     <form className="mt-4 flex h-full flex-col gap-4">

@@ -1,6 +1,6 @@
 import ContactForm from "@/components/Form/ContactForm";
 import TattooForm from "@/components/Form/TattooForm";
-import useAppointmentStore from "@/hooks/useAppointmentStore";
+import useFormStore from "@/hooks/useFormStore";
 import { api } from "@/utils/api";
 import { useCallback, useState, type SyntheticEvent } from "react";
 import toast from "react-hot-toast";
@@ -29,7 +29,7 @@ const MultiForm = () => {
     placement,
     color,
     resetStore,
-  } = useAppointmentStore();
+  } = useFormStore();
 
   const handleSubmit = useCallback(
     (evt: SyntheticEvent) => {
