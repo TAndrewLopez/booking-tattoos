@@ -137,8 +137,8 @@ const EventModal = () => {
     setTitle("");
     setDescription("");
     setSelectedLabel("");
-    setAptTime("");
-  }, [selectedEvent]);
+    setAptTime(moment(daySelected).format("yy-MM-DDTHH:mm"));
+  }, [selectedEvent, daySelected]);
 
   if (!isOpen) return null;
 
