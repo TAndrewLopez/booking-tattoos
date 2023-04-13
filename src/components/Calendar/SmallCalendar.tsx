@@ -1,7 +1,7 @@
 import { getMonth } from "@/utils/calendar";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import NavigateCalendar from "./NavigateCalendar";
+import CalendarNavigation from "./CalendarNavigation";
 import useCalendarStore from "@/hooks/useCalendarStore";
 import React from "react";
 
@@ -50,7 +50,7 @@ const SmallCalendar = () => {
           )}
         </p>
         <div>
-          <NavigateCalendar
+          <CalendarNavigation
             handlePrevMonth={handlePrevMonth}
             handleNextMonth={handleNextMonth}
           />

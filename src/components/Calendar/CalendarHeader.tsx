@@ -1,10 +1,10 @@
 import useCalendarStore from "@/hooks/useCalendarStore";
 import moment from "moment";
 import { AiTwotoneCalendar } from "react-icons/ai";
-import NavigateCalendar from "./NavigateCalendar";
+import CalendarNavigation from "./CalendarNavigation";
 
 const CalendarHeader = () => {
-  const { monthIndex, setMonthIndex } = useCalendarStore();
+  const { monthIndex, setMonthIndex, setDaySelected } = useCalendarStore();
 
   const handlePrevMonth = () => {
     setMonthIndex(monthIndex - 1);
@@ -15,6 +15,7 @@ const CalendarHeader = () => {
   };
 
   const handleResetMonth = () => {
+    setDaySelected(moment());
     setMonthIndex(
       monthIndex === moment().month()
         ? monthIndex + Math.random()
@@ -26,7 +27,7 @@ const CalendarHeader = () => {
     <header className="flex items-center px-4 py-2">
       <AiTwotoneCalendar size={40} className="mr-2" />
       <h1 className="font-base mr-10 text-xl text-gray-500">Calendar</h1>
-      <NavigateCalendar
+      <CalendarNavigation
         handleResetMonth={handleResetMonth}
         handlePrevMonth={handlePrevMonth}
         handleNextMonth={handleNextMonth}

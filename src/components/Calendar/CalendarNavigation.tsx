@@ -1,12 +1,12 @@
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 
-interface NavigateCalendarProps {
+interface CalendarNavigationProps {
   handleResetMonth?: () => void;
   handlePrevMonth: () => void;
   handleNextMonth: () => void;
 }
 
-const NavigateCalendar: React.FC<NavigateCalendarProps> = ({
+const CalendarNavigation: React.FC<CalendarNavigationProps> = ({
   handleResetMonth,
   handlePrevMonth,
   handleNextMonth,
@@ -37,4 +37,4 @@ const NavigateCalendar: React.FC<NavigateCalendarProps> = ({
   );
 };
 
-export default NavigateCalendar;
+export default CalendarNavigation;

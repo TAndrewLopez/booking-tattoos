@@ -3,10 +3,10 @@ import { create } from "zustand";
 
 interface EventModalInterface {
   isOpen: boolean;
-  openModal: () => void;
-  closeModal: () => void;
   selectedEvent: null | CalendarEvent;
   selectedAppointment: null | Appointment;
+  openModal: () => void;
+  closeModal: () => void;
   setSelectedEvent: (event: CalendarEvent) => void;
   setSelectedAppointment: (appointment: Appointment) => void;
 }

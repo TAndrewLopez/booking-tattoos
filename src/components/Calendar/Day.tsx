@@ -10,6 +10,7 @@ interface DayProps {
 }
 
 // TODO: DISPLAY CALENDAR EVENTS, CONSULTATION APTS, AND TATTOO APTS
+// TODO: SHOW CONFLICTS FOR ALREADY SCHEDULE APTS
 
 const Day: React.FC<DayProps> = ({ day, rowIndex }) => {
   const { setDaySelected } = useCalendarStore();
