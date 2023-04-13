@@ -9,10 +9,10 @@ type LabelObj = {
 export interface CalendarStoreInterface {
   monthIndex: number;
   daySelected: moment.Moment;
-  labels: LabelObj[];
+  labels: [];
   setMonthIndex: (val: number) => void;
   setDaySelected: (day: moment.Moment) => void;
-  setLabels: (selectedLabels: LabelObj[]) => void;
+  setLabels: () => void;
 }
 
 const useCalendarStore = create<CalendarStoreInterface>((set) => ({
@@ -27,10 +27,8 @@ const useCalendarStore = create<CalendarStoreInterface>((set) => ({
     set({
       daySelected: day,
     }),
-  setLabels: (selectedLabels: LabelObj[]) => {
-    set({
-      labels: selectedLabels,
-    });
+  setLabels: () => {
+    set({});
   },
 }));
 

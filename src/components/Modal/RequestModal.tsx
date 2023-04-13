@@ -1,9 +1,9 @@
 import { AiOutlineClose } from "react-icons/ai";
 import MultiForm from "../Form/MultiForm";
-import useTattooModal from "@/hooks/useTattooModal";
+import useAppointmentModal from "@/hooks/useAppointmentModal";
 
 const Modal = () => {
-  const { isOpen, closeModal } = useTattooModal();
+  const { isOpen, closeModal } = useAppointmentModal();
 
   if (!isOpen) return null;
 

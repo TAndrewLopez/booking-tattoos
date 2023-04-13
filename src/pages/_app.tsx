@@ -9,6 +9,7 @@ import Layout from "@/components/Layout/Layout";
 import { Toaster } from "react-hot-toast";
 import RequestModal from "@/components/Modal/RequestModal";
 import EventModal from "@/components/Modal/EventModal";
+import AppointmentModal from "@/components/Modal/AppointmentModal";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -18,6 +19,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
     <SessionProvider session={session}>
       <Layout>
         <RequestModal />
+        {/* <AppointmentModal /> */}
         <EventModal />
         <Toaster />
         <Component {...pageProps} />

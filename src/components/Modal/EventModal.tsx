@@ -162,9 +162,10 @@ const EventModal = () => {
             </button>
           </div>
         </header>
+
+        {/* CONTENT */}
         <div className="m-3 grid grid-cols-1/5 items-center gap-y-7">
           <div></div>
-
           {/* TITLE INPUT */}
           <input
             className="w-full border-0 border-b-2 border-gray-200 pb-2 pt-3 text-xl font-semibold text-gray-600 focus:border-blue-500 focus:outline-none focus:ring-0"
@@ -176,14 +177,9 @@ const EventModal = () => {
             onChange={(evt) => setTitle(evt.target.value)}
           />
 
-          {/* TIME INPUT */}
+          {/* DATE AND TIME INPUT */}
           <MdSchedule className="text-gray-400" size={24} />
           <div className="flex items-center gap-5">
-            {/* <p>
-              {selectedEvent
-                ? moment(selectedEvent?.date).format("dddd, MMMM DD")
-                : daySelected?.format("dddd, MMMM DD")}
-            </p> */}
             <input
               required
               className="flex w-full justify-between border-0 border-b-2 border-gray-200 pb-2 pt-3 text-gray-600 focus:border-blue-500 focus:outline-none focus:ring-0"
@@ -222,6 +218,7 @@ const EventModal = () => {
           </div>
         </div>
 
+        {/* FOOTER */}
         <footer className="mt-5 flex justify-end border-t p-3">
           <button
             onClick={(evt) => void handleSubmit(evt)}

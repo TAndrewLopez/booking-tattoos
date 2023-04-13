@@ -1,9 +1,9 @@
-import useTattooModal from "@/hooks/useTattooModal";
+import useAppointmentModal from "@/hooks/useAppointmentModal";
 import { type NextPage } from "next";
 import { useCallback } from "react";
 
 const Home: NextPage = () => {
-  const { isOpen, openModal, closeModal } = useTattooModal();
+  const { isOpen, openModal, closeModal } = useAppointmentModal();
   const toggleModal = useCallback(() => {
     if (isOpen) return closeModal();
     openModal();

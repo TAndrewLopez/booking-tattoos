@@ -7,11 +7,11 @@ import toast from "react-hot-toast";
 import MultiFormButtons from "./MultiFormButtons";
 import ReviewAptEntries from "./ReviewEntry";
 import Sidebar from "./Sidebar";
-import useTattooModal from "@/hooks/useTattooModal";
+import useAppointmentModal from "@/hooks/useAppointmentModal";
 
 const MultiForm = () => {
   const createAppointment = api.appointment.create.useMutation();
-  const { closeModal } = useTattooModal();
+  const { closeModal } = useAppointmentModal();
 
   // LOCAL STATE
   const [page, setPage] = useState(0);
