@@ -59,21 +59,6 @@ const Day: React.FC<DayProps> = ({ day, rowIndex }) => {
           openModal();
         }}
       >
-        {daysCalEvents?.map((calEvt) => (
-          <div
-            onClick={(e) => {
-              e.stopPropagation();
-              setSelectedEvent(calEvt);
-              openModal();
-              // console.log(calEvt);
-            }}
-            className={`bg-${calEvt.label}-200 mb-1 mr-3 truncate rounded p-1 text-sm text-gray-600`}
-            key={calEvt.id}
-          >
-            {calEvt.title}
-          </div>
-        ))}
-
         {daysConsultation?.map((aptEvt) => (
           <div
             onClick={(e) => {
@@ -84,6 +69,20 @@ const Day: React.FC<DayProps> = ({ day, rowIndex }) => {
             key={aptEvt.id}
           >
             {`${aptEvt.name} Consultation`}
+          </div>
+        ))}
+
+        {daysCalEvents?.map((calEvt) => (
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+              setSelectedEvent(calEvt);
+              openModal();
+            }}
+            className={`bg-${calEvt.label}-200 mb-1 mr-3 truncate rounded p-1 text-sm text-gray-600`}
+            key={calEvt.id}
+          >
+            {calEvt.title}
           </div>
         ))}
       </div>

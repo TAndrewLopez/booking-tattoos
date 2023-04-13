@@ -28,7 +28,30 @@ export const calendarEventRouter = createTRPCRouter({
         },
       });
     }),
-  remove: protectedProcedure
+  update: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        title: z.string(),
+        date: z.date(),
+        description: z.string(),
+        label: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      return ctx.prisma.calendarEvent.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          title: input.title,
+          date: input.date,
+          description: input.description,
+          label: input.label,
+        },
+      });
+    }),
+  delete: protectedProcedure
     .input(
       z.object({
         id: z.string(),

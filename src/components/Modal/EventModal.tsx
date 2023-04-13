@@ -12,6 +12,8 @@ import moment from "moment";
 
 const labelClasses = ["indigo", "gray", "green", "blue", "red", "purple"];
 
+// TODO: FIX SENDING DATE TO DATEBASE WITH NEW INPUT
+
 const EventModal = () => {
   const { pathname } = useRouter();
   const { isOpen, closeModal, selectedEvent } = useEventModal();
@@ -21,11 +23,16 @@ const EventModal = () => {
 
   const { refetch: refetchCalendarEvents } =
     api.calendarEvents.getAll.useQuery();
+
   const createEvent = api.calendarEvents.create.useMutation({
     onSuccess: () => void refetchCalendarEvents(),
   });
 
-  const deleteEvent = api.calendarEvents.remove.useMutation({
+  const updateEvent = api.calendarEvents.update.useMutation({
+    onSuccess: () => void refetchCalendarEvents(),
+  });
+
+  const deleteEvent = api.calendarEvents.delete.useMutation({
     onSuccess: () => void refetchCalendarEvents(),
   });
 
@@ -35,6 +42,26 @@ const EventModal = () => {
   const [selectedLabel, setSelectedLabel] = useState(labelClasses[0]);
   const [aptTime, setAptTime] = useState("");
 
+  // FORM FUNCTIONS
+  const handleDelete = useCallback(
+    (evt: SyntheticEvent) => {
+      evt.preventDefault();
+      try {
+        setIsLoading(true);
+        if (!selectedEvent) return;
+        deleteEvent.mutate({ id: selectedEvent.id });
+        closeModal();
+        toast.success("Calendar event deleted successfully!");
+      } catch (error) {
+        console.log(error);
+        toast.error("Something went wrong");
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [selectedEvent, deleteEvent, closeModal]
+  );
+
   const handleSubmit = useCallback(
     (evt: SyntheticEvent) => {
       evt.preventDefault();
@@ -42,28 +69,36 @@ const EventModal = () => {
         setIsLoading(true);
 
         if (!title) return toast.error("Title is required.");
-        if (!aptTime) return toast.error("Appointment time is required.");
+        if (!aptTime)
+          return toast.error("Appointment date and time is required.");
         if (!description) return toast.error("Description is required.");
         if (!selectedLabel) return toast.error("Please select a label.");
 
         if (selectedEvent) {
-          // MUTATE CURRENT SELECTED EVENT
-        } else {
-          createEvent.mutate({
+          // UPDATE SELECTED EVENT
+          updateEvent.mutate({
+            id: selectedEvent.id,
             title,
-            date: new Date(
-              new Date(`${daySelected.format("yyyy-MM-DD")} ${aptTime}:00`)
-            ),
+            date: new Date(aptTime),
             description,
             label: selectedLabel,
           });
+          toast.success("Calendar event updated successfully!");
+        } else {
+          // CREATE NEW EVENT
+          createEvent.mutate({
+            title,
+            date: new Date(aptTime),
+            description,
+            label: selectedLabel,
+          });
+          toast.success("Calendar event created successfully!");
         }
 
         setTitle("");
         setDescription("");
         setSelectedLabel("");
         closeModal();
-        toast.success("Calendar event created successfully!");
       } catch (error) {
         console.log(error);
         toast.error("Something went wrong.");
@@ -75,22 +110,12 @@ const EventModal = () => {
       title,
       description,
       selectedLabel,
-      daySelected,
       closeModal,
       aptTime,
       createEvent,
       selectedEvent,
+      updateEvent,
     ]
-  );
-
-  const handleDelete = useCallback(
-    (evt: SyntheticEvent) => {
-      evt.preventDefault();
-      if (!selectedEvent) return;
-      deleteEvent.mutate({ id: selectedEvent.id });
-      closeModal();
-    },
-    [selectedEvent, deleteEvent, closeModal]
   );
 
   // CLOSES MODAL IF OPEN WHEN SWITCHING PAGES
@@ -106,12 +131,13 @@ const EventModal = () => {
       setSelectedLabel(
         labelClasses.find((label) => label === selectedEvent.label)
       );
-      setAptTime(new Date(selectedEvent.date).toTimeString().slice(0, 8));
+      setAptTime(moment(selectedEvent.date).format("yy-MM-DDTHH:mm"));
       return;
     }
     setTitle("");
     setDescription("");
     setSelectedLabel("");
+    setAptTime("");
   }, [selectedEvent]);
 
   if (!isOpen) return null;
@@ -120,9 +146,11 @@ const EventModal = () => {
     <div className="fixed left-0 top-0 flex h-screen w-full items-center justify-center">
       <form className="w-[448px] rounded-lg bg-white shadow-2xl">
         {/* HEADER */}
-        <header className="flex items-center justify-between bg-gray-100 px-4 py-2">
+        <header className="relative flex items-center justify-between bg-gray-100 px-4 py-2">
           <MdDragHandle className="text-gray-500" size={24} />
-          {/* <p className="text-sm font-semibold text-gray-500">Create Event</p> */}
+          <p className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">
+            Create Event
+          </p>
           <div className="flex items-center gap-3">
             {selectedEvent && (
               <button onClick={handleDelete}>
@@ -151,15 +179,15 @@ const EventModal = () => {
           {/* TIME INPUT */}
           <MdSchedule className="text-gray-400" size={24} />
           <div className="flex items-center gap-5">
-            <p>
+            {/* <p>
               {selectedEvent
                 ? moment(selectedEvent?.date).format("dddd, MMMM DD")
                 : daySelected?.format("dddd, MMMM DD")}
-            </p>
+            </p> */}
             <input
               required
-              className="border-0 border-b-2 border-gray-200 pb-2 pt-3 text-gray-600 focus:border-blue-500 focus:outline-none focus:ring-0"
-              type="time"
+              className="flex w-full justify-between border-0 border-b-2 border-gray-200 pb-2 pt-3 text-gray-600 focus:border-blue-500 focus:outline-none focus:ring-0"
+              type="datetime-local"
               value={aptTime}
               onChange={(evt) => setAptTime(evt.target.value)}
             />
