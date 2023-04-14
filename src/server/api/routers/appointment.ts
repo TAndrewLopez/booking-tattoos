@@ -1,5 +1,7 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
+import { mailOptions, transporter } from "@/lib/nodemailer";
+import { generateTattooRequestConfirmationEmailContent } from "@/utils/emailGeneration";
 
 export const appointmentRouter = createTRPCRouter({
   getAll: protectedProcedure.query(({ ctx }) => {
@@ -27,10 +29,18 @@ export const appointmentRouter = createTRPCRouter({
         size: z.string(),
         placement: z.string(),
         color: z.string(),
-        userId: z.string().nullish(),
       })
     )
     .mutation(async ({ ctx, input }) => {
+      try {
+        await transporter.sendMail({
+          ...mailOptions,
+          ...generateTattooRequestConfirmationEmailContent(input),
+          subject: "Tattoo Request Confirmation",
+        });
+      } catch (error) {
+        console.log(error);
+      }
       return ctx.prisma.appointment.create({
         data: {
           name: input.name,

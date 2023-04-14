@@ -28,7 +28,7 @@ const CalendarLabels = () => {
       <p className="mt-10 font-bold text-gray-500">Labels</p>
       {labels.map(({ label: lbl, checked }, i) => (
         <label
-          className={`mt-3 flex items-center rounded bg-${lbl}-500 px-2 py-1`}
+          className={`mt-3 flex items-center rounded bg-${lbl}-200 px-2 py-1`}
           key={i}
         >
           <input
@@ -39,7 +39,7 @@ const CalendarLabels = () => {
             }
             className={`h-5 w-5 cursor-pointer rounded focus:ring-0`}
           />
-          <span className="ml-2 capitalize text-white">{lbl}</span>
+          <span className="ml-2 capitalize text-neutral-700">{lbl}</span>
         </label>
       ))}
     </>

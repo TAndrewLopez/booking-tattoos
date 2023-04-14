@@ -8,6 +8,7 @@ import MultiFormButtons from "./MultiFormButtons";
 import ReviewAptEntries from "./ReviewEntry";
 import Sidebar from "./Sidebar";
 import useAppointmentModal from "@/hooks/useAppointmentModal";
+import { generateTattooRequestConfirmationEmailContent } from "@/utils/emailGeneration";
 
 const MultiForm = () => {
   const createAppointment = api.appointment.create.useMutation();
