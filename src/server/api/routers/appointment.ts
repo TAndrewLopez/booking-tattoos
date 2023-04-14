@@ -35,7 +35,16 @@ export const appointmentRouter = createTRPCRouter({
       try {
         await transporter.sendMail({
           ...mailOptions,
-          ...generateTattooRequestConfirmationEmailContent(input),
+          ...generateTattooRequestConfirmationEmailContent({
+            name: input.name,
+            preferredPronouns: input.preferredPronouns,
+            email: input.email,
+            phoneNumber: input.phoneNumber,
+            description: input.description,
+            size: input.size,
+            placement: input.placement,
+            color: input.color,
+          }),
           subject: "Tattoo Request Confirmation",
         });
       } catch (error) {
