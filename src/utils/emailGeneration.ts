@@ -25,13 +25,15 @@ export const generateTattooRequestConfirmationEmailContent = (
 ) => {
   const stringData = Object.entries(data).reduce(
     (acc, [key, val]) =>
-      (acc += `${TATTOO_REQUEST_FIELDS[key]}: \n${val} \n \n`),
+      (acc += `${TATTOO_REQUEST_FIELDS[key] as string}: \n${val} \n \n`),
     ""
   );
 
   const htmlData = Object.entries(data).reduce(
     (acc, [key, val]) =>
-      (acc += `<h1 class="form-heading" align="left">${TATTOO_REQUEST_FIELDS[key]}</h1><p class="form-answer" align="left">${val}</p>`),
+      (acc += `<h1 class="form-heading" align="left">${
+        TATTOO_REQUEST_FIELDS[key] as string
+      }</h1><p class="form-answer" align="left">${val}</p>`),
     ""
   );
 
