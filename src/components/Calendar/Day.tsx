@@ -1,3 +1,4 @@
+import useAppointmentModal from "@/hooks/useAppointmentModal";
 import useCalendarStore from "@/hooks/useCalendarStore";
 import useEventModal from "@/hooks/useEventModal";
 import { api } from "@/utils/api";
@@ -13,13 +14,23 @@ interface DayProps {
 // TODO: SHOW CONFLICTS FOR ALREADY SCHEDULE APTS
 
 const Day: React.FC<DayProps> = ({ day, rowIndex }) => {
-  const { setDaySelected } = useCalendarStore();
-  const { openModal, setSelectedAppointment, setSelectedEvent } =
-    useEventModal();
+  const { labels, setDaySelected } = useCalendarStore();
+  const { openModal: openEventModal, setSelectedEvent } = useEventModal();
+  const { setSelectedAppointment } = useAppointmentModal();
 
   // EVENTS FROM DATABASE
   const { data: calendarEvents } = api.calendarEvents.getAll.useQuery();
   const { data: consultations } = api.appointment.getConsultations.useQuery();
+
+  const filteredCalEvents = useMemo(() => {
+    if (!calendarEvents) return null;
+    return calendarEvents.filter((evt) =>
+      labels
+        .filter((lbl) => lbl.checked)
+        .map((lbl) => lbl.label)
+        .includes(evt.label)
+    );
+  }, [labels, calendarEvents]);
 
   const daysConsultation = useMemo(() => {
     return consultations?.filter(
@@ -30,10 +41,10 @@ const Day: React.FC<DayProps> = ({ day, rowIndex }) => {
   }, [consultations, day]);
 
   const daysCalEvents = useMemo(() => {
-    return calendarEvents?.filter(
+    return filteredCalEvents?.filter(
       (evt) => moment(evt.date).format("MM-DD-YY") === day.format("MM-DD-YY")
     );
-  }, [calendarEvents, day]);
+  }, [filteredCalEvents, day]);
 
   const getCurrentDayClass = () => {
     return day.format("DD-MM-YY") === moment().format("DD-MM-YY")
@@ -57,7 +68,7 @@ const Day: React.FC<DayProps> = ({ day, rowIndex }) => {
         className="flex-1 cursor-pointer"
         onClick={() => {
           setDaySelected(day);
-          openModal();
+          openEventModal();
         }}
       >
         {daysConsultation?.map((aptEvt) => (
@@ -78,7 +89,7 @@ const Day: React.FC<DayProps> = ({ day, rowIndex }) => {
             onClick={(e) => {
               e.stopPropagation();
               setSelectedEvent(calEvt);
-              openModal();
+              openEventModal();
             }}
             className={`bg-${calEvt.label}-200 mb-1 mr-3 truncate rounded p-1 text-sm text-gray-600`}
             key={calEvt.id}

@@ -1,47 +1,27 @@
+import useCalendarStore from "@/hooks/useCalendarStore";
 import { type LabelObj } from "@/types";
 import { api } from "@/utils/api";
-import { useCallback, useEffect, useMemo, useState } from "react";
-
-// TODO: REPLACE LOCAL STATE WITH GLOBAL STATE SO WHEN SWITCHING SCREENS, SELECTED LABELS REMAIN
+import { useCallback, useEffect } from "react";
 
 const CalendarLabels = () => {
   const { data: calEvents } = api.calendarEvents.getAll.useQuery();
-  const [labels, setLabels] = useState<Array<LabelObj>>([]);
+  const { labels, setLabels, updateLabel } = useCalendarStore();
 
-  const updateLabel = useCallback(
+  const handleUpdateLabel = useCallback(
     (updatedLabel: LabelObj) => {
-      setLabels(
+      updateLabel(
         labels.map((lbl) =>
           lbl.label === updatedLabel.label ? updatedLabel : lbl
         )
       );
     },
-    [labels]
+    [labels, updateLabel]
   );
-
-  const filteredCalEvents = useMemo(() => {
-    if (!calEvents) return null;
-
-    return calEvents.filter((evt) =>
-      labels
-        .filter((lbl) => lbl.checked)
-        .map((lbl) => lbl.label)
-        .includes(evt.label)
-    );
-  }, [labels, calEvents]);
 
   useEffect(() => {
     if (!calEvents) return;
-    setLabels((prevLabels) => {
-      return [...new Set(calEvents.map((evt) => evt.label))].map((label) => {
-        const currentLabel = prevLabels.find((lbl) => lbl.label === label);
-        return {
-          label,
-          checked: currentLabel ? currentLabel.checked : true,
-        };
-      });
-    });
-  }, [calEvents]);
+    setLabels(calEvents);
+  }, [calEvents, setLabels]);
 
   return (
     <>
@@ -54,7 +34,9 @@ const CalendarLabels = () => {
           <input
             type="checkbox"
             checked={checked}
-            onChange={() => updateLabel({ label: lbl, checked: !checked })}
+            onChange={() =>
+              handleUpdateLabel({ label: lbl, checked: !checked })
+            }
             className={`h-5 w-5 cursor-pointer rounded focus:ring-0`}
           />
           <span className="ml-2 capitalize text-white">{lbl}</span>
