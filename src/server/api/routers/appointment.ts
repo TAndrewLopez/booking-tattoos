@@ -32,6 +32,7 @@ export const appointmentRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
+      // SEND EMAIL CONFIRMATION TO USER AFTER SUBMITTING TATTOO REQUEST
       try {
         await transporter.sendMail({
           ...mailOptions,

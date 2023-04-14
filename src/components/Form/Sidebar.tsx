@@ -11,11 +11,11 @@ const Sidebar: React.FC<SidebarProps> = ({ page }) => {
       <Image
         fill
         style={{
-          objectFit: "cover",
+          objectFit: "contain",
           objectPosition: "bottom",
         }}
         alt="form-image"
-        src="/images/tattooTray.jpg"
+        src="/images/tattooSign.png"
       />
 
       <div className="absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2">

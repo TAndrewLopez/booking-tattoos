@@ -7,12 +7,8 @@ import React, {
 } from "react";
 import { toast } from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
+import { validateEmail, validateNumber } from "../../utils/validation";
 import Button from "./Inputs/Button";
-import {
-  validateEmail,
-  validateNumber,
-  validateSize,
-} from "../../utils/validation";
 
 interface MultiFormButtonsProps {
   isLoading: boolean;
@@ -29,21 +25,13 @@ const MultiFormButtons: React.FC<MultiFormButtonsProps> = ({
   setPage,
   handleSubmit,
 }) => {
-  const {
-    name,
-    preferredPronouns,
-    email,
-    phoneNumber,
-    description,
-    size,
-    placement,
-    color,
-  } = useFormStore();
+  const { name, email, phoneNumber, description, size, placement, color } =
+    useFormStore();
 
   const contactFormCompleted = useMemo(() => {
-    if (!name || !preferredPronouns || !email || !phoneNumber) return true;
+    if (!name || !email || !phoneNumber) return true;
     return false;
-  }, [name, preferredPronouns, email, phoneNumber]);
+  }, [name, email, phoneNumber]);
 
   const tattooFormCompleted = useMemo(() => {
     if (!description || !size || !placement || !color) return true;
@@ -52,15 +40,6 @@ const MultiFormButtons: React.FC<MultiFormButtonsProps> = ({
 
   return (
     <>
-      {/* BACK BUTTON */}
-      {page > 0 && (
-        <Button
-          type="error"
-          label="Back"
-          onClick={() => setPage((prev: number) => prev - 1)}
-        />
-      )}
-
       {/* PAGE 1 NEXT BUTTON */}
       {page === 0 && (
         <Button
@@ -87,14 +66,7 @@ const MultiFormButtons: React.FC<MultiFormButtonsProps> = ({
         <Button
           type="submit"
           label="Next"
-          onClick={() => {
-            // VALIDATING INPUTS
-            if (!validateSize(size)) {
-              inputError("Size");
-              return toast.error("Invalid Size");
-            }
-            setPage((prev: number) => prev + 1);
-          }}
+          onClick={() => setPage((prev: number) => prev + 1)}
           disabled={tattooFormCompleted}
         />
       )}
@@ -106,6 +78,15 @@ const MultiFormButtons: React.FC<MultiFormButtonsProps> = ({
           label={isLoading ? <ClipLoader size={22} color="#fff" /> : "Submit"}
           onClick={handleSubmit}
           disabled={isLoading || tattooFormCompleted}
+        />
+      )}
+
+      {/* BACK BUTTON */}
+      {page > 0 && (
+        <Button
+          type="error"
+          label="Back"
+          onClick={() => setPage((prev: number) => prev - 1)}
         />
       )}
     </>

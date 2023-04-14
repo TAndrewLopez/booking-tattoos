@@ -1,5 +1,5 @@
-import ContactForm from "@/components/Form/ContactForm";
-import TattooForm from "@/components/Form/TattooForm";
+import ContactForm from "@/components/Form/Inputs/ContactInputs";
+import TattooForm from "@/components/Form/Inputs/TattooInputs";
 import useFormStore from "@/hooks/useFormStore";
 import { api } from "@/utils/api";
 import { useCallback, useState, type SyntheticEvent } from "react";
@@ -8,6 +8,7 @@ import MultiFormButtons from "./MultiFormButtons";
 import ReviewAptEntries from "./ReviewEntry";
 import Sidebar from "./Sidebar";
 import useAppointmentModal from "@/hooks/useAppointmentModal";
+import { stripPhoneNumber } from "@/utils/validation";
 
 const MultiForm = () => {
   const createAppointment = api.appointment.create.useMutation();
@@ -40,7 +41,7 @@ const MultiForm = () => {
           name,
           preferredPronouns,
           email,
-          phoneNumber,
+          phoneNumber: stripPhoneNumber(phoneNumber),
           description,
           size,
           placement,
@@ -75,7 +76,7 @@ const MultiForm = () => {
     <div className="mx-5">
       <div>
         <Sidebar page={page} />
-        <div className="md:col-span-3">
+        <form className="mt-4 flex h-full flex-col gap-4">
           {page === 0 && (
             <ContactForm
               isLoading={isLoading}
@@ -104,22 +105,22 @@ const MultiForm = () => {
               ]}
             />
           )}
-        </div>
-      </div>
-      <div
-        className={`
-          flex w-full p-3
+          <div
+            className={`
+          flex w-full flex-row-reverse p-3
           ${page === 0 ? "justify-end" : ""}
           ${page > 0 ? "justify-between" : ""}
         `}
-      >
-        <MultiFormButtons
-          isLoading={isLoading}
-          inputError={setInputError}
-          handleSubmit={handleSubmit}
-          page={page}
-          setPage={setPage}
-        />
+          >
+            <MultiFormButtons
+              isLoading={isLoading}
+              inputError={setInputError}
+              handleSubmit={handleSubmit}
+              page={page}
+              setPage={setPage}
+            />
+          </div>
+        </form>
       </div>
     </div>
   );
