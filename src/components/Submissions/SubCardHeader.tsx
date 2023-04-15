@@ -60,14 +60,29 @@ const CardHeader: React.FC<CardHeaderProps> = ({
           Response
         </button>
       </li>
+      <li>
+        <button
+          onClick={() => setDisplaySection("Notes")}
+          className={`inline-block p-4 hover:bg-gray-100
+          ${
+            displaySection === "Notes" ? "text-blue-600" : "hover:text-gray-600"
+          }
+      `}
+        >
+          Notes
+        </button>
+      </li>
       <li className="mr-2 flex grow items-center justify-end">
-        <Button
-          type={editEnabled ? "details" : "error"}
-          label={editEnabled ? "Edit" : "Cancel"}
-          onClick={() => {
-            setEditEnabled(!editEnabled);
-          }}
-        />
+        <div className="w-full p-2 sm:w-auto">
+          <Button
+            fullSize
+            type={editEnabled ? "details" : "error"}
+            label={editEnabled ? "Edit" : "Cancel"}
+            onClick={() => {
+              setEditEnabled(!editEnabled);
+            }}
+          />
+        </div>
       </li>
     </ul>
   );

@@ -2,10 +2,18 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { mailOptions, transporter } from "@/lib/nodemailer";
 import { generateTattooRequestConfirmationEmailContent } from "@/utils/emailGeneration";
+import { TRPCError } from "@trpc/server";
 
 export const appointmentRouter = createTRPCRouter({
   getAll: protectedProcedure.query(({ ctx }) => {
     return ctx.prisma.appointment.findMany({
+      include: {
+        notes: {
+          include: {
+            user: true,
+          },
+        },
+      },
       orderBy: {
         createdAt: "desc",
       },
@@ -34,6 +42,18 @@ export const appointmentRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       // SEND EMAIL CONFIRMATION TO USER AFTER SUBMITTING TATTOO REQUEST
       try {
+        const appointment = ctx.prisma.appointment.create({
+          data: {
+            name: input.name,
+            preferredPronouns: input.preferredPronouns,
+            email: input.email,
+            phoneNumber: input.phoneNumber,
+            description: input.description,
+            size: input.size,
+            placement: input.placement,
+            color: input.color,
+          },
+        });
         await transporter.sendMail({
           ...mailOptions,
           ...generateTattooRequestConfirmationEmailContent({
@@ -48,21 +68,14 @@ export const appointmentRouter = createTRPCRouter({
           }),
           subject: "Tattoo Request Confirmation",
         });
+        return appointment;
       } catch (error) {
-        console.log(error);
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "An unexpected error occurred, please try again later.",
+          cause: error,
+        });
       }
-      return ctx.prisma.appointment.create({
-        data: {
-          name: input.name,
-          preferredPronouns: input.preferredPronouns,
-          email: input.email,
-          phoneNumber: input.phoneNumber,
-          description: input.description,
-          size: input.size,
-          placement: input.placement,
-          color: input.color,
-        },
-      });
     }),
   update: protectedProcedure
     .input(
@@ -84,24 +97,34 @@ export const appointmentRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      return ctx.prisma.appointment.update({
-        where: {
-          id: input.id,
-        },
-        data: {
-          name: input.name,
-          preferredPronouns: input.preferredPronouns,
-          email: input.email,
-          phoneNumber: input.phoneNumber,
-          description: input.description,
-          size: input.size,
-          placement: input.placement,
-          color: input.color,
-          requiresConsultation: input.requiresConsultation,
-          consultationDate: input.consultationDate,
-          accepted: input.accepted,
-          notes: input.notes,
-        },
-      });
+      try {
+        const updatedAppointment = ctx.prisma.appointment.update({
+          where: {
+            id: input.id,
+          },
+          data: {
+            name: input.name,
+            preferredPronouns: input.preferredPronouns,
+            email: input.email,
+            phoneNumber: input.phoneNumber,
+            description: input.description,
+            size: input.size,
+            placement: input.placement,
+            color: input.color,
+            requiresConsultation: input.requiresConsultation,
+            consultationDate: input.consultationDate,
+            accepted: input.accepted,
+            // notes: input.notes,
+          },
+        });
+
+        return updatedAppointment;
+      } catch (error) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "An unexpected error occurred, please try again later.",
+          cause: error,
+        });
+      }
     }),
 });

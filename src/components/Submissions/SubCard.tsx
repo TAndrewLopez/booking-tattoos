@@ -8,20 +8,26 @@ import { api } from "@/utils/api";
 import { toast } from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
 import moment from "moment";
+import { FiTrash } from "react-icons/fi";
 
 interface SubCardProps {
+  userId: string;
   data: Appointment;
 }
 
 // TODO: STORE CONSULTATION AND TATTOO APPOINTMENT DATES IN DATABASE
 // TODO: REPLACE USE EFFECT WITH CONDITIONAL LOGIC FOR INITIAL VALUES ON STATE
 
-const SubCard: React.FC<SubCardProps> = ({ data }) => {
+const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [editEnabled, setEditEnabled] = useState(true);
   const [displaySection, setDisplaySection] = useState("Contact");
 
-  const updateApt = api.appointment.update.useMutation();
+  const { refetch: refetchNotes } = api.appointment.getAll.useQuery();
+  const createNote = api.appointmentNotes.create.useMutation();
+  const updateApt = api.appointment.update.useMutation({
+    onSuccess: () => void refetchNotes(),
+  });
 
   // INPUT STATES
   const [name, setName] = useState("");
@@ -35,9 +41,9 @@ const SubCard: React.FC<SubCardProps> = ({ data }) => {
 
   // RESPONSE STATES
   const [consultation, setConsultation] = useState(false);
-  const [notes, setNotes] = useState("");
   const [accepted, setAccepted] = useState<boolean | null>(null);
   const [consultationDate, setConsultationDate] = useState("");
+  const [notes, setNotes] = useState("");
 
   const submitUpdate = useCallback(
     (evt: SyntheticEvent) => {
@@ -55,12 +61,17 @@ const SubCard: React.FC<SubCardProps> = ({ data }) => {
           size,
           color,
           requiresConsultation: consultation,
-          notes,
           accepted: accepted ?? undefined,
           consultationDate: consultationDate
             ? new Date(new Date(`${consultationDate} 12:30:00`).toISOString())
             : undefined,
         });
+        createNote.mutate({
+          userId,
+          appointmentId: data.id,
+          text: notes,
+        });
+        setNotes("");
         setEditEnabled(true);
         toast.success("Update successful.");
       } catch (error) {
@@ -100,7 +111,6 @@ const SubCard: React.FC<SubCardProps> = ({ data }) => {
     setColor(data.color);
 
     // RESPONSE STATES
-    if (data.notes) setNotes(data.notes);
     if (data.accepted === true || data.accepted === false)
       setAccepted(data.accepted);
     if (data.requiresConsultation) setConsultation(data.requiresConsultation);
@@ -216,17 +226,9 @@ const SubCard: React.FC<SubCardProps> = ({ data }) => {
 
       {displaySection === "Response" && (
         <div className="space-y-2 p-3">
-          <TextArea
-            id="Notes"
-            label="Notes"
-            value={notes}
-            onChange={(evt) => setNotes(evt.target.value)}
-            disabled={editEnabled}
-          />
-
           <div className="flex flex-col gap-5 md:flex-row md:justify-between">
             {/* REQUIRES CONSULTATION CONTAINER */}
-            <div className="flex flex-col justify-between gap-5 sm:flex-row">
+            <div className="flex flex-col justify-between gap-5 md:flex-row">
               <div className="flex items-center">
                 <label className="mr-2" htmlFor="consultation">
                   Requires Consultation
@@ -311,6 +313,45 @@ const SubCard: React.FC<SubCardProps> = ({ data }) => {
               </button>
             </div>
           </div>
+        </div>
+      )}
+
+      {displaySection === "Notes" && (
+        <div className="space-y-2 p-3">
+          {data.notes.map((note) => (
+            <div
+              className="flex w-full rounded-md bg-neutral-200 px-6 py-3"
+              key={note.id}
+            >
+              <div className="flex grow items-center">
+                <p>{note.text}</p>
+              </div>
+              <div className="grid grid-cols-2 text-xs">
+                <div className="col-span-1">
+                  <p className="hidden font-semibold md:block">Created At:</p>
+                  <p className="hidden font-semibold md:block">Created By:</p>
+                </div>
+                <div className="col-span-1">
+                  <p className="hidden truncate md:block">
+                    {moment(note.createdAt).format("MMMM DD hh:ss A")}
+                  </p>
+                  <p className="hidden truncate md:block">{note.user?.name}</p>
+                </div>
+              </div>
+              {userId === note.userId && (
+                <button className="ml-2">
+                  <FiTrash className="text-gray-500" size={18} />
+                </button>
+              )}
+            </div>
+          ))}
+          <TextArea
+            id="Notes"
+            label="Notes"
+            value={notes}
+            onChange={(evt) => setNotes(evt.target.value)}
+            disabled={editEnabled}
+          />
         </div>
       )}
 

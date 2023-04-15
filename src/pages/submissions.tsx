@@ -40,16 +40,6 @@ const Submissions: NextPage = () => {
         if (item.accepted === false) submissions.push(item);
       });
     }
-    if (filter === "colored") {
-      aptData?.forEach((item) => {
-        if (item.color === "Colored") submissions.push(item);
-      });
-    }
-    if (filter === "black & grey") {
-      aptData?.forEach((item) => {
-        if (item.color === "Black & Grey") submissions.push(item);
-      });
-    }
     return submissions.reduce((acc: Appointment[], el: Appointment) => {
       if (!acc.includes(el)) {
         acc.push(el);
@@ -79,28 +69,46 @@ const Submissions: NextPage = () => {
       {!filter.length &&
         !searchName.length &&
         !searchNameSubmissions.length &&
-        aptData?.map((data) => <SubCard data={data} key={data.id} />)}
+        aptData?.map((data) => (
+          <SubCard
+            userId={sessionData?.user.id as string}
+            data={data}
+            key={data.id}
+          />
+        ))}
 
       {/* FILTERED APPOINTMENT DATA */}
       {!!filter.length &&
         !searchName.length &&
         !searchNameSubmissions.length &&
         filteredSubmissions?.map((data) => (
-          <SubCard data={data} key={data.id} />
+          <SubCard
+            userId={sessionData?.user.id as string}
+            data={data}
+            key={data.id}
+          />
         ))}
 
       {/* SEARCHED SUBMISSIONS */}
       {!!searchNameSubmissions.length &&
         !filter.length &&
         searchNameSubmissions?.map((data) => (
-          <SubCard data={data} key={data.id} />
+          <SubCard
+            userId={sessionData?.user.id as string}
+            data={data}
+            key={data.id}
+          />
         ))}
 
       {/* SEARCHED SUBMISSIONS WITH FILTERS */}
       {!!filter.length &&
         !!searchNameSubmissions.length &&
         filteredSearchNameSubmissions?.map((data) => (
-          <SubCard data={data} key={data.id} />
+          <SubCard
+            userId={sessionData?.user.id as string}
+            data={data}
+            key={data.id}
+          />
         ))}
     </main>
   );

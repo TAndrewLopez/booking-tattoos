@@ -8,8 +8,7 @@ interface SubFilterProps {
 const SubFilter: React.FC<SubFilterProps> = ({ filter, setFilter }) => {
   const toggleFilterOption = (val: string) => {
     if (filter === val) {
-      setFilter("");
-      return;
+      return setFilter("");
     }
     setFilter(val);
   };
@@ -49,28 +48,6 @@ const SubFilter: React.FC<SubFilterProps> = ({ filter, setFilter }) => {
             type="checkbox"
             checked={filter === "rejected"}
             onChange={() => toggleFilterOption("rejected")}
-          />
-        </div>
-        <div className="flex flex-col items-center gap-1">
-          <label className="text-xs font-semibold" htmlFor="response">
-            Colored
-          </label>
-          <input
-            id="response"
-            type="checkbox"
-            checked={filter === "colored"}
-            onChange={() => toggleFilterOption("colored")}
-          />
-        </div>
-        <div className="flex flex-col items-center gap-1">
-          <label className="text-xs font-semibold" htmlFor="response">
-            Black & Grey
-          </label>
-          <input
-            id="response"
-            type="checkbox"
-            checked={filter === "black & grey"}
-            onChange={() => toggleFilterOption("black & grey")}
           />
         </div>
       </div>
