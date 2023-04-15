@@ -24,6 +24,13 @@ export const appointmentRouter = createTRPCRouter({
       where: {
         requiresConsultation: true,
       },
+      include: {
+        notes: {
+          include: {
+            user: true,
+          },
+        },
+      },
     });
   }),
   create: publicProcedure

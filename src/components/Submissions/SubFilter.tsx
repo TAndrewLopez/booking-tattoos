@@ -50,6 +50,28 @@ const SubFilter: React.FC<SubFilterProps> = ({ filter, setFilter }) => {
             onChange={() => toggleFilterOption("rejected")}
           />
         </div>
+        <div className="flex flex-col items-center gap-1">
+          <label className="text-xs font-semibold" htmlFor="response">
+            Requires Refs
+          </label>
+          <input
+            id="references"
+            type="checkbox"
+            checked={filter === "references"}
+            onChange={() => toggleFilterOption("references")}
+          />
+        </div>
+        <div className="flex flex-col items-center gap-1">
+          <label className="text-xs font-semibold" htmlFor="response">
+            Requires Deposits
+          </label>
+          <input
+            id="deposit"
+            type="checkbox"
+            checked={filter === "deposit"}
+            onChange={() => toggleFilterOption("deposit")}
+          />
+        </div>
       </div>
     </div>
   );

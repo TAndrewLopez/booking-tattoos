@@ -68,7 +68,7 @@ const Navbar = () => {
             </Link>
           </>
         )}
-        <AuthButtons />
+        <AuthButtons session={sessionData} />
       </div>
 
       <RxHamburgerMenu
@@ -79,6 +79,7 @@ const Navbar = () => {
       />
 
       <MobileNav
+        session={sessionData}
         pathname={pathname}
         handleMobileNav={handleMobileNav}
         setShowMobileNav={setShowMobileNav}

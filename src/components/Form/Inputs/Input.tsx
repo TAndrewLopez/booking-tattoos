@@ -21,6 +21,7 @@ const Input: React.FC<InputProps> = ({
     <div className="relative">
       <input
         id={id}
+        name={id}
         placeholder=" "
         type={type}
         value={value}

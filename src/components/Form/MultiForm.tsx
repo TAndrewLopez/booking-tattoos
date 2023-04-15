@@ -1,5 +1,5 @@
-import ContactForm from "@/components/Form/Inputs/ContactInputs";
-import TattooForm from "@/components/Form/Inputs/TattooInputs";
+import ContactInputs from "@/components/Form/Inputs/ContactInputs";
+import TattooInputs from "@/components/Form/Inputs/TattooInputs";
 import useFormStore from "@/hooks/useFormStore";
 import { api } from "@/utils/api";
 import { useCallback, useState, type SyntheticEvent } from "react";
@@ -78,14 +78,14 @@ const MultiForm = () => {
         <Sidebar page={page} />
         <form className="mt-4 flex h-full flex-col gap-4">
           {page === 0 && (
-            <ContactForm
+            <ContactInputs
               isLoading={isLoading}
               inputError={inputError}
               setInputError={setInputError}
             />
           )}
           {page === 1 && (
-            <TattooForm
+            <TattooInputs
               isLoading={isLoading}
               inputError={inputError}
               setInputError={setInputError}

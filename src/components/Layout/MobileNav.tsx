@@ -1,9 +1,10 @@
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { AiOutlineClose } from "react-icons/ai";
 import AuthButtons from "../Auth/AuthButtons";
+import { type Session } from "next-auth";
 
 interface MobileNavProps {
+  session: Session | null;
   showMobileNav: boolean;
   setShowMobileNav: (val: boolean) => void;
   handleMobileNav: () => void;
@@ -11,12 +12,12 @@ interface MobileNavProps {
 }
 
 const MobileNav: React.FC<MobileNavProps> = ({
+  session,
   showMobileNav,
   setShowMobileNav,
   handleMobileNav,
   pathname,
 }) => {
-  const { data: sessionData } = useSession();
   return (
     <div
       className={`fixed right-0 top-0 z-50 flex h-full w-full items-center justify-center bg-[#e3d8e9] duration-300 ease-in
@@ -37,7 +38,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
         >
           Home
         </Link>
-        {sessionData?.user && (
+        {session?.user && (
           <>
             <Link
               onClick={handleMobileNav}
@@ -77,7 +78,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
             </Link>
           </>
         )}
-        <AuthButtons />
+        <AuthButtons session={session} />
       </div>
     </div>
   );

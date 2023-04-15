@@ -1,11 +1,16 @@
-import { signIn, signOut, useSession } from "next-auth/react";
+import { type Session } from "next-auth";
+import { signIn, signOut } from "next-auth/react";
 
-const AuthButtons = () => {
-  const { data: sessionData } = useSession();
-  // TODO UPDATE AUTH TO BE EMAIL CREDENTIALS INSTEAD OF GOOGLE LOGIN
+interface AuthButtonProps {
+  session: Session | null;
+}
+
+// TODO: UPDATE AUTH TO BE EMAIL CREDENTIALS INSTEAD OF GOOGLE LOGIN
+
+const AuthButtons: React.FC<AuthButtonProps> = ({ session }) => {
   return (
     <>
-      {sessionData?.user ? (
+      {session?.user ? (
         <button
           className="rounded-md bg-red-200 px-3 py-2 text-red-900 hover:bg-red-900 hover:text-white"
           onClick={() => void signOut()}

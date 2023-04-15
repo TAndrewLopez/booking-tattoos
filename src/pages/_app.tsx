@@ -1,14 +1,12 @@
-import { type AppType } from "next/app";
+import Layout from "@/components/Layout/Layout";
+import EventModal from "@/components/Modal/EventModal";
+import RequestModal from "@/components/Modal/RequestModal";
+import "@/styles/globals.css";
+import { api } from "@/utils/api";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
-
-import { api } from "@/utils/api";
-
-import "@/styles/globals.css";
-import Layout from "@/components/Layout/Layout";
+import { type AppType } from "next/app";
 import { Toaster } from "react-hot-toast";
-import RequestModal from "@/components/Modal/RequestModal";
-import EventModal from "@/components/Modal/EventModal";
 // import AppointmentModal from "@/components/Modal/AppointmentModal";
 
 const MyApp: AppType<{ session: Session | null }> = ({

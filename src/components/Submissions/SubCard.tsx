@@ -24,10 +24,15 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
   const [displaySection, setDisplaySection] = useState("Contact");
 
   const { refetch: refetchNotes } = api.appointment.getAll.useQuery();
-  const createNote = api.appointmentNotes.create.useMutation();
+  
+  const createNote = api.appointmentNotes.create.useMutation({
+    onSuccess: () => void refetchNotes(),
+  });
+
   const deleteNote = api.appointmentNotes.delete.useMutation({
     onSuccess: () => void refetchNotes(),
   });
+
   const updateApt = api.appointment.update.useMutation({
     onSuccess: () => void refetchNotes(),
   });
@@ -42,10 +47,14 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
   const [placement, setPlacement] = useState("");
   const [color, setColor] = useState("");
 
-  // RESPONSE STATES
+  // APPOINTMENT STATES
   const [consultation, setConsultation] = useState(false);
   const [accepted, setAccepted] = useState<boolean | null>(null);
   const [consultationDate, setConsultationDate] = useState("");
+  const [deposit, setDeposit] = useState(false);
+  const [references, setReferences] = useState(false);
+
+  // NOTES STATES
   const [notes, setNotes] = useState("");
 
   const submitUpdate = useCallback(
@@ -66,7 +75,7 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
           requiresConsultation: consultation,
           accepted: accepted ?? undefined,
           consultationDate: consultationDate
-            ? new Date(new Date(`${consultationDate} 12:30:00`).toISOString())
+            ? new Date(new Date(`${consultationDate} 11:30:00`).toISOString())
             : undefined,
         });
         createNote.mutate({
@@ -169,8 +178,8 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
           <Input
             id="Name"
             label="Name"
-            value={name}
             disabled={editEnabled}
+            value={name}
             onChange={(evt) => {
               setName(evt.target.value);
             }}
@@ -178,8 +187,8 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
           <Input
             id="Pronouns"
             label="Preferred Pronouns"
-            value={preferredPronouns}
             disabled={editEnabled}
+            value={preferredPronouns}
             onChange={(evt) => {
               setPreferredPronouns(evt.target.value);
             }}
@@ -187,8 +196,8 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
           <Input
             id="Email"
             label="Email"
-            value={email}
             disabled={editEnabled}
+            value={email}
             onChange={(evt) => {
               setEmail(evt.target.value);
             }}
@@ -196,8 +205,8 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
           <Input
             id="Number"
             label="Phone Number"
-            value={number}
             disabled={editEnabled}
+            value={number}
             onChange={(evt) => {
               setNumber(evt.target.value);
             }}
@@ -210,8 +219,8 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
           <Input
             id="Description"
             label="Description"
-            value={description}
             disabled={editEnabled}
+            value={description}
             onChange={(evt) => {
               setDescription(evt.target.value);
             }}
@@ -219,8 +228,8 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
           <Input
             id="Size"
             label="Size"
-            value={size}
             disabled={editEnabled}
+            value={size}
             onChange={(evt) => {
               setSize(evt.target.value);
             }}
@@ -228,8 +237,8 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
           <Input
             id="Placement"
             label="Placement"
-            value={placement}
             disabled={editEnabled}
+            value={placement}
             onChange={(evt) => {
               setPlacement(evt.target.value);
             }}
@@ -237,8 +246,8 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
           <Input
             id="Color"
             label="Color"
-            value={color}
             disabled={editEnabled}
+            value={color}
             onChange={(evt) => {
               setColor(evt.target.value);
             }}
@@ -249,17 +258,17 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
       {displaySection === "Appointment" && (
         <div className="space-y-2 p-3">
           <div className="flex flex-col gap-5 md:flex-row md:justify-between">
-            {/* REQUIRES CONSULTATION CONTAINER */}
+            {/* REQUIRES CONSULTATION */}
             <div className="flex flex-col justify-between gap-5 md:flex-row">
               <div className="flex items-center">
                 <label className="mr-2" htmlFor="consultation">
                   Requires Consultation
                 </label>
                 <input
-                  disabled={editEnabled}
                   className="h-4 w-4"
                   id="consultation"
                   type="checkbox"
+                  disabled={editEnabled}
                   checked={consultation}
                   onChange={() => setConsultation(!consultation)}
                 />
@@ -273,29 +282,60 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
                     id="consultation-date"
                     className="px-2 outline-dashed outline-1"
                     type="date"
+                    disabled={editEnabled}
                     value={consultationDate}
                     onChange={(evt) => {
                       setConsultationDate(evt.target.value);
                     }}
-                    disabled={editEnabled}
                   />
                 </div>
               )}
             </div>
+            {/* REQUIRES REFERENCES */}
+            <div className="flex flex-col gap-5 md:flex-row md:justify-between">
+              <div className="flex items-center">
+                <label className="mr-2" htmlFor="references">
+                  References Received
+                </label>
+                <input
+                  className="h-4 w-4"
+                  id="references"
+                  type="checkbox"
+                  disabled={editEnabled}
+                  checked={references}
+                  onChange={() => setReferences(!references)}
+                />
+              </div>
+              {/* REQUIRES DEPOSIT */}
+              <div className="flex items-center">
+                <label className="mr-2" htmlFor="deposit">
+                  Deposit Paid
+                </label>
+                <input
+                  className="h-4 w-4"
+                  id="deposit"
+                  type="checkbox"
+                  disabled={editEnabled}
+                  checked={deposit}
+                  onChange={() => setDeposit(!deposit)}
+                />
+              </div>
+            </div>
+          </div>
 
-            {/* ACCEPTED/REJECTED BUTTONS */}
-            <div className="flex justify-between gap-4 md:justify-end">
-              <button
-                onClick={() =>
-                  setAccepted(() => {
-                    if (accepted === false) {
-                      return null;
-                    } else {
-                      return false;
-                    }
-                  })
-                }
-                className={`
+          {/* ACCEPTED/REJECTED BUTTONS */}
+          <div className="flex justify-between gap-4 md:justify-end">
+            <button
+              onClick={() =>
+                setAccepted(() => {
+                  if (accepted === false) {
+                    return null;
+                  } else {
+                    return false;
+                  }
+                })
+              }
+              className={`
                 rounded-md px-3 py-2
                 hover:text-white 
                 disabled:cursor-not-allowed disabled:bg-neutral-400 disabled:text-neutral-50
@@ -305,21 +345,21 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
                     : "bg-red-200 text-red-900 hover:bg-red-900"
                 }
                 `}
-                disabled={editEnabled}
-              >
-                Rejected
-              </button>
-              <button
-                onClick={() =>
-                  setAccepted(() => {
-                    if (accepted) {
-                      return null;
-                    } else {
-                      return true;
-                    }
-                  })
-                }
-                className={`
+              disabled={editEnabled}
+            >
+              Rejected
+            </button>
+            <button
+              onClick={() =>
+                setAccepted(() => {
+                  if (accepted) {
+                    return null;
+                  } else {
+                    return true;
+                  }
+                })
+              }
+              className={`
                 rounded-md px-3 py-2
                 hover:text-white 
                 disabled:cursor-not-allowed disabled:bg-neutral-400 disabled:text-neutral-50
@@ -329,11 +369,10 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
                     : "bg-emerald-200 text-emerald-900 hover:bg-emerald-900"
                 }
                 `}
-                disabled={editEnabled}
-              >
-                Accept
-              </button>
-            </div>
+              disabled={editEnabled}
+            >
+              Accept
+            </button>
           </div>
         </div>
       )}

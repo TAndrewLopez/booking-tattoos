@@ -33,7 +33,7 @@ const ContactInputs: React.FC<ContactInputsProps> = ({
         disabled={isLoading}
         value={name}
         onChange={(evt) => {
-          if (inputError === "Name") setInputError("");
+          if (inputError && inputError === "Name") setInputError("");
           setName(evt.target.value);
         }}
       />
@@ -46,7 +46,7 @@ const ContactInputs: React.FC<ContactInputsProps> = ({
         disabled={isLoading}
         value={preferredPronouns}
         onChange={(evt) => {
-          if (inputError === "Pronouns") setInputError("");
+          if (inputError && inputError === "Pronouns") setInputError("");
           setPreferredPronouns(evt.target.value);
         }}
       />
@@ -60,7 +60,7 @@ const ContactInputs: React.FC<ContactInputsProps> = ({
         disabled={isLoading}
         value={email}
         onChange={(evt) => {
-          if (inputError === "Email") setInputError("");
+          if (inputError && inputError === "Email") setInputError("");
           setEmail(evt.target.value);
         }}
       />
@@ -73,7 +73,7 @@ const ContactInputs: React.FC<ContactInputsProps> = ({
         disabled={isLoading}
         value={phoneNumber}
         onChange={(evt) => {
-          if (inputError === "Number") setInputError("");
+          if (inputError && inputError === "Number") setInputError("");
           setPhoneNumber(evt.target.value);
         }}
       />
