@@ -75,7 +75,6 @@ const Day: React.FC<DayProps> = ({ day, rowIndex }) => {
           <div
             onClick={(e) => {
               e.stopPropagation();
-              setSelectedAppointment(aptEvt);
             }}
             className="mb-1 mr-3 truncate rounded bg-orange-200 p-1 text-sm text-gray-600"
             key={aptEvt.id}
