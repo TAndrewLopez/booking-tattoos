@@ -48,16 +48,16 @@ const CardHeader: React.FC<CardHeaderProps> = ({
       </li>
       <li>
         <button
-          onClick={() => setDisplaySection("Response")}
+          onClick={() => setDisplaySection("Appointment")}
           className={`inline-block p-4 hover:bg-gray-100
           ${
-            displaySection === "Response"
+            displaySection === "Appointment"
               ? "text-blue-600"
               : "hover:text-gray-600"
           }
       `}
         >
-          Response
+          Appointment
         </button>
       </li>
       <li>

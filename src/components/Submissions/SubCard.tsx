@@ -25,6 +25,9 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
 
   const { refetch: refetchNotes } = api.appointment.getAll.useQuery();
   const createNote = api.appointmentNotes.create.useMutation();
+  const deleteNote = api.appointmentNotes.delete.useMutation({
+    onSuccess: () => void refetchNotes(),
+  });
   const updateApt = api.appointment.update.useMutation({
     onSuccess: () => void refetchNotes(),
   });
@@ -99,6 +102,20 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
     ]
   );
 
+  const handleDelete = useCallback(async (noteId: string) => {
+    try {
+      setIsLoading(true);
+      deleteNote.mutate({ id: noteId });
+      setEditEnabled(true);
+      toast.success("Note deleted successfully!");
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong.");
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
     // INPUT STATES
     setName(data.name);
@@ -134,7 +151,7 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
   ]);
 
   return (
-    <div className="w-full rounded-lg border border-gray-200 bg-white shadow">
+    <div className="w-full rounded-lg border border-gray-200 bg-white shadow-sm shadow-blue-200">
       <SubCardHeader
         displaySection={displaySection}
         editEnabled={editEnabled}
@@ -224,7 +241,7 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
         </div>
       )}
 
-      {displaySection === "Response" && (
+      {displaySection === "Appointment" && (
         <div className="space-y-2 p-3">
           <div className="flex flex-col gap-5 md:flex-row md:justify-between">
             {/* REQUIRES CONSULTATION CONTAINER */}
@@ -320,7 +337,9 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
         <div className="space-y-2 p-3">
           {data.notes.map((note) => (
             <div
-              className="flex w-full rounded-md bg-neutral-200 px-6 py-3"
+              className={`flex w-full rounded-md px-6 py-3
+              ${editEnabled ? "bg-neutral-700 text-white" : "bg-neutral-200"}
+              `}
               key={note.id}
             >
               <div className="flex grow items-center">
@@ -338,9 +357,18 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
                   <p className="hidden truncate md:block">{note.user?.name}</p>
                 </div>
               </div>
-              {userId === note.userId && (
-                <button className="ml-2">
-                  <FiTrash className="text-gray-500" size={18} />
+              {userId === note.userId && !editEnabled && (
+                <button
+                  onClick={() => handleDelete(note.id)}
+                  disabled={editEnabled}
+                  className="ml-4"
+                >
+                  <FiTrash
+                    className={
+                      editEnabled ? "text-neutral-400" : "text-neutral-700"
+                    }
+                    size={18}
+                  />
                 </button>
               )}
             </div>

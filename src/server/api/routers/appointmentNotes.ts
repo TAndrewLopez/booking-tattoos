@@ -13,14 +13,30 @@ export const appointmentNotesRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       try {
-        const note = ctx.prisma.appointmentNotes.create({
+        return ctx.prisma.appointmentNotes.create({
           data: {
             userId: input.userId,
             appointmentId: input.appointmentId,
             text: input.text,
           },
         });
-        return note;
+      } catch (error) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "An unexpected error occurred, please try again later.",
+          cause: error,
+        });
+      }
+    }),
+  delete: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      try {
+        return ctx.prisma.appointmentNotes.delete({
+          where: {
+            id: input.id,
+          },
+        });
       } catch (error) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",

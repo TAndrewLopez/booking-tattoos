@@ -98,7 +98,7 @@ export const appointmentRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       try {
-        const updatedAppointment = ctx.prisma.appointment.update({
+        return ctx.prisma.appointment.update({
           where: {
             id: input.id,
           },
@@ -114,11 +114,8 @@ export const appointmentRouter = createTRPCRouter({
             requiresConsultation: input.requiresConsultation,
             consultationDate: input.consultationDate,
             accepted: input.accepted,
-            // notes: input.notes,
           },
         });
-
-        return updatedAppointment;
       } catch (error) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
