@@ -96,25 +96,30 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
       color,
       notes,
       updateApt,
+      createNote,
       consultation,
       consultationDate,
       accepted,
+      userId,
     ]
   );
 
-  const handleDelete = useCallback(async (noteId: string) => {
-    try {
-      setIsLoading(true);
-      deleteNote.mutate({ id: noteId });
-      setEditEnabled(true);
-      toast.success("Note deleted successfully!");
-    } catch (error) {
-      console.log(error);
-      toast.error("Something went wrong.");
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+  const handleDelete = useCallback(
+    (noteId: string) => {
+      try {
+        setIsLoading(true);
+        deleteNote.mutate({ id: noteId });
+        setEditEnabled(true);
+        toast.success("Note deleted successfully!");
+      } catch (error) {
+        console.log(error);
+        toast.error("Something went wrong.");
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [deleteNote]
+  );
 
   useEffect(() => {
     // INPUT STATES
