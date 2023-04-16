@@ -11,8 +11,28 @@ const AppointmentSection: React.FC<AppointmentSectionProps> = ({
 }) => {
   return (
     <section className="space-y-2 p-3">
+      <div className="grid grid-cols-2">
+        <div className="col-span-1 flex flex-col bg-green-200">
+          <h2 className="text-center font-semibold">Initial Review</h2>
+        </div>
+        <div className="col-span-1 bg-blue-200">
+          <h2>Appointment Data</h2>
+        </div>
+      </div>
+      <div className="flex flex-col">
+        <label htmlFor="references">Reference Images</label>
+        <input type="file" />
+        <button>Upload Image</button>
+      </div>
+    </section>
+  );
+};
+
+export default AppointmentSection;
+
+/*
       <div className="flex flex-col gap-5 md:flex-row md:justify-between">
-        {/* REQUIRES CONSULTATION */}
+         REQUIRES CONSULTATION 
         <div className="flex flex-col justify-between gap-5 md:flex-row">
           <div className="flex items-center">
             <label className="mr-2" htmlFor="consultation">
@@ -22,12 +42,12 @@ const AppointmentSection: React.FC<AppointmentSectionProps> = ({
               className="h-4 w-4"
               id="consultation"
               type="checkbox"
-              disabled={editEnabled}
+              disabled={!editEnabled}
               checked={consultation.value}
               onChange={() => consultation.set(!consultation.value)}
             />
           </div>
-          {consultation && (
+          {consultation.value && (
             <div className="flex items-center">
               <label className="mr-2" htmlFor="consultation-date">
                 Consultation Date:
@@ -36,7 +56,7 @@ const AppointmentSection: React.FC<AppointmentSectionProps> = ({
                 id="consultation-date"
                 className="px-2 outline-dashed outline-1"
                 type="date"
-                disabled={editEnabled}
+                disabled={!editEnabled}
                 value={consultationDate.value}
                 onChange={(evt) => {
                   consultationDate.set(evt.target.value);
@@ -45,7 +65,7 @@ const AppointmentSection: React.FC<AppointmentSectionProps> = ({
             </div>
           )}
         </div>
-        {/* REQUIRES REFERENCES */}
+        REQUIRES REFERENCES 
         <div className="flex flex-col gap-5 md:flex-row md:justify-between">
           <div className="flex items-center">
             <label className="mr-2" htmlFor="references">
@@ -55,12 +75,12 @@ const AppointmentSection: React.FC<AppointmentSectionProps> = ({
               className="h-4 w-4"
               id="references"
               type="checkbox"
-              disabled={editEnabled}
+              disabled={!editEnabled}
               checked={references.value}
               onChange={() => references.set(!references.value)}
             />
           </div>
-          {/* REQUIRES DEPOSIT */}
+           REQUIRES DEPOSIT
           <div className="flex items-center">
             <label className="mr-2" htmlFor="deposit">
               Deposit Paid
@@ -69,7 +89,7 @@ const AppointmentSection: React.FC<AppointmentSectionProps> = ({
               className="h-4 w-4"
               id="deposit"
               type="checkbox"
-              disabled={editEnabled}
+              disabled={!editEnabled}
               checked={deposit.value}
               onChange={() => deposit.set(!deposit.value)}
             />
@@ -77,7 +97,7 @@ const AppointmentSection: React.FC<AppointmentSectionProps> = ({
         </div>
       </div>
 
-      {/* ACCEPTED/REJECTED BUTTONS */}
+      ACCEPTED/REJECTED BUTTONS 
       <div className="flex justify-between gap-4 md:justify-end">
         <button
           onClick={() =>
@@ -99,7 +119,7 @@ const AppointmentSection: React.FC<AppointmentSectionProps> = ({
                     : "bg-red-200 text-red-900 hover:bg-red-900"
                 }
                 `}
-          disabled={editEnabled}
+          disabled={!editEnabled}
         >
           Rejected
         </button>
@@ -123,13 +143,9 @@ const AppointmentSection: React.FC<AppointmentSectionProps> = ({
                     : "bg-emerald-200 text-emerald-900 hover:bg-emerald-900"
                 }
                 `}
-          disabled={editEnabled}
+          disabled={!editEnabled}
         >
           Accept
         </button>
       </div>
-    </section>
-  );
-};
-
-export default AppointmentSection;
+*/

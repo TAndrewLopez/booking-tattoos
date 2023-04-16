@@ -1,4 +1,5 @@
 import { type Dispatch, type SetStateAction } from "react";
+import { BiFilterAlt } from "react-icons/bi";
 
 interface SubFilterProps {
   filter: string;
@@ -14,18 +15,22 @@ const SubFilter: React.FC<SubFilterProps> = ({ filter, setFilter }) => {
   };
 
   return (
-    <div className="grow">
-      <p className="mb-2 font-bold">Filter Options:</p>
-      <div className="flex flex-wrap items-center gap-3">
+    <div>
+      <div className="flex items-center gap-2">
+        <h3 className="font-bold">Filters</h3>
+        <BiFilterAlt size={20} />
+      </div>
+
+      <div className="hidden flex-wrap items-center gap-3 md:flex">
         <div className="flex flex-col items-center gap-1">
           <label className="text-xs font-semibold" htmlFor="accepted">
             Consultations
           </label>
           <input
-            id="consultation"
+            id="consultations"
             type="checkbox"
-            checked={filter === "consultation"}
-            onChange={() => toggleFilterOption("consultation")}
+            checked={filter === "consultations"}
+            onChange={() => toggleFilterOption("consultations")}
           />
         </div>
         <div className="flex flex-col items-center gap-1">

@@ -25,7 +25,7 @@ const Submissions: NextPage = () => {
 
   const filteredSubmissions: Appointment[] = useMemo(() => {
     const submissions: Appointment[] = [];
-    if (filter === "consultation") {
+    if (filter === "consultations") {
       aptData?.forEach((item) => {
         if (item.requiresConsultation) submissions.push(item);
       });
@@ -57,59 +57,62 @@ const Submissions: NextPage = () => {
   }, [searchName, filteredSubmissions]);
 
   return (
-    <main className="flex flex-wrap gap-4 p-4">
+    <main className="flex flex-col gap-5 p-4">
       {/* SEARCH AND FILTER FEATURES */}
-      <SubHeader
+      {/* <SubHeader
         filter={filter}
         setFilter={setFilter}
         search={searchName}
         setSearch={setSearchName}
-      />
-      {/* UNFILTERED APPOINTMENT DATA */}
-      {!filter.length &&
-        !searchName.length &&
-        !searchNameSubmissions.length &&
-        aptData?.map((data) => (
-          <SubCard
-            userId={sessionData?.user.id as string}
-            data={data}
-            key={data.id}
-          />
-        ))}
+      /> */}
 
-      {/* FILTERED APPOINTMENT DATA */}
-      {!!filter.length &&
-        !searchName.length &&
-        !searchNameSubmissions.length &&
-        filteredSubmissions?.map((data) => (
-          <SubCard
-            userId={sessionData?.user.id as string}
-            data={data}
-            key={data.id}
-          />
-        ))}
+      <div className="flex w-full flex-wrap justify-center gap-5 py-5">
+        {/* UNFILTERED APPOINTMENT DATA */}
+        {!filter.length &&
+          !searchName.length &&
+          !searchNameSubmissions.length &&
+          aptData?.map((data) => (
+            <SubCard
+              userId={sessionData?.user.id as string}
+              data={data}
+              key={data.id}
+            />
+          ))}
 
-      {/* SEARCHED SUBMISSIONS */}
-      {!!searchNameSubmissions.length &&
-        !filter.length &&
-        searchNameSubmissions?.map((data) => (
-          <SubCard
-            userId={sessionData?.user.id as string}
-            data={data}
-            key={data.id}
-          />
-        ))}
+        {/* FILTERED APPOINTMENT DATA */}
+        {!!filter.length &&
+          !searchName.length &&
+          !searchNameSubmissions.length &&
+          filteredSubmissions?.map((data) => (
+            <SubCard
+              userId={sessionData?.user.id as string}
+              data={data}
+              key={data.id}
+            />
+          ))}
 
-      {/* SEARCHED SUBMISSIONS WITH FILTERS */}
-      {!!filter.length &&
-        !!searchNameSubmissions.length &&
-        filteredSearchNameSubmissions?.map((data) => (
-          <SubCard
-            userId={sessionData?.user.id as string}
-            data={data}
-            key={data.id}
-          />
-        ))}
+        {/* SEARCHED SUBMISSIONS */}
+        {!!searchNameSubmissions.length &&
+          !filter.length &&
+          searchNameSubmissions?.map((data) => (
+            <SubCard
+              userId={sessionData?.user.id as string}
+              data={data}
+              key={data.id}
+            />
+          ))}
+
+        {/* SEARCHED SUBMISSIONS WITH FILTERS */}
+        {!!filter.length &&
+          !!searchNameSubmissions.length &&
+          filteredSearchNameSubmissions?.map((data) => (
+            <SubCard
+              userId={sessionData?.user.id as string}
+              data={data}
+              key={data.id}
+            />
+          ))}
+      </div>
     </main>
   );
 };

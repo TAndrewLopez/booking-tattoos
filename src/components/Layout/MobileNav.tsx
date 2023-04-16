@@ -30,7 +30,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
           size={24}
         />
       </div>
-      <div className="flex flex-col items-center gap-4">
+      <nav className="flex flex-col items-center gap-4">
         <Link
           onClick={handleMobileNav}
           href="/"
@@ -79,7 +79,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
           </>
         )}
         <AuthButtons session={session} />
-      </div>
+      </nav>
     </div>
   );
 };

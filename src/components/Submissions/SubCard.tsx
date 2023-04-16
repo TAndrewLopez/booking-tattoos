@@ -21,7 +21,7 @@ interface SubCardProps {
 
 const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [editEnabled, setEditEnabled] = useState(true);
+  const [editEnabled, setEditEnabled] = useState(false);
   const [displaySection, setDisplaySection] = useState("Contact");
 
   const { refetch: refetchNotes } = api.appointment.getAll.useQuery();
@@ -154,7 +154,7 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
           });
           setNotes("");
         }
-        setEditEnabled(true);
+        setEditEnabled(false);
         toast.success("Update successful.");
       } catch (error) {
         console.log(error);
@@ -188,7 +188,7 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
       try {
         setIsLoading(true);
         deleteNote.mutate({ id: noteId });
-        setEditEnabled(true);
+        setEditEnabled(false);
         toast.success("Note deleted successfully!");
       } catch (error) {
         console.log(error);
@@ -235,7 +235,7 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
   ]);
 
   return (
-    <div className="w-full rounded-lg border border-gray-200 bg-white shadow-sm shadow-blue-200">
+    <div className="w-full max-w-3xl rounded-lg border border-gray-200 bg-white shadow-sm shadow-blue-200">
       <SubCardHeader
         displaySection={displaySection}
         editEnabled={editEnabled}
@@ -268,12 +268,12 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
         />
       )}
 
-      {!editEnabled && (
+      {editEnabled && (
         <div className="flex items-center justify-center px-3 pb-3">
           <Button
             label={isLoading ? <ClipLoader color="blue" /> : "Save"}
             type="submit"
-            disabled={editEnabled}
+            disabled={!editEnabled}
             onClick={submitUpdate}
             fullSize
           />

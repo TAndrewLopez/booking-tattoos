@@ -16,7 +16,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({
       <Input
         id="Name"
         label="Name"
-        disabled={editEnabled}
+        disabled={!editEnabled}
         value={name.value}
         onChange={(evt) => {
           name.set(evt.target.value);
@@ -25,7 +25,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({
       <Input
         id="Pronouns"
         label="Preferred Pronouns"
-        disabled={editEnabled}
+        disabled={!editEnabled}
         value={preferredPronouns.value}
         onChange={(evt) => {
           preferredPronouns.set(evt.target.value);
@@ -34,7 +34,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({
       <Input
         id="Email"
         label="Email"
-        disabled={editEnabled}
+        disabled={!editEnabled}
         value={email.value}
         onChange={(evt) => {
           email.set(evt.target.value);
@@ -43,7 +43,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({
       <Input
         id="Number"
         label="Phone Number"
-        disabled={editEnabled}
+        disabled={!editEnabled}
         value={number.value}
         onChange={(evt) => {
           number.set(evt.target.value);

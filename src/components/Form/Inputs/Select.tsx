@@ -22,7 +22,7 @@ const Select: React.FC<SelectProps> = ({
     >
       <option value={undefined}>{label}</option>
       {options.map((option, i) => (
-        <option value={option} key={option + String(i)}>
+        <option value={option} key={`${option}${String(i)}`}>
           {option}
         </option>
       ))}

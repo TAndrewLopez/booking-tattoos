@@ -22,7 +22,7 @@ const Navbar = () => {
           Raquel Cude
         </Link>
       </div>
-      <div
+      <nav
         className={`hidden items-center gap-4 md:flex
         ${pathname === "/" ? "text-white" : ""}
         `}
@@ -69,7 +69,7 @@ const Navbar = () => {
           </>
         )}
         <AuthButtons session={sessionData} />
-      </div>
+      </nav>
 
       <RxHamburgerMenu
         onClick={() => setShowMobileNav(!showMobileNav)}

@@ -23,7 +23,7 @@ const NoteSection: React.FC<NoteSectionProps> = ({
       {data.notes.map((note) => (
         <div
           className={`flex w-full rounded-md px-6 py-3
-      ${editEnabled ? "bg-neutral-700 text-white" : "bg-neutral-200"}
+      ${editEnabled ? "bg-neutral-200" : "bg-neutral-700 text-white"}
       `}
           key={note.id}
         >
@@ -42,15 +42,15 @@ const NoteSection: React.FC<NoteSectionProps> = ({
               <p className="hidden truncate md:block">{note.user?.name}</p>
             </div>
           </div>
-          {userId === note.userId && !editEnabled && (
+          {userId === note.userId && editEnabled && (
             <button
               onClick={() => handleDelete(note.id)}
-              disabled={editEnabled}
+              disabled={!editEnabled}
               className="ml-4"
             >
               <FiTrash
                 className={
-                  editEnabled ? "text-neutral-400" : "text-neutral-700"
+                  editEnabled ? "text-neutral-700" : "text-neutral-400"
                 }
                 size={18}
               />
@@ -63,7 +63,7 @@ const NoteSection: React.FC<NoteSectionProps> = ({
         label="Notes"
         value={notes.value}
         onChange={(evt) => notes.set(evt.target.value)}
-        disabled={editEnabled}
+        disabled={!editEnabled}
       />
     </section>
   );

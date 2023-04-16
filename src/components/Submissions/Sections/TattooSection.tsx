@@ -15,7 +15,7 @@ const TattooSection: React.FC<TattooSectionProps> = ({
       <Input
         id="Description"
         label="Description"
-        disabled={editEnabled}
+        disabled={!editEnabled}
         value={description.value}
         onChange={(evt) => {
           description.set(evt.target.value);
@@ -24,7 +24,7 @@ const TattooSection: React.FC<TattooSectionProps> = ({
       <Input
         id="Size"
         label="Size"
-        disabled={editEnabled}
+        disabled={!editEnabled}
         value={size.value}
         onChange={(evt) => {
           size.set(evt.target.value);
@@ -33,7 +33,7 @@ const TattooSection: React.FC<TattooSectionProps> = ({
       <Input
         id="Placement"
         label="Placement"
-        disabled={editEnabled}
+        disabled={!editEnabled}
         value={placement.value}
         onChange={(evt) => {
           placement.set(evt.target.value);
@@ -42,7 +42,7 @@ const TattooSection: React.FC<TattooSectionProps> = ({
       <Input
         id="Color"
         label="Color"
-        disabled={editEnabled}
+        disabled={!editEnabled}
         value={color.value}
         onChange={(evt) => {
           color.set(evt.target.value);

@@ -79,8 +79,8 @@ const CardHeader: React.FC<CardHeaderProps> = ({
         <div className="w-full p-2 sm:w-auto">
           <Button
             fullSize
-            type={editEnabled ? "details" : "error"}
-            label={editEnabled ? "Edit" : "Cancel"}
+            type={editEnabled ? "error" : "details"}
+            label={editEnabled ? "Cancel" : "Edit"}
             onClick={() => {
               setEditEnabled(!editEnabled);
             }}
