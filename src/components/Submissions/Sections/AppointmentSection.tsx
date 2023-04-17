@@ -1,42 +1,57 @@
-import Button from "@/components/Form/Inputs/Button";
 import { type AppointmentInputs } from "@/types";
+import InitialReview from "../Tables/InitialReview";
+import AppointmentData from "../Tables/AppointmentData";
+import ReferenceImage from "../Tables/ReferenceImage";
 
 interface AppointmentSectionProps {
   editEnabled: boolean;
   inputs: AppointmentInputs;
   uploadImage: () => Promise<void>;
+  imageURL: string | null;
 }
 
 const AppointmentSection: React.FC<AppointmentSectionProps> = ({
   editEnabled,
-  inputs: { consultation, consultationDate, accepted, deposit, image },
+  inputs: {
+    consultation,
+    consultationDate,
+    accepted,
+    deposit,
+    image,
+    sessions,
+  },
   uploadImage,
+  imageURL,
 }) => {
   return (
     <section className="space-y-2 p-3">
-      <div className="grid grid-cols-2">
-        <div className="col-span-1 flex flex-col bg-green-200">
-          <h2 className="text-center font-semibold">Initial Review</h2>
+      <div className="grid gap-2 sm:grid-cols-2">
+        <div className="col-span-1 flex flex-col border border-dashed border-gray-200 p-1">
+          <InitialReview
+            editEnabled={editEnabled}
+            accepted={accepted}
+            consultation={consultation}
+            sessions={sessions}
+          />
         </div>
-        <div className="col-span-1 bg-blue-200">
-          <h2>Appointment Data</h2>
+        <div className="col-span-1 flex flex-col border border-dashed border-gray-200 p-1">
+          <AppointmentData
+            consultation={consultation.value}
+            accepted={accepted.value}
+            editEnabled={editEnabled}
+            consultationDate={consultationDate}
+            deposit={deposit}
+          />
         </div>
       </div>
+
+      {/* REFERENCE IMAGES */}
       <div className="flex flex-col">
-        <label htmlFor="references">Reference Images</label>
-        <input
-          type="file"
-          onChange={({ target }) => {
-            if (!target.files) return;
-            if (!target.files[0]) return;
-            image.set(target.files[0]);
-          }}
-        />
-        <Button
-          type="details"
-          label="Upload Image"
-          disabled={!editEnabled}
-          onClick={() => void uploadImage()}
+        <ReferenceImage
+          editEnabled={editEnabled}
+          image={image}
+          uploadImage={uploadImage}
+          imageURL={imageURL}
         />
       </div>
     </section>

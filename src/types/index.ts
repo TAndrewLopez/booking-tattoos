@@ -57,6 +57,10 @@ export type AppointmentInputs = {
     value: string;
     set: Dispatch<SetStateAction<string>>;
   };
+  sessions: {
+    value: string;
+    set: Dispatch<SetStateAction<string>>;
+  };
   deposit: {
     value: boolean;
     set: Dispatch<SetStateAction<boolean>>;

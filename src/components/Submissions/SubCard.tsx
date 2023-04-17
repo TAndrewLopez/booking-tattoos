@@ -92,6 +92,7 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
   const [consultation, setConsultation] = useState(false);
   const [accepted, setAccepted] = useState<boolean | null>(null);
   const [consultationDate, setConsultationDate] = useState("");
+  const [sessions, setSessions] = useState("0");
   const [deposit, setDeposit] = useState(false);
   const [image, setImage] = useState<File | null>(null);
   const appointmentInputs = {
@@ -106,6 +107,10 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
     consultationDate: {
       value: consultationDate,
       set: setConsultationDate,
+    },
+    sessions: {
+      value: sessions,
+      set: setSessions,
     },
     deposit: {
       value: deposit,
@@ -276,6 +281,7 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
           editEnabled={editEnabled}
           inputs={appointmentInputs}
           uploadImage={uploadImage}
+          imageURL={data.referenceImageURL}
         />
       )}
 
