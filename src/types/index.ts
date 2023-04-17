@@ -4,7 +4,6 @@ import { type Dispatch, type SetStateAction } from "react";
 export type Appointment = RouterOutputs["appointment"]["getAll"][0];
 export type AppointmentNote = RouterOutputs["appointmentNotes"]["create"];
 export type CalendarEvent = RouterOutputs["calendarEvents"]["getAll"][0];
-
 export type LabelObj = { label: string; checked: boolean };
 
 export type ContactInputs = {
@@ -62,9 +61,9 @@ export type AppointmentInputs = {
     value: boolean;
     set: Dispatch<SetStateAction<boolean>>;
   };
-  references: {
-    value: boolean;
-    set: Dispatch<SetStateAction<boolean>>;
+  image: {
+    value: File | null;
+    set: Dispatch<SetStateAction<File | null>>;
   };
 };
 

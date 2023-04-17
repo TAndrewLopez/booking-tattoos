@@ -1,35 +1,17 @@
+import Button from "@/components/Form/Inputs/Button";
 import { type AppointmentInputs } from "@/types";
-import { useState } from "react";
-import { storage } from "@/lib/firebase";
-import { ref, uploadBytes } from "firebase/storage";
-import * as uuid from "uuid";
-import { toast } from "react-hot-toast";
 
 interface AppointmentSectionProps {
   editEnabled: boolean;
   inputs: AppointmentInputs;
+  uploadImage: () => Promise<void>;
 }
 
 const AppointmentSection: React.FC<AppointmentSectionProps> = ({
   editEnabled,
-  inputs: { consultation, consultationDate, accepted, deposit, references },
+  inputs: { consultation, consultationDate, accepted, deposit, image },
+  uploadImage,
 }) => {
-  const [image, setImage] = useState<File | null>(null);
-  const uploadImage = async () => {
-    try {
-      if (image === null) return;
-      const imageRef = ref(
-        storage,
-        `referenceImages/${image?.name + uuid.v4()}`
-      );
-      await uploadBytes(imageRef, image);
-      toast.success("Image Upload Successful");
-    } catch (error) {
-      console.log(error);
-      toast.error("Something went wrong.");
-    }
-  };
-
   return (
     <section className="space-y-2 p-3">
       <div className="grid grid-cols-2">
@@ -47,10 +29,15 @@ const AppointmentSection: React.FC<AppointmentSectionProps> = ({
           onChange={({ target }) => {
             if (!target.files) return;
             if (!target.files[0]) return;
-            setImage(target.files[0]);
+            image.set(target.files[0]);
           }}
         />
-        <button onClick={() => void uploadImage()}>Upload Image</button>
+        <Button
+          type="details"
+          label="Upload Image"
+          disabled={!editEnabled}
+          onClick={() => void uploadImage()}
+        />
       </div>
     </section>
   );

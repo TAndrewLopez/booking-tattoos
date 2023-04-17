@@ -10,6 +10,9 @@ import ContactSection from "./Sections/ContactSection";
 import NoteSection from "./Sections/NoteSection";
 import TattooSection from "./Sections/TattooSection";
 import SubCardHeader from "./SubCardHeader";
+import { storage } from "@/lib/firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import * as uuid from "uuid";
 
 interface SubCardProps {
   userId: string;
@@ -17,25 +20,24 @@ interface SubCardProps {
 }
 
 // TODO: STORE CONSULTATION AND TATTOO APPOINTMENT DATES IN DATABASE
-// TODO: REPLACE USE EFFECT WITH CONDITIONAL LOGIC FOR INITIAL VALUES ON STATE
 
 const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [editEnabled, setEditEnabled] = useState(false);
   const [displaySection, setDisplaySection] = useState("Contact");
 
-  const { refetch: refetchNotes } = api.appointment.getAll.useQuery();
-
-  const createNote = api.appointmentNotes.create.useMutation({
-    onSuccess: () => void refetchNotes(),
-  });
-
-  const deleteNote = api.appointmentNotes.delete.useMutation({
-    onSuccess: () => void refetchNotes(),
-  });
-
+  const { refetch: refetchAppointments } = api.appointment.getAll.useQuery();
   const updateApt = api.appointment.update.useMutation({
-    onSuccess: () => void refetchNotes(),
+    onSuccess: () => void refetchAppointments(),
+  });
+  const createNote = api.appointmentNotes.create.useMutation({
+    onSuccess: () => void refetchAppointments(),
+  });
+  const deleteNote = api.appointmentNotes.delete.useMutation({
+    onSuccess: () => void refetchAppointments(),
+  });
+  const addReferenceImage = api.appointment.addReferenceImage.useMutation({
+    onSuccess: () => void refetchAppointments(),
   });
 
   // CONTACT STATES
@@ -91,7 +93,7 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
   const [accepted, setAccepted] = useState<boolean | null>(null);
   const [consultationDate, setConsultationDate] = useState("");
   const [deposit, setDeposit] = useState(false);
-  const [references, setReferences] = useState(false);
+  const [image, setImage] = useState<File | null>(null);
   const appointmentInputs = {
     consultation: {
       value: consultation,
@@ -109,9 +111,9 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
       value: deposit,
       set: setDeposit,
     },
-    references: {
-      value: references,
-      set: setReferences,
+    image: {
+      value: image,
+      set: setImage,
     },
   };
 
@@ -200,6 +202,24 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
     [deleteNote]
   );
 
+  const uploadImage = useCallback(async () => {
+    try {
+      if (image === null) return;
+      const imageRef = ref(
+        storage,
+        `referenceImages/${image?.name + uuid.v4()}`
+      );
+      const result = await uploadBytes(imageRef, image);
+      const imageURL = await getDownloadURL(result.ref);
+      addReferenceImage.mutate({ appointmentId: data.id, imageURL });
+      toast.success("Image uploaded successfully!");
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong.");
+    }
+  }, [image, addReferenceImage, data.id]);
+
+  // LOAD INITIAL VALUES FROM DB
   useEffect(() => {
     // INPUT STATES
     setName(data.name);
@@ -255,6 +275,7 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
         <AppointmentSection
           editEnabled={editEnabled}
           inputs={appointmentInputs}
+          uploadImage={uploadImage}
         />
       )}
 

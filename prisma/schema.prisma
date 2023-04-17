@@ -73,6 +73,7 @@ model Appointment {
     requiresConsultation Boolean?
     consultationDate     DateTime?
     accepted             Boolean?
+    referenceImageURL    String?
     createdAt            DateTime  @default(now())
     updatedAt            DateTime  @updatedAt
 

@@ -131,4 +131,29 @@ export const appointmentRouter = createTRPCRouter({
         });
       }
     }),
+  addReferenceImage: protectedProcedure
+    .input(
+      z.object({
+        appointmentId: z.string(),
+        imageURL: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      try {
+        return ctx.prisma.appointment.update({
+          where: {
+            id: input.appointmentId,
+          },
+          data: {
+            referenceImageURL: input.imageURL,
+          },
+        });
+      } catch (error) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "An unexpected error occurred, please try again later.",
+          cause: error,
+        });
+      }
+    }),
 });
