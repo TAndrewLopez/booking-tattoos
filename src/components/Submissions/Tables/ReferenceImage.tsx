@@ -2,17 +2,14 @@ import { type Dispatch, type SetStateAction } from "react";
 
 interface ReferenceImageProps {
   editEnabled: boolean;
-  image: {
-    value: File | null;
-    set: Dispatch<SetStateAction<File | null>>;
-  };
+  setImage: Dispatch<SetStateAction<File | null>>;
   uploadImage: () => Promise<void>;
   imageURL: string | null;
 }
 
 const ReferenceImage: React.FC<ReferenceImageProps> = ({
   editEnabled,
-  image,
+  setImage,
   uploadImage,
   imageURL,
 }) => {
@@ -41,7 +38,7 @@ const ReferenceImage: React.FC<ReferenceImageProps> = ({
                     onChange={({ target }) => {
                       if (!target.files) return;
                       if (!target.files[0]) return;
-                      image.set(target.files[0]);
+                      setImage(target.files[0]);
                     }}
                   />
                 </td>

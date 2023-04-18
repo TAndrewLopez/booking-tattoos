@@ -1,14 +1,24 @@
-import { type Appointment, type AppointmentInputs } from "@/types";
+import { type Appointment } from "@/types";
 import InitialReview from "../Tables/InitialReview";
 import AppointmentData from "../Tables/AppointmentData";
 import ReferenceImage from "../Tables/ReferenceImage";
-import { useEffect } from "react";
+import { type Dispatch, type SetStateAction, useEffect } from "react";
 import moment from "moment";
 
 interface AppointmentSectionProps {
   data: Appointment;
   editEnabled: boolean;
-  inputs: AppointmentInputs;
+  accepted: boolean | null;
+  consultation: boolean;
+  sessions: string;
+  consultationDate: string;
+  deposit: boolean;
+  setAccepted: Dispatch<SetStateAction<boolean | null>>;
+  setConsultation: Dispatch<SetStateAction<boolean>>;
+  setSessions: Dispatch<SetStateAction<string>>;
+  setConsultationDate: Dispatch<SetStateAction<string>>;
+  setDeposit: Dispatch<SetStateAction<boolean>>;
+  setImage: Dispatch<SetStateAction<File | null>>;
   uploadImage: () => Promise<void>;
   imageURL: string | null;
 }
@@ -16,38 +26,41 @@ interface AppointmentSectionProps {
 const AppointmentSection: React.FC<AppointmentSectionProps> = ({
   data,
   editEnabled,
-  inputs: {
-    accepted,
-    consultation,
-    consultationDate,
-    sessions,
-    deposit,
-    image,
-  },
+  accepted,
+  consultation,
+  sessions,
+  consultationDate,
+  deposit,
+  setAccepted,
+  setConsultation,
+  setSessions,
+  setConsultationDate,
+  setDeposit,
+  setImage,
   uploadImage,
   imageURL,
 }) => {
   // INITIAL VALUES
   useEffect(() => {
-    accepted.set(data.accepted);
-    if (data.requiresConsultation) consultation.set(data.requiresConsultation);
+    setAccepted(data.accepted);
+    if (data.requiresConsultation) setConsultation(data.requiresConsultation);
     if (data.consultationDate)
-      consultationDate.set(
+      setConsultationDate(
         moment(data.consultationDate.toISOString()).format("yyyy-MM-DD")
       );
-    if (data.sessionsAmount) sessions.set(data.sessionsAmount ?? "0");
-    if (data.depositPaid) deposit.set(data.depositPaid);
+    if (data.sessionsAmount) setSessions(data.sessionsAmount ?? "0");
+    if (data.depositPaid) setDeposit(data.depositPaid);
   }, [
     data.accepted,
     data.requiresConsultation,
     data.sessionsAmount,
     data.consultationDate,
     data.depositPaid,
-    accepted,
-    consultation,
-    sessions,
-    consultationDate,
-    deposit,
+    setAccepted,
+    setConsultation,
+    setSessions,
+    setConsultationDate,
+    setDeposit,
   ]);
   return (
     <section className="space-y-2 p-3">
@@ -58,15 +71,20 @@ const AppointmentSection: React.FC<AppointmentSectionProps> = ({
             accepted={accepted}
             consultation={consultation}
             sessions={sessions}
+            setAccepted={setAccepted}
+            setConsultation={setConsultation}
+            setSessions={setSessions}
           />
         </div>
         <div className="col-span-1 flex flex-col border border-dashed border-gray-200 p-1">
           <AppointmentData
-            consultation={consultation.value}
-            accepted={accepted.value}
             editEnabled={editEnabled}
+            consultation={consultation}
+            accepted={accepted}
             consultationDate={consultationDate}
             deposit={deposit}
+            setConsultationDate={setConsultationDate}
+            setDeposit={setDeposit}
             refImage={data.referenceImageURL ? true : false}
           />
         </div>
@@ -76,7 +94,7 @@ const AppointmentSection: React.FC<AppointmentSectionProps> = ({
       <div className="flex flex-col">
         <ReferenceImage
           editEnabled={editEnabled}
-          image={image}
+          setImage={setImage}
           uploadImage={uploadImage}
           imageURL={imageURL}
         />

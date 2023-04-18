@@ -1,33 +1,47 @@
-import React, { useEffect } from "react";
+import React, { type Dispatch, type SetStateAction, useEffect } from "react";
 import Input from "../../Form/Inputs/Input";
-import { type Appointment, type ContactInputs } from "@/types";
+import { type Appointment } from "@/types";
 
 interface ContactSectionProps {
   data: Appointment;
   editEnabled: boolean;
-  inputs: ContactInputs;
+  name: string;
+  preferredPronouns: string;
+  email: string;
+  number: string;
+  setName: Dispatch<SetStateAction<string>>;
+  setPreferredPronouns: Dispatch<SetStateAction<string>>;
+  setEmail: Dispatch<SetStateAction<string>>;
+  setNumber: Dispatch<SetStateAction<string>>;
 }
 
 const ContactSection: React.FC<ContactSectionProps> = ({
   data,
   editEnabled,
-  inputs: { name, preferredPronouns, email, number },
+  name,
+  preferredPronouns,
+  email,
+  number,
+  setName,
+  setPreferredPronouns,
+  setEmail,
+  setNumber,
 }) => {
   // INITIAL VALUES
   useEffect(() => {
-    name.set(data.name);
-    preferredPronouns.set(data.preferredPronouns);
-    email.set(data.email);
-    number.set(data.phoneNumber);
+    setName(data.name);
+    setPreferredPronouns(data.preferredPronouns);
+    setEmail(data.email);
+    setNumber(data.phoneNumber);
   }, [
     data.name,
     data.preferredPronouns,
     data.email,
     data.phoneNumber,
-    name,
-    preferredPronouns,
-    email,
-    number,
+    setName,
+    setPreferredPronouns,
+    setEmail,
+    setNumber,
   ]);
 
   return (
@@ -36,36 +50,36 @@ const ContactSection: React.FC<ContactSectionProps> = ({
         id="Name"
         label="Name"
         disabled={!editEnabled}
-        value={name.value}
+        value={name}
         onChange={(evt) => {
-          name.set(evt.target.value);
+          setName(evt.target.value);
         }}
       />
       <Input
         id="Pronouns"
         label="Preferred Pronouns"
         disabled={!editEnabled}
-        value={preferredPronouns.value}
+        value={preferredPronouns}
         onChange={(evt) => {
-          preferredPronouns.set(evt.target.value);
+          setPreferredPronouns(evt.target.value);
         }}
       />
       <Input
         id="Email"
         label="Email"
         disabled={!editEnabled}
-        value={email.value}
+        value={email}
         onChange={(evt) => {
-          email.set(evt.target.value);
+          setEmail(evt.target.value);
         }}
       />
       <Input
         id="Number"
         label="Phone Number"
         disabled={!editEnabled}
-        value={number.value}
+        value={number}
         onChange={(evt) => {
-          number.set(evt.target.value);
+          setNumber(evt.target.value);
         }}
       />
     </section>

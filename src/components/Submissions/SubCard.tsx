@@ -3,8 +3,7 @@ import { storage } from "@/lib/firebase";
 import { type Appointment } from "@/types";
 import { api } from "@/utils/api";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import moment from "moment";
-import { useCallback, useEffect, useState, type SyntheticEvent } from "react";
+import { useCallback, useState, type SyntheticEvent } from "react";
 import { toast } from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
 import * as uuid from "uuid";
@@ -54,92 +53,23 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
   const [preferredPronouns, setPreferredPronouns] = useState("");
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState("");
-  const contactInputs = {
-    name: {
-      value: name,
-      set: setName,
-    },
-    preferredPronouns: {
-      value: preferredPronouns,
-      set: setPreferredPronouns,
-    },
-    email: {
-      value: email,
-      set: setEmail,
-    },
-    number: {
-      value: number,
-      set: setNumber,
-    },
-  };
 
   // TATTOO STATES
   const [description, setDescription] = useState("");
   const [size, setSize] = useState("");
   const [placement, setPlacement] = useState("");
   const [color, setColor] = useState("");
-  const tattooInputs = {
-    description: {
-      value: description,
-      set: setDescription,
-    },
-    size: {
-      value: size,
-      set: setSize,
-    },
-    placement: {
-      value: placement,
-      set: setPlacement,
-    },
-    color: {
-      value: color,
-      set: setColor,
-    },
-  };
 
   // APPOINTMENT STATES
   const [accepted, setAccepted] = useState<boolean | null>(null);
   const [consultation, setConsultation] = useState(false);
   const [sessions, setSessions] = useState("0");
-
   const [consultationDate, setConsultationDate] = useState("");
   const [deposit, setDeposit] = useState(false);
   const [image, setImage] = useState<File | null>(null);
-  const appointmentInputs = {
-    consultation: {
-      value: consultation,
-      set: setConsultation,
-    },
-    accepted: {
-      value: accepted,
-      set: setAccepted,
-    },
-    consultationDate: {
-      value: consultationDate,
-      set: setConsultationDate,
-    },
-    sessions: {
-      value: sessions,
-      set: setSessions,
-    },
-    deposit: {
-      value: deposit,
-      set: setDeposit,
-    },
-    image: {
-      value: image,
-      set: setImage,
-    },
-  };
 
   // NOTES STATES
   const [notes, setNotes] = useState("");
-  const noteInputs = {
-    notes: {
-      value: notes,
-      set: setNotes,
-    },
-  };
 
   const submitUpdate = useCallback(
     (evt: SyntheticEvent) => {
@@ -238,43 +168,6 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
     }
   }, [image, addReferenceImage, data.id]);
 
-  // LOAD INITIAL VALUES FROM DB
-  // useEffect(() => {
-  //   // CONTACT STATES
-  //   setName(data.name);
-  //   setPreferredPronouns(data.preferredPronouns);
-  //   setEmail(data.email);
-  //   setNumber(data.phoneNumber);
-
-  //   // TATTOO STATES
-  //   setDescription(data.description);
-  //   setSize(data.size);
-  //   setPlacement(data.placement);
-  //   setColor(data.color);
-
-  //   // APPOINTMENT STATES
-  //   if (data.accepted || data.accepted === false) setAccepted(data.accepted);
-  //   if (data.requiresConsultation) setConsultation(data.requiresConsultation);
-
-  //   if (data.consultationDate)
-  //     setConsultationDate(
-  //       moment(data.consultationDate?.toISOString()).format("yyyy-MM-DD")
-  //     );
-  // }, [
-  //   data.name,
-  //   data.preferredPronouns,
-  //   data.email,
-  //   data.phoneNumber,
-  //   data.description,
-  //   data.size,
-  //   data.placement,
-  //   data.color,
-  //   data.notes,
-  //   data.requiresConsultation,
-  //   data.consultationDate,
-  //   data.accepted,
-  // ]);
-
   return (
     <div className="w-full max-w-3xl rounded-lg border border-gray-200 bg-white shadow-sm shadow-blue-200">
       <SubCardHeader
@@ -288,7 +181,14 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
         <ContactSection
           data={data}
           editEnabled={editEnabled}
-          inputs={contactInputs}
+          name={name}
+          preferredPronouns={preferredPronouns}
+          email={email}
+          number={number}
+          setName={setName}
+          setPreferredPronouns={setPreferredPronouns}
+          setEmail={setEmail}
+          setNumber={setNumber}
         />
       )}
 
@@ -296,7 +196,14 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
         <TattooSection
           data={data}
           editEnabled={editEnabled}
-          inputs={tattooInputs}
+          description={description}
+          size={size}
+          placement={placement}
+          color={color}
+          setDescription={setDescription}
+          setSize={setSize}
+          setPlacement={setPlacement}
+          setColor={setColor}
         />
       )}
 
@@ -304,7 +211,17 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
         <AppointmentSection
           data={data}
           editEnabled={editEnabled}
-          inputs={appointmentInputs}
+          accepted={accepted}
+          consultation={consultation}
+          sessions={sessions}
+          consultationDate={consultationDate}
+          deposit={deposit}
+          setAccepted={setAccepted}
+          setConsultation={setConsultation}
+          setSessions={setSessions}
+          setConsultationDate={setConsultationDate}
+          setDeposit={setDeposit}
+          setImage={setImage}
           uploadImage={uploadImage}
           imageURL={data.referenceImageURL}
         />
@@ -314,7 +231,8 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
         <NoteSection
           data={data}
           editEnabled={editEnabled}
-          inputs={noteInputs}
+          notes={notes}
+          setNotes={setNotes}
           handleDelete={handleDelete}
           userId={userId}
         />

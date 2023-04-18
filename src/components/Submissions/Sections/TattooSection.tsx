@@ -1,33 +1,47 @@
 import Input from "@/components/Form/Inputs/Input";
-import { type Appointment, type TattooInputs } from "@/types";
-import { useEffect } from "react";
+import { type Appointment } from "@/types";
+import { type Dispatch, type SetStateAction, useEffect } from "react";
 
 interface TattooSectionProps {
   data: Appointment;
   editEnabled: boolean;
-  inputs: TattooInputs;
+  description: string;
+  size: string;
+  placement: string;
+  color: string;
+  setDescription: Dispatch<SetStateAction<string>>;
+  setSize: Dispatch<SetStateAction<string>>;
+  setPlacement: Dispatch<SetStateAction<string>>;
+  setColor: Dispatch<SetStateAction<string>>;
 }
 
 const TattooSection: React.FC<TattooSectionProps> = ({
   data,
   editEnabled,
-  inputs: { description, size, placement, color },
+  description,
+  size,
+  placement,
+  color,
+  setDescription,
+  setSize,
+  setPlacement,
+  setColor,
 }) => {
   // INITIAL VALUES
   useEffect(() => {
-    description.set(data.description);
-    size.set(data.size);
-    placement.set(data.placement);
-    color.set(data.color);
+    setDescription(data.description);
+    setSize(data.size);
+    setPlacement(data.placement);
+    setColor(data.color);
   }, [
     data.description,
     data.size,
     data.placement,
     data.color,
-    description,
-    size,
-    placement,
-    color,
+    setDescription,
+    setSize,
+    setPlacement,
+    setColor,
   ]);
   return (
     <section className="space-y-2 p-3">
@@ -35,36 +49,36 @@ const TattooSection: React.FC<TattooSectionProps> = ({
         id="Description"
         label="Description"
         disabled={!editEnabled}
-        value={description.value}
+        value={description}
         onChange={(evt) => {
-          description.set(evt.target.value);
+          setDescription(evt.target.value);
         }}
       />
       <Input
         id="Size"
         label="Size"
         disabled={!editEnabled}
-        value={size.value}
+        value={size}
         onChange={(evt) => {
-          size.set(evt.target.value);
+          setSize(evt.target.value);
         }}
       />
       <Input
         id="Placement"
         label="Placement"
         disabled={!editEnabled}
-        value={placement.value}
+        value={placement}
         onChange={(evt) => {
-          placement.set(evt.target.value);
+          setPlacement(evt.target.value);
         }}
       />
       <Input
         id="Color"
         label="Color"
         disabled={!editEnabled}
-        value={color.value}
+        value={color}
         onChange={(evt) => {
-          color.set(evt.target.value);
+          setColor(evt.target.value);
         }}
       />
     </section>

@@ -1,12 +1,14 @@
 import TextArea from "@/components/Form/Inputs/TextArea";
-import { type Appointment, type NoteInputs } from "@/types";
+import { type Appointment } from "@/types";
 import moment from "moment";
+import { type Dispatch, type SetStateAction } from "react";
 import { FiTrash } from "react-icons/fi";
 
 interface NoteSectionProps {
   editEnabled: boolean;
   userId: string;
-  inputs: NoteInputs;
+  notes: string;
+  setNotes: Dispatch<SetStateAction<string>>;
   data: Appointment;
   handleDelete: (noteId: string) => void;
 }
@@ -14,7 +16,8 @@ interface NoteSectionProps {
 const NoteSection: React.FC<NoteSectionProps> = ({
   editEnabled,
   userId,
-  inputs: { notes },
+  notes,
+  setNotes,
   data,
   handleDelete,
 }) => {
@@ -61,8 +64,8 @@ const NoteSection: React.FC<NoteSectionProps> = ({
       <TextArea
         id="Notes"
         label="Notes"
-        value={notes.value}
-        onChange={(evt) => notes.set(evt.target.value)}
+        value={notes}
+        onChange={(evt) => setNotes(evt.target.value)}
         disabled={!editEnabled}
       />
     </section>

@@ -1,26 +1,24 @@
 import { type Dispatch, type SetStateAction } from "react";
 
 interface AppointmentDataProps {
+  editEnabled: boolean;
   accepted: boolean | null;
   consultation: boolean;
-  editEnabled: boolean;
-  consultationDate: {
-    value: string;
-    set: Dispatch<SetStateAction<string>>;
-  };
-  deposit: {
-    value: boolean;
-    set: Dispatch<SetStateAction<boolean>>;
-  };
+  consultationDate: string;
+  deposit: boolean;
+  setConsultationDate: Dispatch<SetStateAction<string>>;
+  setDeposit: Dispatch<SetStateAction<boolean>>;
   refImage: boolean;
 }
 
 const AppointmentData: React.FC<AppointmentDataProps> = ({
+  editEnabled,
   accepted,
   consultation,
-  editEnabled,
   consultationDate,
   deposit,
+  setConsultationDate,
+  setDeposit,
   refImage,
 }) => {
   return (
@@ -42,9 +40,9 @@ const AppointmentData: React.FC<AppointmentDataProps> = ({
                     className="px-2 outline-dashed outline-1"
                     type="date"
                     disabled={!editEnabled}
-                    value={consultationDate.value}
+                    value={consultationDate}
                     onChange={(evt) => {
-                      consultationDate.set(evt.target.value);
+                      setConsultationDate(evt.target.value);
                     }}
                   />
                 </td>
@@ -68,8 +66,8 @@ const AppointmentData: React.FC<AppointmentDataProps> = ({
                   id="deposit"
                   type="checkbox"
                   disabled={!editEnabled}
-                  checked={deposit.value}
-                  onChange={() => deposit.set(!deposit.value)}
+                  checked={deposit}
+                  onChange={() => setDeposit(!deposit)}
                 />
               </td>
             </tr>

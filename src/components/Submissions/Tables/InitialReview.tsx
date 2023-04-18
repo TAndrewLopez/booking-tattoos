@@ -2,18 +2,12 @@ import { type Dispatch, type SetStateAction } from "react";
 
 interface InitialReviewProps {
   editEnabled: boolean;
-  accepted: {
-    value: boolean | null;
-    set: Dispatch<SetStateAction<boolean | null>>;
-  };
-  consultation: {
-    value: boolean;
-    set: Dispatch<SetStateAction<boolean>>;
-  };
-  sessions: {
-    value: string;
-    set: Dispatch<SetStateAction<string>>;
-  };
+  accepted: boolean | null;
+  consultation: boolean;
+  sessions: string;
+  setAccepted: Dispatch<SetStateAction<boolean | null>>;
+  setConsultation: Dispatch<SetStateAction<boolean>>;
+  setSessions: Dispatch<SetStateAction<string>>;
 }
 
 const InitialReview: React.FC<InitialReviewProps> = ({
@@ -21,6 +15,9 @@ const InitialReview: React.FC<InitialReviewProps> = ({
   accepted,
   consultation,
   sessions,
+  setAccepted,
+  setConsultation,
+  setSessions,
 }) => {
   return (
     <>
@@ -31,8 +28,8 @@ const InitialReview: React.FC<InitialReviewProps> = ({
             <td className="p-1">
               <button
                 onClick={() =>
-                  accepted.set(() => {
-                    if (accepted.value) {
+                  setAccepted(() => {
+                    if (accepted) {
                       return null;
                     } else {
                       return true;
@@ -44,7 +41,7 @@ const InitialReview: React.FC<InitialReviewProps> = ({
                     hover:text-white 
                     disabled:cursor-not-allowed 
                     ${
-                      accepted.value
+                      accepted
                         ? "bg-emerald-900 text-white"
                         : "bg-emerald-200 text-emerald-900 hover:bg-emerald-900 disabled:bg-neutral-400 disabled:text-neutral-50"
                     }
@@ -57,8 +54,8 @@ const InitialReview: React.FC<InitialReviewProps> = ({
             <td className="p-1 text-right">
               <button
                 onClick={() =>
-                  accepted.set(() => {
-                    if (accepted.value === false) {
+                  setAccepted(() => {
+                    if (accepted === false) {
                       return null;
                     } else {
                       return false;
@@ -70,7 +67,7 @@ const InitialReview: React.FC<InitialReviewProps> = ({
                 hover:text-white 
                 disabled:cursor-not-allowed
                 ${
-                  accepted.value === false
+                  accepted === false
                     ? "bg-red-900 text-white"
                     : "bg-red-200 text-red-900 hover:bg-red-900 disabled:bg-neutral-400 disabled:text-neutral-50"
                 }
@@ -81,7 +78,7 @@ const InitialReview: React.FC<InitialReviewProps> = ({
               </button>
             </td>
           </tr>
-          {accepted.value && (
+          {accepted && (
             <>
               <tr>
                 <td className="p-1 text-sm">
@@ -93,8 +90,8 @@ const InitialReview: React.FC<InitialReviewProps> = ({
                     id="consultation"
                     type="checkbox"
                     disabled={!editEnabled}
-                    checked={consultation.value}
-                    onChange={() => consultation.set(!consultation.value)}
+                    checked={consultation}
+                    onChange={() => setConsultation(!consultation)}
                   />
                 </td>
               </tr>
@@ -107,8 +104,8 @@ const InitialReview: React.FC<InitialReviewProps> = ({
                     className="w-1/4 text-right"
                     id="sessions"
                     type="number"
-                    value={sessions.value}
-                    onChange={(evt) => sessions.set(evt.target.value)}
+                    value={sessions}
+                    onChange={(evt) => setSessions(evt.target.value)}
                   />
                 </td>
               </tr>
