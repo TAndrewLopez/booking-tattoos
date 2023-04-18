@@ -3,6 +3,7 @@ import useCalendarStore from "@/hooks/useCalendarStore";
 import useEventModal from "@/hooks/useEventModal";
 import { api } from "@/utils/api";
 import moment from "moment";
+import { useSession } from "next-auth/react";
 import { useMemo } from "react";
 
 interface DayProps {
@@ -14,13 +15,23 @@ interface DayProps {
 // TODO: SHOW CONFLICTS FOR ALREADY SCHEDULE APTS
 
 const Day: React.FC<DayProps> = ({ day, rowIndex }) => {
+  const { data: sessionData } = useSession();
+  const { data: calendarEvents } = api.calendarEvents.getAll.useQuery(
+    undefined,
+    {
+      enabled: sessionData?.user !== undefined,
+    }
+  );
+  const { data: consultations } = api.appointment.getConsultations.useQuery(
+    undefined,
+    {
+      enabled: sessionData?.user !== undefined,
+    }
+  );
+
   const { labels, setDaySelected } = useCalendarStore();
   const { openModal: openEventModal, setSelectedEvent } = useEventModal();
   const { setSelectedAppointment } = useAppointmentModal();
-
-  // EVENTS FROM DATABASE
-  const { data: calendarEvents } = api.calendarEvents.getAll.useQuery();
-  const { data: consultations } = api.appointment.getConsultations.useQuery();
 
   const filteredCalEvents = useMemo(() => {
     if (!calendarEvents) return null;

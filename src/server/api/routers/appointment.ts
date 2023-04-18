@@ -84,7 +84,7 @@ export const appointmentRouter = createTRPCRouter({
         });
       }
     }),
-  update: protectedProcedure
+  updateAppointment: protectedProcedure
     .input(
       z.object({
         id: z.string(),

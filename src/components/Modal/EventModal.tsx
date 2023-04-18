@@ -9,32 +9,34 @@ import { toast } from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
 import { api } from "@/utils/api";
 import moment from "moment";
+import { useSession } from "next-auth/react";
 
 const labelClasses = ["indigo", "gray", "green", "blue", "red", "purple"];
 
 // TODO: FIX SENDING DATE TO DATEBASE WITH NEW INPUT
 
 const EventModal = () => {
-  const { pathname } = useRouter();
-  const { isOpen, closeModal, selectedEvent } = useEventModal();
-  const { daySelected } = useCalendarStore();
-
-  const [isLoading, setIsLoading] = useState(false);
-
-  const { refetch: refetchCalendarEvents } =
-    api.calendarEvents.getAll.useQuery();
-
+  const { data: sessionData } = useSession();
+  const { refetch: refetchCalendarEvents } = api.calendarEvents.getAll.useQuery(
+    undefined,
+    {
+      enabled: sessionData?.user !== undefined,
+    }
+  );
   const createEvent = api.calendarEvents.create.useMutation({
     onSuccess: () => void refetchCalendarEvents(),
   });
-
   const updateEvent = api.calendarEvents.update.useMutation({
     onSuccess: () => void refetchCalendarEvents(),
   });
-
   const deleteEvent = api.calendarEvents.delete.useMutation({
     onSuccess: () => void refetchCalendarEvents(),
   });
+
+  const { pathname } = useRouter();
+  const { isOpen, closeModal, selectedEvent } = useEventModal();
+  const { daySelected } = useCalendarStore();
+  const [isLoading, setIsLoading] = useState(false);
 
   // FORM STATES
   const [title, setTitle] = useState("");

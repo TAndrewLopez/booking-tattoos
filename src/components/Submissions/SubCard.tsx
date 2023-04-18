@@ -1,18 +1,19 @@
 import Button from "@/components/Form/Inputs/Button";
+import { storage } from "@/lib/firebase";
 import { type Appointment } from "@/types";
 import { api } from "@/utils/api";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import moment from "moment";
 import { useCallback, useEffect, useState, type SyntheticEvent } from "react";
 import { toast } from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
+import * as uuid from "uuid";
 import AppointmentSection from "./Sections/AppointmentSection";
 import ContactSection from "./Sections/ContactSection";
 import NoteSection from "./Sections/NoteSection";
 import TattooSection from "./Sections/TattooSection";
 import SubCardHeader from "./SubCardHeader";
-import { storage } from "@/lib/firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import * as uuid from "uuid";
+import { useSession } from "next-auth/react";
 
 interface SubCardProps {
   userId: string;
@@ -22,12 +23,20 @@ interface SubCardProps {
 // TODO: STORE CONSULTATION AND TATTOO APPOINTMENT DATES IN DATABASE
 
 const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
+  const { data: sessionData } = useSession();
+
   const [isLoading, setIsLoading] = useState(false);
   const [editEnabled, setEditEnabled] = useState(false);
   const [displaySection, setDisplaySection] = useState("Contact");
 
-  const { refetch: refetchAppointments } = api.appointment.getAll.useQuery();
-  const updateApt = api.appointment.update.useMutation({
+  const { refetch: refetchAppointments } = api.appointment.getAll.useQuery(
+    undefined,
+    {
+      enabled: sessionData?.user !== undefined,
+    }
+  );
+
+  const updateApt = api.appointment.updateAppointment.useMutation({
     onSuccess: () => void refetchAppointments(),
   });
   const createNote = api.appointmentNotes.create.useMutation({
@@ -89,10 +98,11 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
   };
 
   // APPOINTMENT STATES
-  const [consultation, setConsultation] = useState(false);
   const [accepted, setAccepted] = useState<boolean | null>(null);
-  const [consultationDate, setConsultationDate] = useState("");
+  const [consultation, setConsultation] = useState(false);
   const [sessions, setSessions] = useState("0");
+
+  const [consultationDate, setConsultationDate] = useState("");
   const [deposit, setDeposit] = useState(false);
   const [image, setImage] = useState<File | null>(null);
   const appointmentInputs = {
@@ -226,20 +236,22 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
 
   // LOAD INITIAL VALUES FROM DB
   useEffect(() => {
-    // INPUT STATES
+    // CONTACT STATES
     setName(data.name);
     setPreferredPronouns(data.preferredPronouns);
     setEmail(data.email);
     setNumber(data.phoneNumber);
+
+    // TATTOO STATES
     setDescription(data.description);
     setSize(data.size);
     setPlacement(data.placement);
     setColor(data.color);
 
-    // RESPONSE STATES
-    if (data.accepted === true || data.accepted === false)
-      setAccepted(data.accepted);
+    // APPOINTMENT STATES
+    if (data.accepted || data.accepted === false) setAccepted(data.accepted);
     if (data.requiresConsultation) setConsultation(data.requiresConsultation);
+
     if (data.consultationDate)
       setConsultationDate(
         moment(data.consultationDate?.toISOString()).format("yyyy-MM-DD")

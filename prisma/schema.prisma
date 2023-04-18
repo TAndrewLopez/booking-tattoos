@@ -70,9 +70,11 @@ model Appointment {
     size                 String
     placement            String
     color                String
+    accepted             Boolean?
     requiresConsultation Boolean?
     consultationDate     DateTime?
-    accepted             Boolean?
+    sessionsAmount       String?
+    depositPaid          Boolean?
     referenceImageURL    String?
     createdAt            DateTime  @default(now())
     updatedAt            DateTime  @updatedAt

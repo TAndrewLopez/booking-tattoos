@@ -1,10 +1,15 @@
 import useCalendarStore from "@/hooks/useCalendarStore";
 import { type LabelObj } from "@/types";
 import { api } from "@/utils/api";
+import { useSession } from "next-auth/react";
 import { useCallback, useEffect } from "react";
 
 const CalendarLabels = () => {
-  const { data: calEvents } = api.calendarEvents.getAll.useQuery();
+  const { data: sessionData } = useSession();
+  const { data: calEvents } = api.calendarEvents.getAll.useQuery(undefined, {
+    enabled: sessionData?.user !== undefined,
+  });
+
   const { labels, setLabels, updateLabel } = useCalendarStore();
 
   const handleUpdateLabel = useCallback(
