@@ -1,6 +1,6 @@
+import Head from "next/head";
 import { type ReactNode } from "react";
 import Navbar from "./Navbar";
-import Head from "next/head";
 
 interface LayoutProps {
   children: ReactNode;

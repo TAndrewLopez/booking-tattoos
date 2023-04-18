@@ -1,26 +1,10 @@
 import useAppointmentModal from "@/hooks/useAppointmentModal";
-// import useCalendarStore from "@/hooks/useCalendarStore";
-// import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { MdDragHandle } from "react-icons/md";
-// import ContactInputs from "./ContactInputs";
 import TattooInputs from "./TattooInputs";
 
 const AppointmentModal = () => {
   const { isOpen, closeModal } = useAppointmentModal();
-  // const { daySelected } = useCalendarStore();
-
-  // const [isLoading, setIsLoading] = useState(false);
-
-  // FORM STATES
-  // const [name, setName] = useState("");
-  // const [pronouns, setPronouns] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [number, setNumber] = useState("");
-  // const [description, setDescrition] = useState("");
-  // const [size, setSize] = useState("");
-  // const [placement, setPlacement] = useState("");
-  // const [color, setColor] = useState("");
 
   if (!isOpen) return null;
 

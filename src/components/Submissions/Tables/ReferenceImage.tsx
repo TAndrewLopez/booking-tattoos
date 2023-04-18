@@ -19,7 +19,7 @@ const ReferenceImage: React.FC<ReferenceImageProps> = ({
       {imageURL ? (
         <>
           <a
-            className="hover:text-underline truncate text-blue-500"
+            className="truncate text-blue-500 hover:text-blue-700 hover:underline"
             href="#"
             onClick={() => window.open(imageURL, "_blank")}
           >

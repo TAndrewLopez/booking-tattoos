@@ -1,7 +1,7 @@
+import { type Session } from "next-auth";
 import Link from "next/link";
 import { AiOutlineClose } from "react-icons/ai";
 import AuthButtons from "../Auth/AuthButtons";
-import { type Session } from "next-auth";
 
 interface MobileNavProps {
   session: Session | null;

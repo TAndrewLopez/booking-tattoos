@@ -1,9 +1,8 @@
+import useCalendarStore from "@/hooks/useCalendarStore";
 import { getMonth } from "@/utils/calendar";
 import moment from "moment";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import CalendarNavigation from "./CalendarNavigation";
-import useCalendarStore from "@/hooks/useCalendarStore";
-import React from "react";
 
 const SmallCalendar = () => {
   const [currentMonthIndex, setCurrentMonthIndex] = useState(moment().month());

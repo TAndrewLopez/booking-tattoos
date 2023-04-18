@@ -1,14 +1,14 @@
 import ContactInputs from "@/components/Form/Inputs/ContactInputs";
 import TattooInputs from "@/components/Form/Inputs/TattooInputs";
+import useAppointmentModal from "@/hooks/useAppointmentModal";
 import useFormStore from "@/hooks/useFormStore";
 import { api } from "@/utils/api";
+import { stripPhoneNumber } from "@/utils/validation";
 import { useCallback, useState, type SyntheticEvent } from "react";
 import toast from "react-hot-toast";
 import MultiFormButtons from "./MultiFormButtons";
 import ReviewAptEntries from "./ReviewEntry";
 import Sidebar from "./Sidebar";
-import useAppointmentModal from "@/hooks/useAppointmentModal";
-import { stripPhoneNumber } from "@/utils/validation";
 
 const MultiForm = () => {
   const createAppointment = api.appointment.create.useMutation();

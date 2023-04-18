@@ -3,6 +3,7 @@ import { storage } from "@/lib/firebase";
 import { type Appointment } from "@/types";
 import { api } from "@/utils/api";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { useSession } from "next-auth/react";
 import { useCallback, useState, type SyntheticEvent } from "react";
 import { toast } from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
@@ -12,7 +13,6 @@ import ContactSection from "./Sections/ContactSection";
 import NoteSection from "./Sections/NoteSection";
 import TattooSection from "./Sections/TattooSection";
 import SubCardHeader from "./SubCardHeader";
-import { useSession } from "next-auth/react";
 
 interface SubCardProps {
   userId: string;

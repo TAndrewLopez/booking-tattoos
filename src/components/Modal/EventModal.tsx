@@ -1,15 +1,15 @@
 import useCalendarStore from "@/hooks/useCalendarStore";
 import useEventModal from "@/hooks/useEventModal";
-import { type SyntheticEvent, useCallback, useEffect, useState } from "react";
-import { AiOutlineClose, AiOutlineCheck } from "react-icons/ai";
-import { MdDragHandle, MdSchedule, MdSegment } from "react-icons/md";
-import { FiBookmark, FiTrash } from "react-icons/fi";
-import { useRouter } from "next/router";
-import { toast } from "react-hot-toast";
-import { ClipLoader } from "react-spinners";
 import { api } from "@/utils/api";
 import moment from "moment";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { useCallback, useEffect, useState, type SyntheticEvent } from "react";
+import { toast } from "react-hot-toast";
+import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
+import { FiBookmark, FiTrash } from "react-icons/fi";
+import { MdDragHandle, MdSchedule, MdSegment } from "react-icons/md";
+import { ClipLoader } from "react-spinners";
 
 const labelClasses = ["indigo", "gray", "green", "blue", "red", "purple"];
 

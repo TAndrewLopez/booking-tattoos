@@ -1,8 +1,8 @@
-import { z } from "zod";
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { mailOptions, transporter } from "@/lib/nodemailer";
 import { generateTattooRequestConfirmationEmailContent } from "@/utils/emailGeneration";
 import { TRPCError } from "@trpc/server";
+import { z } from "zod";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
 export const appointmentRouter = createTRPCRouter({
   getAll: protectedProcedure.query(({ ctx }) => {

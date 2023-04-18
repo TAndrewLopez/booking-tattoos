@@ -1,6 +1,6 @@
 import Input from "@/components/Form/Inputs/Input";
 import { type Appointment } from "@/types";
-import { type Dispatch, type SetStateAction, useEffect } from "react";
+import { useEffect, type Dispatch, type SetStateAction } from "react";
 
 interface TattooSectionProps {
   data: Appointment;

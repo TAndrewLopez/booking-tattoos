@@ -1,6 +1,6 @@
+import useAppointmentModal from "@/hooks/useAppointmentModal";
 import { AiOutlineClose } from "react-icons/ai";
 import MultiForm from "../Form/MultiForm";
-import useAppointmentModal from "@/hooks/useAppointmentModal";
 
 const Modal = () => {
   const { isOpen, closeModal } = useAppointmentModal();

@@ -1,6 +1,6 @@
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
-import { TRPCError } from "@trpc/server";
 
 export const calendarEventRouter = createTRPCRouter({
   getAll: protectedProcedure.query(({ ctx }) => {

@@ -29,7 +29,7 @@ const AppointmentData: React.FC<AppointmentDataProps> = ({
           <tbody>
             {consultation && (
               <tr>
-                <td className="text-sm">
+                <td className="p-1 text-sm">
                   <label className="mr-2" htmlFor="consultation-date">
                     Consultation Date:
                   </label>
@@ -55,7 +55,7 @@ const AppointmentData: React.FC<AppointmentDataProps> = ({
               </td>
             </tr> */}
             <tr>
-              <td className="text-sm">
+              <td className="p-1 text-sm">
                 <label className="mr-2" htmlFor="deposit">
                   Deposit Paid:
                 </label>
@@ -72,7 +72,7 @@ const AppointmentData: React.FC<AppointmentDataProps> = ({
               </td>
             </tr>
             <tr>
-              <td className="text-sm">
+              <td className="p-1 text-sm">
                 <label className="mr-2" htmlFor="references">
                   Reference Image:
                 </label>

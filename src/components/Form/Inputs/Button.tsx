@@ -1,4 +1,4 @@
-import { type SyntheticEvent, type ReactNode } from "react";
+import { type ReactNode, type SyntheticEvent } from "react";
 
 interface ButtonProps {
   type: "submit" | "error" | "details";

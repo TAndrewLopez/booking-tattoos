@@ -1,6 +1,6 @@
-import React, { type Dispatch, type SetStateAction, useEffect } from "react";
-import Input from "../../Form/Inputs/Input";
 import { type Appointment } from "@/types";
+import React, { useEffect, type Dispatch, type SetStateAction } from "react";
+import Input from "../../Form/Inputs/Input";
 
 interface ContactSectionProps {
   data: Appointment;

@@ -1,9 +1,9 @@
 import { type Appointment } from "@/types";
-import InitialReview from "../Tables/InitialReview";
-import AppointmentData from "../Tables/AppointmentData";
-import ReferenceImage from "../Tables/ReferenceImage";
-import { type Dispatch, type SetStateAction, useEffect } from "react";
 import moment from "moment";
+import { useEffect, type Dispatch, type SetStateAction } from "react";
+import AppointmentData from "../Tables/AppointmentData";
+import InitialReview from "../Tables/InitialReview";
+import ReferenceImage from "../Tables/ReferenceImage";
 
 interface AppointmentSectionProps {
   data: Appointment;
