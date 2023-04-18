@@ -156,11 +156,13 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
           placement,
           size,
           color,
-          requiresConsultation: consultation,
           accepted: accepted ?? undefined,
+          requiresConsultation: consultation,
           consultationDate: consultationDate
             ? new Date(new Date(`${consultationDate} 11:30:00`).toISOString())
             : undefined,
+          sessionsAmount: sessions,
+          depositPaid: deposit,
         });
 
         if (notes.length) {
@@ -197,6 +199,8 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
       consultationDate,
       accepted,
       userId,
+      sessions,
+      deposit,
     ]
   );
 
@@ -235,41 +239,41 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
   }, [image, addReferenceImage, data.id]);
 
   // LOAD INITIAL VALUES FROM DB
-  useEffect(() => {
-    // CONTACT STATES
-    setName(data.name);
-    setPreferredPronouns(data.preferredPronouns);
-    setEmail(data.email);
-    setNumber(data.phoneNumber);
+  // useEffect(() => {
+  //   // CONTACT STATES
+  //   setName(data.name);
+  //   setPreferredPronouns(data.preferredPronouns);
+  //   setEmail(data.email);
+  //   setNumber(data.phoneNumber);
 
-    // TATTOO STATES
-    setDescription(data.description);
-    setSize(data.size);
-    setPlacement(data.placement);
-    setColor(data.color);
+  //   // TATTOO STATES
+  //   setDescription(data.description);
+  //   setSize(data.size);
+  //   setPlacement(data.placement);
+  //   setColor(data.color);
 
-    // APPOINTMENT STATES
-    if (data.accepted || data.accepted === false) setAccepted(data.accepted);
-    if (data.requiresConsultation) setConsultation(data.requiresConsultation);
+  //   // APPOINTMENT STATES
+  //   if (data.accepted || data.accepted === false) setAccepted(data.accepted);
+  //   if (data.requiresConsultation) setConsultation(data.requiresConsultation);
 
-    if (data.consultationDate)
-      setConsultationDate(
-        moment(data.consultationDate?.toISOString()).format("yyyy-MM-DD")
-      );
-  }, [
-    data.name,
-    data.preferredPronouns,
-    data.email,
-    data.phoneNumber,
-    data.description,
-    data.size,
-    data.placement,
-    data.color,
-    data.notes,
-    data.requiresConsultation,
-    data.consultationDate,
-    data.accepted,
-  ]);
+  //   if (data.consultationDate)
+  //     setConsultationDate(
+  //       moment(data.consultationDate?.toISOString()).format("yyyy-MM-DD")
+  //     );
+  // }, [
+  //   data.name,
+  //   data.preferredPronouns,
+  //   data.email,
+  //   data.phoneNumber,
+  //   data.description,
+  //   data.size,
+  //   data.placement,
+  //   data.color,
+  //   data.notes,
+  //   data.requiresConsultation,
+  //   data.consultationDate,
+  //   data.accepted,
+  // ]);
 
   return (
     <div className="w-full max-w-3xl rounded-lg border border-gray-200 bg-white shadow-sm shadow-blue-200">
@@ -281,15 +285,24 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
       />
 
       {displaySection === "Contact" && (
-        <ContactSection editEnabled={editEnabled} inputs={contactInputs} />
+        <ContactSection
+          data={data}
+          editEnabled={editEnabled}
+          inputs={contactInputs}
+        />
       )}
 
       {displaySection === "Tattoo" && (
-        <TattooSection editEnabled={editEnabled} inputs={tattooInputs} />
+        <TattooSection
+          data={data}
+          editEnabled={editEnabled}
+          inputs={tattooInputs}
+        />
       )}
 
       {displaySection === "Appointment" && (
         <AppointmentSection
+          data={data}
           editEnabled={editEnabled}
           inputs={appointmentInputs}
           uploadImage={uploadImage}
@@ -299,11 +312,11 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
 
       {displaySection === "Notes" && (
         <NoteSection
+          data={data}
           editEnabled={editEnabled}
           inputs={noteInputs}
           handleDelete={handleDelete}
           userId={userId}
-          data={data}
         />
       )}
 

@@ -1,15 +1,34 @@
 import Input from "@/components/Form/Inputs/Input";
-import { type TattooInputs } from "@/types";
+import { type Appointment, type TattooInputs } from "@/types";
+import { useEffect } from "react";
 
 interface TattooSectionProps {
+  data: Appointment;
   editEnabled: boolean;
   inputs: TattooInputs;
 }
 
 const TattooSection: React.FC<TattooSectionProps> = ({
+  data,
   editEnabled,
   inputs: { description, size, placement, color },
 }) => {
+  // INITIAL VALUES
+  useEffect(() => {
+    description.set(data.description);
+    size.set(data.size);
+    placement.set(data.placement);
+    color.set(data.color);
+  }, [
+    data.description,
+    data.size,
+    data.placement,
+    data.color,
+    description,
+    size,
+    placement,
+    color,
+  ]);
   return (
     <section className="space-y-2 p-3">
       <Input

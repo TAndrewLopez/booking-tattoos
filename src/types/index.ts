@@ -45,13 +45,13 @@ export type TattooInputs = {
 };
 
 export type AppointmentInputs = {
-  consultation: {
-    value: boolean;
-    set: Dispatch<SetStateAction<boolean>>;
-  };
   accepted: {
     value: boolean | null;
     set: Dispatch<SetStateAction<boolean | null>>;
+  };
+  consultation: {
+    value: boolean;
+    set: Dispatch<SetStateAction<boolean>>;
   };
   consultationDate: {
     value: string;

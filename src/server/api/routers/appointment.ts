@@ -96,11 +96,11 @@ export const appointmentRouter = createTRPCRouter({
         size: z.string(),
         placement: z.string(),
         color: z.string(),
-        userId: z.string().nullish(),
+        accepted: z.boolean().optional(),
         requiresConsultation: z.boolean().optional(),
         consultationDate: z.date().optional(),
-        accepted: z.boolean().optional(),
-        notes: z.string().optional(),
+        sessionsAmount: z.string().optional(),
+        depositPaid: z.boolean().optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -118,9 +118,11 @@ export const appointmentRouter = createTRPCRouter({
             size: input.size,
             placement: input.placement,
             color: input.color,
+            accepted: input.accepted,
             requiresConsultation: input.requiresConsultation,
             consultationDate: input.consultationDate,
-            accepted: input.accepted,
+            sessionsAmount: input.sessionsAmount,
+            depositPaid: input.depositPaid,
           },
         });
       } catch (error) {

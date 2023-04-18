@@ -12,6 +12,7 @@ interface AppointmentDataProps {
     value: boolean;
     set: Dispatch<SetStateAction<boolean>>;
   };
+  refImage: boolean;
 }
 
 const AppointmentData: React.FC<AppointmentDataProps> = ({
@@ -20,6 +21,7 @@ const AppointmentData: React.FC<AppointmentDataProps> = ({
   editEnabled,
   consultationDate,
   deposit,
+  refImage,
 }) => {
   return (
     <>
@@ -29,9 +31,22 @@ const AppointmentData: React.FC<AppointmentDataProps> = ({
           <tbody>
             {consultation && (
               <tr>
-                <td className="text-sm">Consultation Date</td>
+                <td className="text-sm">
+                  <label className="mr-2" htmlFor="consultation-date">
+                    Consultation Date:
+                  </label>
+                </td>
                 <td className="text-right">
-                  <input type="date" />
+                  <input
+                    id="consultation-date"
+                    className="px-2 outline-dashed outline-1"
+                    type="date"
+                    disabled={!editEnabled}
+                    value={consultationDate.value}
+                    onChange={(evt) => {
+                      consultationDate.set(evt.target.value);
+                    }}
+                  />
                 </td>
               </tr>
             )}
@@ -42,15 +57,36 @@ const AppointmentData: React.FC<AppointmentDataProps> = ({
               </td>
             </tr> */}
             <tr>
-              <td className="text-sm">Deposit Paid</td>
+              <td className="text-sm">
+                <label className="mr-2" htmlFor="deposit">
+                  Deposit Paid:
+                </label>
+              </td>
               <td className="text-right">
-                <input type="checkbox" />
+                <input
+                  className="h-4 w-4"
+                  id="deposit"
+                  type="checkbox"
+                  disabled={!editEnabled}
+                  checked={deposit.value}
+                  onChange={() => deposit.set(!deposit.value)}
+                />
               </td>
             </tr>
             <tr>
-              <td className="text-sm">Reference Images</td>
+              <td className="text-sm">
+                <label className="mr-2" htmlFor="references">
+                  Reference Image:
+                </label>
+              </td>
               <td className="text-right">
-                <input type="checkbox" />
+                <input
+                  className="h-4 w-4"
+                  id="references"
+                  type="checkbox"
+                  disabled={!editEnabled}
+                  checked={refImage}
+                />
               </td>
             </tr>
           </tbody>

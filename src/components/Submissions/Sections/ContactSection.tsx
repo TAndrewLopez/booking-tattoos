@@ -1,16 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Input from "../../Form/Inputs/Input";
-import { type ContactInputs } from "@/types";
+import { type Appointment, type ContactInputs } from "@/types";
 
 interface ContactSectionProps {
+  data: Appointment;
   editEnabled: boolean;
   inputs: ContactInputs;
 }
 
 const ContactSection: React.FC<ContactSectionProps> = ({
+  data,
   editEnabled,
   inputs: { name, preferredPronouns, email, number },
 }) => {
+  // INITIAL VALUES
+  useEffect(() => {
+    name.set(data.name);
+    preferredPronouns.set(data.preferredPronouns);
+    email.set(data.email);
+    number.set(data.phoneNumber);
+  }, [
+    data.name,
+    data.preferredPronouns,
+    data.email,
+    data.phoneNumber,
+    name,
+    preferredPronouns,
+    email,
+    number,
+  ]);
+
   return (
     <section className="space-y-2 p-3">
       <Input
