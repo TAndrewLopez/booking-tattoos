@@ -1,5 +1,6 @@
 import SubCard from "@/components/Submissions/SubCard";
 import SubHeader from "@/components/Submissions/SubHeader";
+import SubSidebar from "@/components/Submissions/SubSidebar";
 import { type Appointment } from "@/types";
 import { api } from "@/utils/api";
 import { type NextPage, type NextPageContext } from "next";
@@ -17,10 +18,21 @@ const Submissions: NextPage = () => {
 
   const searchNameSubmissions = useMemo(() => {
     if (!aptData || !searchName.length) return [];
-
-    return aptData?.filter((apt) =>
+    const searchEmailQuery = aptData.filter((apt) =>
+      apt.email.toLowerCase().includes(searchName.toLocaleLowerCase())
+    );
+    const searchNameQuery = aptData.filter((apt) =>
       apt.name.toLowerCase().includes(searchName.toLowerCase())
     );
+
+    const returnResults: Appointment[] = [];
+
+    return [...searchEmailQuery, ...searchNameQuery].reduce((acc, el) => {
+      if (!acc.includes(el)) {
+        acc.push(el);
+      }
+      return acc;
+    }, returnResults);
   }, [searchName, aptData]);
 
   const filteredSubmissions: Appointment[] = useMemo(() => {
@@ -57,7 +69,7 @@ const Submissions: NextPage = () => {
   }, [searchName, filteredSubmissions]);
 
   return (
-    <main className="flex flex-col gap-5 p-4">
+    <main className="flex gap-5 p-4">
       {/* SEARCH AND FILTER FEATURES */}
       {/* <SubHeader
         filter={filter}
@@ -65,8 +77,14 @@ const Submissions: NextPage = () => {
         search={searchName}
         setSearch={setSearchName}
       /> */}
+      <SubSidebar
+        search={searchName}
+        setSearch={setSearchName}
+        filter={filter}
+        setFilter={setFilter}
+      />
 
-      <div className="flex w-full flex-wrap justify-center gap-5 py-5">
+      <div className="flex w-full flex-wrap gap-5">
         {/* UNFILTERED APPOINTMENT DATA */}
         {!filter.length &&
           !searchName.length &&

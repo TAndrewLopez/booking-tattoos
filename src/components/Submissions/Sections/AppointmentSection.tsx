@@ -1,6 +1,5 @@
 import { type Appointment } from "@/types";
-import moment from "moment";
-import { useEffect, type Dispatch, type SetStateAction } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import AppointmentData from "../Tables/AppointmentData";
 import InitialReview from "../Tables/InitialReview";
 import ReferenceImage from "../Tables/ReferenceImage";
@@ -40,28 +39,6 @@ const AppointmentSection: React.FC<AppointmentSectionProps> = ({
   uploadImage,
   imageURL,
 }) => {
-  // INITIAL VALUES
-  useEffect(() => {
-    setAccepted(data.accepted);
-    if (data.requiresConsultation) setConsultation(data.requiresConsultation);
-    if (data.consultationDate)
-      setConsultationDate(
-        moment(data.consultationDate.toISOString()).format("yyyy-MM-DD")
-      );
-    if (data.sessionsAmount) setSessions(data.sessionsAmount ?? "0");
-    if (data.depositPaid) setDeposit(data.depositPaid);
-  }, [
-    data.accepted,
-    data.requiresConsultation,
-    data.sessionsAmount,
-    data.consultationDate,
-    data.depositPaid,
-    setAccepted,
-    setConsultation,
-    setSessions,
-    setConsultationDate,
-    setDeposit,
-  ]);
   return (
     <section className="space-y-2 p-3">
       <div className="grid gap-2 sm:grid-cols-2">
@@ -83,6 +60,7 @@ const AppointmentSection: React.FC<AppointmentSectionProps> = ({
             accepted={accepted}
             consultationDate={consultationDate}
             deposit={deposit}
+            sessions={sessions}
             setConsultationDate={setConsultationDate}
             setDeposit={setDeposit}
             refImage={data.referenceImageURL ? true : false}
@@ -93,7 +71,7 @@ const AppointmentSection: React.FC<AppointmentSectionProps> = ({
       {/* REFERENCE IMAGES */}
       <div className="flex flex-col">
         <ReferenceImage
-          editEnabled={editEnabled}
+          editEnabled={accepted && editEnabled}
           setImage={setImage}
           uploadImage={uploadImage}
           imageURL={imageURL}

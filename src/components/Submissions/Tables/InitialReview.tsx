@@ -10,6 +10,32 @@ interface InitialReviewProps {
   setSessions: Dispatch<SetStateAction<string>>;
 }
 
+type Rejection = {
+  value: string;
+  reason: string;
+};
+
+const REJECTION_REASON: Rejection[] = [
+  { value: "", reason: "Select Reason" },
+  { value: "fine-line", reason: "Fine line tattoo" },
+  { value: "portrait", reason: "Portrait tattoo" },
+  { value: "script", reason: "Text/Scripts" },
+];
+
+type Referral = {
+  name: string;
+  value: string;
+};
+
+const TATTOO_REFERRALS = [
+  { name: "Select Referral", value: "" },
+  { name: "George Perham", value: "George Perham" },
+  { name: "Alex Harris", value: "Alex Harris" },
+  { name: "Mikki Bedol", value: "Mikki Bedol" },
+  { name: "Jodi Longo", value: "Jodi Longo" },
+  { name: "Steve Cacioppo", value: "Steve Cacioppo" },
+];
+
 const InitialReview: React.FC<InitialReviewProps> = ({
   editEnabled,
   accepted,
@@ -82,7 +108,7 @@ const InitialReview: React.FC<InitialReviewProps> = ({
             <>
               <tr>
                 <td className="p-1 text-sm">
-                  <label htmlFor="consultation">Requires Consultation</label>
+                  <label htmlFor="consultation">Requires Consultation:</label>
                 </td>
                 <td className="p-1 text-right">
                   <input
@@ -97,7 +123,7 @@ const InitialReview: React.FC<InitialReviewProps> = ({
               </tr>
               <tr>
                 <td className="p-1 text-sm">
-                  <label htmlFor="sessions"> No. of Sessions</label>
+                  <label htmlFor="sessions">No. of Sessions:</label>
                 </td>
                 <td className="p-1 text-right">
                   <input
@@ -107,6 +133,38 @@ const InitialReview: React.FC<InitialReviewProps> = ({
                     value={sessions}
                     onChange={(evt) => setSessions(evt.target.value)}
                   />
+                </td>
+              </tr>
+            </>
+          )}
+          {accepted === false && (
+            <>
+              <tr>
+                <td className="p-1 text-sm">
+                  <label htmlFor="reason">Reason:</label>
+                </td>
+                <td className="p-1 text-right">
+                  <select id="reason">
+                    {REJECTION_REASON.map(({ value, reason }, i) => (
+                      <option value={value} key={`${reason}${i}`}>
+                        {reason}
+                      </option>
+                    ))}
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td className="p-1 text-sm">
+                  <label htmlFor="referral">Referral:</label>
+                </td>
+                <td className="p-1 text-right">
+                  <select id="referral">
+                    {TATTOO_REFERRALS.map(({ name, value }, i) => (
+                      <option value={value} key={`${name}${i}`}>
+                        {name}
+                      </option>
+                    ))}
+                  </select>
                 </td>
               </tr>
             </>

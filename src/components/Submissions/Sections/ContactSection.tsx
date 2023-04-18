@@ -1,5 +1,5 @@
 import { type Appointment } from "@/types";
-import React, { useEffect, type Dispatch, type SetStateAction } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import Input from "../../Form/Inputs/Input";
 
 interface ContactSectionProps {
@@ -16,7 +16,6 @@ interface ContactSectionProps {
 }
 
 const ContactSection: React.FC<ContactSectionProps> = ({
-  data,
   editEnabled,
   name,
   preferredPronouns,
@@ -27,23 +26,6 @@ const ContactSection: React.FC<ContactSectionProps> = ({
   setEmail,
   setNumber,
 }) => {
-  // INITIAL VALUES
-  useEffect(() => {
-    setName(data.name);
-    setPreferredPronouns(data.preferredPronouns);
-    setEmail(data.email);
-    setNumber(data.phoneNumber);
-  }, [
-    data.name,
-    data.preferredPronouns,
-    data.email,
-    data.phoneNumber,
-    setName,
-    setPreferredPronouns,
-    setEmail,
-    setNumber,
-  ]);
-
   return (
     <section className="space-y-2 p-3">
       <Input

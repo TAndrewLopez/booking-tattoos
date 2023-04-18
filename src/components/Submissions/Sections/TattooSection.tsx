@@ -1,6 +1,6 @@
 import Input from "@/components/Form/Inputs/Input";
-import { type Appointment } from "@/types";
-import { useEffect, type Dispatch, type SetStateAction } from "react";
+import type { Appointment } from "@/types";
+import type { Dispatch, SetStateAction } from "react";
 
 interface TattooSectionProps {
   data: Appointment;
@@ -16,7 +16,6 @@ interface TattooSectionProps {
 }
 
 const TattooSection: React.FC<TattooSectionProps> = ({
-  data,
   editEnabled,
   description,
   size,
@@ -27,22 +26,6 @@ const TattooSection: React.FC<TattooSectionProps> = ({
   setPlacement,
   setColor,
 }) => {
-  // INITIAL VALUES
-  useEffect(() => {
-    setDescription(data.description);
-    setSize(data.size);
-    setPlacement(data.placement);
-    setColor(data.color);
-  }, [
-    data.description,
-    data.size,
-    data.placement,
-    data.color,
-    setDescription,
-    setSize,
-    setPlacement,
-    setColor,
-  ]);
   return (
     <section className="space-y-2 p-3">
       <Input

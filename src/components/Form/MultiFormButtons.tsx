@@ -45,7 +45,8 @@ const MultiFormButtons: React.FC<MultiFormButtonsProps> = ({
         <Button
           type="submit"
           label="Next"
-          onClick={() => {
+          onClick={(evt) => {
+            evt.preventDefault();
             // VALIDATING INPUTS
             if (!validateEmail(email)) {
               inputError("Email");
@@ -66,7 +67,10 @@ const MultiFormButtons: React.FC<MultiFormButtonsProps> = ({
         <Button
           type="submit"
           label="Next"
-          onClick={() => setPage((prev: number) => prev + 1)}
+          onClick={(evt) => {
+            evt.preventDefault();
+            setPage((prev: number) => prev + 1);
+          }}
           disabled={tattooFormCompleted}
         />
       )}

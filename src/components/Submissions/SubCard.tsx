@@ -4,7 +4,7 @@ import { type Appointment } from "@/types";
 import { api } from "@/utils/api";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useSession } from "next-auth/react";
-import { useCallback, useState, type SyntheticEvent } from "react";
+import { useCallback, useState, type SyntheticEvent, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
 import * as uuid from "uuid";
@@ -13,6 +13,7 @@ import ContactSection from "./Sections/ContactSection";
 import NoteSection from "./Sections/NoteSection";
 import TattooSection from "./Sections/TattooSection";
 import SubCardHeader from "./SubCardHeader";
+import moment from "moment";
 
 interface SubCardProps {
   userId: string;
@@ -76,6 +77,26 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
       evt.preventDefault();
       try {
         setIsLoading(true);
+        console.log({
+          id: data.id,
+          name,
+          preferredPronouns,
+          email,
+          phoneNumber: number,
+          description,
+          placement,
+          size,
+          color,
+          accepted: accepted ?? undefined,
+          requiresConsultation: consultation,
+          consultationDate: consultationDate
+            ? new Date(new Date(`${consultationDate} 11:30:00`).toISOString())
+            : undefined,
+          sessionsAmount: sessions,
+          depositPaid: deposit,
+          sessionDates: [""],
+        });
+
         updateApt.mutate({
           id: data.id,
           name,
@@ -93,6 +114,7 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
             : undefined,
           sessionsAmount: sessions,
           depositPaid: deposit,
+          sessionDates: [""],
         });
 
         if (notes.length) {
@@ -167,6 +189,54 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
       toast.error("Something went wrong.");
     }
   }, [image, addReferenceImage, data.id]);
+
+  // INITIAL VALUES
+  useEffect(() => {
+    setName(data.name);
+    setPreferredPronouns(data.preferredPronouns);
+    setEmail(data.email);
+    setNumber(data.phoneNumber);
+    setDescription(data.description);
+    setSize(data.size);
+    setPlacement(data.placement);
+    setColor(data.color);
+
+    setAccepted(data.accepted);
+    if (data.requiresConsultation) setConsultation(data.requiresConsultation);
+    if (data.consultationDate)
+      setConsultationDate(
+        moment(data.consultationDate.toISOString()).format("yyyy-MM-DD")
+      );
+    if (data.sessionsAmount) setSessions(data.sessionsAmount ?? "0");
+    if (data.depositPaid) setDeposit(data.depositPaid);
+  }, [
+    data.name,
+    data.preferredPronouns,
+    data.email,
+    data.phoneNumber,
+    data.description,
+    data.size,
+    data.placement,
+    data.color,
+    data.accepted,
+    data.requiresConsultation,
+    data.sessionsAmount,
+    data.consultationDate,
+    data.depositPaid,
+    setName,
+    setPreferredPronouns,
+    setEmail,
+    setNumber,
+    setDescription,
+    setSize,
+    setPlacement,
+    setColor,
+    setAccepted,
+    setConsultation,
+    setSessions,
+    setConsultationDate,
+    setDeposit,
+  ]);
 
   return (
     <div className="w-full max-w-3xl rounded-lg border border-gray-200 bg-white shadow-sm shadow-blue-200">

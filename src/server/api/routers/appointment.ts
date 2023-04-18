@@ -100,6 +100,7 @@ export const appointmentRouter = createTRPCRouter({
         requiresConsultation: z.boolean().optional(),
         consultationDate: z.date().optional(),
         sessionsAmount: z.string().optional(),
+        sessionDates: z.string().array(),
         depositPaid: z.boolean().optional(),
       })
     )
@@ -122,6 +123,7 @@ export const appointmentRouter = createTRPCRouter({
             requiresConsultation: input.requiresConsultation,
             consultationDate: input.consultationDate,
             sessionsAmount: input.sessionsAmount,
+            sessionDates: input.sessionDates,
             depositPaid: input.depositPaid,
           },
         });

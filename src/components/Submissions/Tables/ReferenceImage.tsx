@@ -1,7 +1,7 @@
 import { type Dispatch, type SetStateAction } from "react";
 
 interface ReferenceImageProps {
-  editEnabled: boolean;
+  editEnabled: boolean | null;
   setImage: Dispatch<SetStateAction<File | null>>;
   uploadImage: () => Promise<void>;
   imageURL: string | null;
@@ -44,7 +44,7 @@ const ReferenceImage: React.FC<ReferenceImageProps> = ({
                 </td>
                 <td className="text-right">
                   <button
-                    className="rounded-md bg-sky-200 px-2 py-1 text-sky-900 hover:bg-sky-900 hover:text-white disabled:cursor-not-allowed"
+                    className="rounded-md bg-sky-200 px-2 py-1 text-sky-900 hover:bg-sky-900 hover:text-white disabled:cursor-not-allowed disabled:bg-neutral-400 disabled:text-neutral-50"
                     disabled={!editEnabled}
                     onClick={() => void uploadImage()}
                   >

@@ -10,7 +10,7 @@ interface SubSearchProps {
 
 const SubSearch: React.FC<SubSearchProps> = ({ search, setSearch }) => {
   return (
-    <div className="md:grow">
+    <div className="max-w-2xl md:grow">
       {/* MOBILE SEARCH INPUT AND ICON */}
       <div className="flex justify-end md:hidden">
         <FiSearch size={24} />

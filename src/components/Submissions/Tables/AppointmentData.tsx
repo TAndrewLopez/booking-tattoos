@@ -6,6 +6,7 @@ interface AppointmentDataProps {
   consultation: boolean;
   consultationDate: string;
   deposit: boolean;
+  sessions: string;
   setConsultationDate: Dispatch<SetStateAction<string>>;
   setDeposit: Dispatch<SetStateAction<boolean>>;
   refImage: boolean;
@@ -17,10 +18,13 @@ const AppointmentData: React.FC<AppointmentDataProps> = ({
   consultation,
   consultationDate,
   deposit,
+  sessions,
   setConsultationDate,
   setDeposit,
   refImage,
 }) => {
+  const sessionsArray = new Array(Number(sessions)).fill("null");
+
   return (
     <>
       <h2 className="text-center font-semibold">Appointment Data</h2>
@@ -54,6 +58,14 @@ const AppointmentData: React.FC<AppointmentDataProps> = ({
                 <input type="datetime-local" />
               </td>
             </tr> */}
+            {sessionsArray.map((item, i) => (
+              <tr key={`${item as string}${i}`}>
+                <td className="text-sm">Appointment Date</td>
+                <td className="text-right">
+                  <input type="datetime-local" />
+                </td>
+              </tr>
+            ))}
             <tr>
               <td className="p-1 text-sm">
                 <label className="mr-2" htmlFor="deposit">
@@ -84,6 +96,7 @@ const AppointmentData: React.FC<AppointmentDataProps> = ({
                   type="checkbox"
                   disabled={!editEnabled}
                   checked={refImage}
+                  readOnly
                 />
               </td>
             </tr>

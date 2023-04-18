@@ -74,6 +74,7 @@ model Appointment {
     requiresConsultation Boolean?
     consultationDate     DateTime?
     sessionsAmount       String?
+    sessionDates         String[]
     depositPaid          Boolean?
     referenceImageURL    String?
     createdAt            DateTime  @default(now())
