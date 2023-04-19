@@ -156,7 +156,7 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
     ]
   );
 
-  const handleDelete = useCallback(
+  const handleDeleteNote = useCallback(
     (noteId: string) => {
       try {
         setIsLoading(true);
@@ -189,6 +189,15 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
       toast.error("Something went wrong.");
     }
   }, [image, addReferenceImage, data.id]);
+
+  const handleDeleteImage = useCallback(async () => {
+    try {
+      return console.log("delete image");
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong.");
+    }
+  }, []);
 
   // INITIAL VALUES
   useEffect(() => {
@@ -239,7 +248,7 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
   ]);
 
   return (
-    <div className="w-full max-w-3xl rounded-lg border border-gray-200 bg-white shadow-sm shadow-blue-200">
+    <div className="h-fit w-full max-w-2xl rounded-lg border border-gray-200 bg-white shadow-sm shadow-blue-200">
       <SubCardHeader
         displaySection={displaySection}
         editEnabled={editEnabled}
@@ -293,6 +302,7 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
           setDeposit={setDeposit}
           setImage={setImage}
           uploadImage={uploadImage}
+          deleteImage={handleDeleteImage}
           imageURL={data.referenceImageURL}
         />
       )}
@@ -303,7 +313,7 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
           editEnabled={editEnabled}
           notes={notes}
           setNotes={setNotes}
-          handleDelete={handleDelete}
+          handleDelete={handleDeleteNote}
           userId={userId}
         />
       )}

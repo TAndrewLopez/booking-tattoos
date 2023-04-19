@@ -1,9 +1,11 @@
 import { type Dispatch, type SetStateAction } from "react";
+import { FiTrash } from "react-icons/fi";
 
 interface ReferenceImageProps {
   editEnabled: boolean | null;
   setImage: Dispatch<SetStateAction<File | null>>;
   uploadImage: () => Promise<void>;
+  deleteImage: () => Promise<void>;
   imageURL: string | null;
 }
 
@@ -11,11 +13,23 @@ const ReferenceImage: React.FC<ReferenceImageProps> = ({
   editEnabled,
   setImage,
   uploadImage,
+  deleteImage,
   imageURL,
 }) => {
   return (
     <>
-      <h2>Reference Image:</h2>
+      <div className="flex w-full items-center justify-between">
+        <h2 className="mb-2">Reference Image:</h2>
+        <button
+          onClick={() => void deleteImage()}
+          disabled={!imageURL || !editEnabled}
+        >
+          <FiTrash
+            size={18}
+            className={editEnabled ? "text-neutral-700" : "text-neutral-400"}
+          />
+        </button>
+      </div>
       {imageURL ? (
         <>
           <a
@@ -30,7 +44,7 @@ const ReferenceImage: React.FC<ReferenceImageProps> = ({
         <>
           <table>
             <tbody>
-              <tr>
+              <tr className="flex flex-col gap-2 md:flex-row md:justify-between">
                 <td>
                   <input
                     type="file"
@@ -42,7 +56,7 @@ const ReferenceImage: React.FC<ReferenceImageProps> = ({
                     }}
                   />
                 </td>
-                <td className="text-right">
+                <td className="md:text-right">
                   <button
                     className="rounded-md bg-sky-200 px-2 py-1 text-sky-900 hover:bg-sky-900 hover:text-white disabled:cursor-not-allowed disabled:bg-neutral-400 disabled:text-neutral-50"
                     disabled={!editEnabled}

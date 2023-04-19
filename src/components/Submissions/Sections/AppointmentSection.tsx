@@ -19,6 +19,7 @@ interface AppointmentSectionProps {
   setDeposit: Dispatch<SetStateAction<boolean>>;
   setImage: Dispatch<SetStateAction<File | null>>;
   uploadImage: () => Promise<void>;
+  deleteImage: () => Promise<void>;
   imageURL: string | null;
 }
 
@@ -37,6 +38,7 @@ const AppointmentSection: React.FC<AppointmentSectionProps> = ({
   setDeposit,
   setImage,
   uploadImage,
+  deleteImage,
   imageURL,
 }) => {
   return (
@@ -74,6 +76,7 @@ const AppointmentSection: React.FC<AppointmentSectionProps> = ({
           editEnabled={accepted && editEnabled}
           setImage={setImage}
           uploadImage={uploadImage}
+          deleteImage={deleteImage}
           imageURL={imageURL}
         />
       </div>

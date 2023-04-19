@@ -1,5 +1,4 @@
 import SubCard from "@/components/Submissions/SubCard";
-import SubHeader from "@/components/Submissions/SubHeader";
 import SubSidebar from "@/components/Submissions/SubSidebar";
 import { type Appointment } from "@/types";
 import { api } from "@/utils/api";
@@ -13,8 +12,8 @@ const Submissions: NextPage = () => {
     enabled: sessionData?.user !== undefined,
   });
 
-  const [filter, setFilter] = useState("");
   const [searchName, setSearchName] = useState("");
+  const [filters, setFilters] = useState<Array<string>>([]);
 
   const searchNameSubmissions = useMemo(() => {
     if (!aptData || !searchName.length) return [];
@@ -35,30 +34,35 @@ const Submissions: NextPage = () => {
     }, returnResults);
   }, [searchName, aptData]);
 
+  // LOGIC FOR STRING FILTER
+  // const filteredSubmissions: Appointment[] = useMemo(() => {
+  //   const submissions: Appointment[] = [];
+  //   if (filter === "consultations") {
+  //     aptData?.forEach((item) => {
+  //       if (item.requiresConsultation) submissions.push(item);
+  //     });
+  //   }
+  //   if (filter === "accepted") {
+  //     aptData?.forEach((item) => {
+  //       if (item.accepted === true) submissions.push(item);
+  //     });
+  //   }
+  //   if (filter === "rejected") {
+  //     aptData?.forEach((item) => {
+  //       if (item.accepted === false) submissions.push(item);
+  //     });
+  //   }
+  //   return submissions.reduce((acc: Appointment[], el: Appointment) => {
+  //     if (!acc.includes(el)) {
+  //       acc.push(el);
+  //     }
+  //     return acc;
+  //   }, []);
+  // }, [filter, aptData]);
+
   const filteredSubmissions: Appointment[] = useMemo(() => {
-    const submissions: Appointment[] = [];
-    if (filter === "consultations") {
-      aptData?.forEach((item) => {
-        if (item.requiresConsultation) submissions.push(item);
-      });
-    }
-    if (filter === "accepted") {
-      aptData?.forEach((item) => {
-        if (item.accepted === true) submissions.push(item);
-      });
-    }
-    if (filter === "rejected") {
-      aptData?.forEach((item) => {
-        if (item.accepted === false) submissions.push(item);
-      });
-    }
-    return submissions.reduce((acc: Appointment[], el: Appointment) => {
-      if (!acc.includes(el)) {
-        acc.push(el);
-      }
-      return acc;
-    }, []);
-  }, [filter, aptData]);
+    return [];
+  }, []);
 
   const filteredSearchNameSubmissions = useMemo(() => {
     if (!filteredSubmissions.length || !searchName.length) return [];
@@ -71,22 +75,16 @@ const Submissions: NextPage = () => {
   return (
     <main className="flex gap-5 p-4">
       {/* SEARCH AND FILTER FEATURES */}
-      {/* <SubHeader
-        filter={filter}
-        setFilter={setFilter}
-        search={searchName}
-        setSearch={setSearchName}
-      /> */}
       <SubSidebar
         search={searchName}
         setSearch={setSearchName}
-        filter={filter}
-        setFilter={setFilter}
+        filters={filters}
+        setFilters={setFilters}
       />
 
       <div className="flex w-full flex-wrap gap-5">
         {/* UNFILTERED APPOINTMENT DATA */}
-        {!filter.length &&
+        {!filters.length &&
           !searchName.length &&
           !searchNameSubmissions.length &&
           aptData?.map((data) => (
@@ -98,7 +96,7 @@ const Submissions: NextPage = () => {
           ))}
 
         {/* FILTERED APPOINTMENT DATA */}
-        {!!filter.length &&
+        {!!filters.length &&
           !searchName.length &&
           !searchNameSubmissions.length &&
           filteredSubmissions?.map((data) => (
@@ -111,7 +109,7 @@ const Submissions: NextPage = () => {
 
         {/* SEARCHED SUBMISSIONS */}
         {!!searchNameSubmissions.length &&
-          !filter.length &&
+          !filters.length &&
           searchNameSubmissions?.map((data) => (
             <SubCard
               userId={sessionData?.user.id as string}
@@ -121,7 +119,7 @@ const Submissions: NextPage = () => {
           ))}
 
         {/* SEARCHED SUBMISSIONS WITH FILTERS */}
-        {!!filter.length &&
+        {!!filters.length &&
           !!searchNameSubmissions.length &&
           filteredSearchNameSubmissions?.map((data) => (
             <SubCard
