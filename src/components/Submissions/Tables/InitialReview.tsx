@@ -27,7 +27,7 @@ type Referral = {
   value: string;
 };
 
-const TATTOO_REFERRALS = [
+const TATTOO_REFERRALS: Referral[] = [
   { name: "Select Referral", value: "" },
   { name: "George Perham", value: "George Perham" },
   { name: "Alex Harris", value: "Alex Harris" },

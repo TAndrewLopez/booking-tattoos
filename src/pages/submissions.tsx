@@ -1,6 +1,6 @@
 import SubCard from "@/components/Submissions/SubCard";
 import SubSidebar from "@/components/Submissions/SubSidebar";
-import { type Appointment } from "@/types";
+import type { FilterConditions, Appointment } from "@/types";
 import { api } from "@/utils/api";
 import { type NextPage, type NextPageContext } from "next";
 import { getSession, useSession } from "next-auth/react";
@@ -17,6 +17,7 @@ const Submissions: NextPage = () => {
 
   const searchNameSubmissions = useMemo(() => {
     if (!aptData || !searchName.length) return [];
+
     const searchEmailQuery = aptData.filter((apt) =>
       apt.email.toLowerCase().includes(searchName.toLocaleLowerCase())
     );
@@ -24,45 +25,35 @@ const Submissions: NextPage = () => {
       apt.name.toLowerCase().includes(searchName.toLowerCase())
     );
 
-    const returnResults: Appointment[] = [];
-
-    return [...searchEmailQuery, ...searchNameQuery].reduce((acc, el) => {
-      if (!acc.includes(el)) {
-        acc.push(el);
-      }
-      return acc;
-    }, returnResults);
+    const result = new Set([...searchEmailQuery, ...searchNameQuery]);
+    return [...result];
   }, [searchName, aptData]);
 
-  // LOGIC FOR STRING FILTER
-  // const filteredSubmissions: Appointment[] = useMemo(() => {
-  //   const submissions: Appointment[] = [];
-  //   if (filter === "consultations") {
-  //     aptData?.forEach((item) => {
-  //       if (item.requiresConsultation) submissions.push(item);
-  //     });
-  //   }
-  //   if (filter === "accepted") {
-  //     aptData?.forEach((item) => {
-  //       if (item.accepted === true) submissions.push(item);
-  //     });
-  //   }
-  //   if (filter === "rejected") {
-  //     aptData?.forEach((item) => {
-  //       if (item.accepted === false) submissions.push(item);
-  //     });
-  //   }
-  //   return submissions.reduce((acc: Appointment[], el: Appointment) => {
-  //     if (!acc.includes(el)) {
-  //       acc.push(el);
-  //     }
-  //     return acc;
-  //   }, []);
-  // }, [filter, aptData]);
-
   const filteredSubmissions: Appointment[] = useMemo(() => {
-    return [];
-  }, []);
+    if (!aptData) return [];
+
+    const filterConditions: FilterConditions = {
+      consult: (apt, value) => apt.requiresConsultation === (value === "t"),
+      accepted: (apt, value) => apt.accepted === (value === "t"),
+      deposit: (apt, value) => apt.depositPaid === (value === "t"),
+      image: (apt, value) =>
+        (value === "t" && !!apt.referenceImageURL) ||
+        (value === "f" && apt.referenceImageURL === null),
+    };
+
+    return aptData.filter((apt) => {
+      return filters.every((filter) => {
+        const filterType = filter.split("-")[0];
+        const filterValue = filter.split("-")[1];
+
+        const condition = filterConditions[filterType as string] as (
+          apt: Appointment,
+          value: string
+        ) => boolean;
+        return condition(apt, filterValue as string);
+      });
+    });
+  }, [aptData, filters]);
 
   const filteredSearchNameSubmissions = useMemo(() => {
     if (!filteredSubmissions.length || !searchName.length) return [];

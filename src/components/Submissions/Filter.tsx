@@ -54,6 +54,30 @@ const SubFilter: React.FC<SubFilterProps> = ({ filters, setFilters }) => {
           </p>
         </div>
       </div>
+      {/* APPOINTMENT ACCEPTED */}
+      <div className="grid w-full grid-cols-4">
+        <div className="col-span-3">
+          <label className="text-sm" htmlFor="appointment">
+            Appointment Accepted:
+          </label>
+        </div>
+        <div className="col-span-1 flex items-center justify-end gap-4">
+          <input
+            id="appointment"
+            type="checkbox"
+            className="h-4 w-4"
+            checked={filters.includes("accepted-t")}
+            onChange={() => toggleFilterOption("accepted-t")}
+          />
+          <input
+            id="appointment"
+            type="checkbox"
+            className="h-4 w-4"
+            checked={filters.includes("accepted-f")}
+            onChange={() => toggleFilterOption("accepted-f")}
+          />
+        </div>
+      </div>
       {/* REQUIRES CONSULTATION */}
       <div className="grid w-full grid-cols-4">
         <div className="col-span-3">
@@ -78,27 +102,27 @@ const SubFilter: React.FC<SubFilterProps> = ({ filters, setFilters }) => {
           />
         </div>
       </div>
-      {/* APPT ACCEPTED */}
+      {/* DEPOSIT PAID */}
       <div className="grid w-full grid-cols-4">
         <div className="col-span-3">
-          <label className="text-sm" htmlFor="appointment">
-            Appointment Accepted:
+          <label className="text-sm" htmlFor="deposit">
+            Deposit Paid:
           </label>
         </div>
         <div className="col-span-1 flex items-center justify-end gap-4">
           <input
-            id="appointment"
+            id="deposit"
             type="checkbox"
             className="h-4 w-4"
-            checked={filters.includes("accepted-t")}
-            onChange={() => toggleFilterOption("accepted-t")}
+            checked={filters.includes("deposit-t")}
+            onChange={() => toggleFilterOption("deposit-t")}
           />
           <input
-            id="appointment"
+            id="deposit"
             type="checkbox"
             className="h-4 w-4"
-            checked={filters.includes("accepted-f")}
-            onChange={() => toggleFilterOption("accepted-f")}
+            checked={filters.includes("deposit-f")}
+            onChange={() => toggleFilterOption("deposit-f")}
           />
         </div>
       </div>
@@ -114,39 +138,15 @@ const SubFilter: React.FC<SubFilterProps> = ({ filters, setFilters }) => {
             id="references"
             type="checkbox"
             className="h-4 w-4"
-            checked={filters.includes("refImage-t")}
-            onChange={() => toggleFilterOption("refImage-t")}
+            checked={filters.includes("image-t")}
+            onChange={() => toggleFilterOption("image-t")}
           />
           <input
             id="references"
             type="checkbox"
             className="h-4 w-4"
-            checked={filters.includes("refImage-f")}
-            onChange={() => toggleFilterOption("refImage-f")}
-          />
-        </div>
-      </div>
-      {/* DEPOSIT PAID */}
-      <div className="grid w-full grid-cols-4">
-        <div className="col-span-3">
-          <label className="text-sm" htmlFor="deposit">
-            Deposit Paid:
-          </label>
-        </div>
-        <div className="col-span-1 flex items-center justify-end gap-4">
-          <input
-            id="deposit"
-            type="checkbox"
-            className="h-4 w-4"
-            checked={filters.includes("paid-t")}
-            onChange={() => toggleFilterOption("paid-t")}
-          />
-          <input
-            id="deposit"
-            type="checkbox"
-            className="h-4 w-4"
-            checked={filters.includes("paid-f")}
-            onChange={() => toggleFilterOption("paid-f")}
+            checked={filters.includes("image-f")}
+            onChange={() => toggleFilterOption("image-f")}
           />
         </div>
       </div>
