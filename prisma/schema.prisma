@@ -77,6 +77,7 @@ model Appointment {
     sessionDates         String[]
     depositPaid          Boolean?
     referenceImageURL    String?
+    firebaseRef          String?
     createdAt            DateTime  @default(now())
     updatedAt            DateTime  @updatedAt
 

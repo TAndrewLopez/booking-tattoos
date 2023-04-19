@@ -2,7 +2,12 @@ import Button from "@/components/Form/Inputs/Button";
 import { storage } from "@/lib/firebase";
 import { type Appointment } from "@/types";
 import { api } from "@/utils/api";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytes,
+} from "firebase/storage";
 import { useSession } from "next-auth/react";
 import { useCallback, useState, type SyntheticEvent, useEffect } from "react";
 import { toast } from "react-hot-toast";
@@ -48,6 +53,11 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
   const addReferenceImage = api.appointment.addReferenceImage.useMutation({
     onSuccess: () => void refetchAppointments(),
   });
+  const removeReferenceImage = api.appointment.removeReferenceImage.useMutation(
+    {
+      onSuccess: () => void refetchAppointments(),
+    }
+  );
 
   // CONTACT STATES
   const [name, setName] = useState("");
@@ -72,7 +82,7 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
   // NOTES STATES
   const [notes, setNotes] = useState("");
 
-  const submitUpdate = useCallback(
+  const handleUpdateAppointment = useCallback(
     (evt: SyntheticEvent) => {
       evt.preventDefault();
       try {
@@ -175,29 +185,43 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
 
   const uploadImage = useCallback(async () => {
     try {
+      setIsLoading(true);
       if (image === null) return;
-      const imageRef = ref(
-        storage,
-        `referenceImages/${image?.name + uuid.v4()}`
-      );
+      const firebaseRef = `referenceImages/${image?.name + uuid.v4()}`;
+      const imageRef = ref(storage, firebaseRef);
       const result = await uploadBytes(imageRef, image);
-      const imageURL = await getDownloadURL(result.ref);
-      addReferenceImage.mutate({ appointmentId: data.id, imageURL });
+      const referenceImageURL = await getDownloadURL(result.ref);
+      addReferenceImage.mutate({
+        appointmentId: data.id,
+        firebaseRef,
+        referenceImageURL,
+      });
       toast.success("Image uploaded successfully!");
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong.");
+    } finally {
+      setIsLoading(false);
     }
   }, [image, addReferenceImage, data.id]);
 
-  const handleDeleteImage = useCallback(() => {
+  const handleDeleteImage = useCallback(async () => {
     try {
-      return console.log("delete image");
+      setIsLoading(true);
+      const imageRef = ref(storage, data?.firebaseRef as string);
+      await deleteObject(imageRef);
+      console.log("delete image", {
+        referenceImageURL: data?.firebaseRef as string,
+      });
+      removeReferenceImage.mutate({ appointmentId: data?.id });
+      toast.success("Image deleted successfully!");
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong.");
+    } finally {
+      setIsLoading(false);
     }
-  }, []);
+  }, [data?.firebaseRef, removeReferenceImage, data?.id]);
 
   // INITIAL VALUES
   useEffect(() => {
@@ -324,7 +348,7 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
             label={isLoading ? <ClipLoader color="blue" /> : "Save"}
             type="submit"
             disabled={!editEnabled}
-            onClick={submitUpdate}
+            onClick={handleUpdateAppointment}
             fullSize
           />
         </div>

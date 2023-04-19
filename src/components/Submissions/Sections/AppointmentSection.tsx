@@ -19,7 +19,7 @@ interface AppointmentSectionProps {
   setDeposit: Dispatch<SetStateAction<boolean>>;
   setImage: Dispatch<SetStateAction<File | null>>;
   uploadImage: () => Promise<void>;
-  deleteImage: () => void;
+  deleteImage: () => Promise<void>;
   imageURL: string | null;
 }
 

@@ -3,8 +3,21 @@ import { generateTattooRequestConfirmationEmailContent } from "@/utils/emailGene
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
+import { data as testData } from "../../testData";
 
 export const appointmentRouter = createTRPCRouter({
+  seed: publicProcedure.mutation(async ({ ctx }) => {
+    try {
+      await ctx.prisma.appointment.deleteMany();
+      return ctx.prisma.appointment.createMany({ data: testData });
+    } catch (error) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "An unexpected error occurred, please try again later.",
+        cause: error,
+      });
+    }
+  }),
   getAll: protectedProcedure.query(({ ctx }) => {
     return ctx.prisma.appointment.findMany({
       include: {
@@ -33,6 +46,7 @@ export const appointmentRouter = createTRPCRouter({
       },
     });
   }),
+
   create: publicProcedure
     .input(
       z.object({
@@ -139,7 +153,8 @@ export const appointmentRouter = createTRPCRouter({
     .input(
       z.object({
         appointmentId: z.string(),
-        imageURL: z.string(),
+        firebaseRef: z.string(),
+        referenceImageURL: z.string(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -149,7 +164,33 @@ export const appointmentRouter = createTRPCRouter({
             id: input.appointmentId,
           },
           data: {
-            referenceImageURL: input.imageURL,
+            firebaseRef: input.firebaseRef,
+            referenceImageURL: input.referenceImageURL,
+          },
+        });
+      } catch (error) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "An unexpected error occurred, please try again later.",
+          cause: error,
+        });
+      }
+    }),
+  removeReferenceImage: protectedProcedure
+    .input(
+      z.object({
+        appointmentId: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      try {
+        return ctx.prisma.appointment.update({
+          where: {
+            id: input.appointmentId,
+          },
+          data: {
+            firebaseRef: null,
+            referenceImageURL: null,
           },
         });
       } catch (error) {
