@@ -5,7 +5,7 @@ interface ReferenceImageProps {
   editEnabled: boolean | null;
   setImage: Dispatch<SetStateAction<File | null>>;
   uploadImage: () => Promise<void>;
-  deleteImage: () => Promise<void>;
+  deleteImage: () => void;
   imageURL: string | null;
 }
 
