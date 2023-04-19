@@ -190,14 +190,14 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
     }
   }, [image, addReferenceImage, data.id]);
 
-  const handleDeleteImage = useCallback(async () => {
-    try {
-      return console.log("delete image");
-    } catch (error) {
-      console.log(error);
-      toast.error("Something went wrong.");
-    }
-  }, []);
+  // const handleDeleteImage = useCallback(async () => {
+  //   try {
+  //     return console.log("delete image");
+  //   } catch (error) {
+  //     console.log(error);
+  //     toast.error("Something went wrong.");
+  //   }
+  // }, []);
 
   // INITIAL VALUES
   useEffect(() => {
