@@ -33,7 +33,10 @@ const Submissions: NextPage = () => {
     if (!aptData) return [];
 
     const filterConditions: FilterConditions = {
-      consult: (apt, value) => apt.requiresConsultation === (value === "t"),
+      consult: (apt, value) =>
+        (value === "t" && !!apt.requiresConsultation) ||
+        (value === "f" && !apt.requiresConsultation),
+
       accepted: (apt, value) => apt.accepted === (value === "t"),
       deposit: (apt, value) => apt.depositPaid === (value === "t"),
       image: (apt, value) =>

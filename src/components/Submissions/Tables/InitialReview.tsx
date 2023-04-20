@@ -15,21 +15,21 @@ interface InitialReviewProps {
 }
 
 type Rejection = {
-  value: string;
   reason: string;
+  value: string;
 };
-
-const REJECTION_REASON: Rejection[] = [
-  { value: "", reason: "Select Reason" },
-  { value: "fine-line", reason: "Fine line tattoo" },
-  { value: "portrait", reason: "Portrait tattoo" },
-  { value: "script", reason: "Text/Scripts" },
-];
 
 type Referral = {
   name: string;
   value: string;
 };
+
+const REJECTION_REASON: Rejection[] = [
+  { reason: "Select Reason", value: "" },
+  { reason: "Fine line tattoo", value: "fine-line" },
+  { reason: "Portrait tattoo", value: "portrait" },
+  { reason: "Text/Scripts", value: "script" },
+];
 
 const TATTOO_REFERRALS: Referral[] = [
   { name: "Select Referral", value: "" },
