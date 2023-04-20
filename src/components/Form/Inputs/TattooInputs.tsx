@@ -13,16 +13,7 @@ const TattooInputs: React.FC<TattooInputsProps> = ({
   setInputError,
   isLoading,
 }) => {
-  const {
-    description,
-    setDescription,
-    size,
-    setSize,
-    placement,
-    setPlacement,
-    color,
-    setColor,
-  } = useFormStore();
+  const { setValue, description, size, placement, color } = useFormStore();
 
   return (
     <>
@@ -33,9 +24,9 @@ const TattooInputs: React.FC<TattooInputsProps> = ({
         label="Description"
         value={description}
         disabled={isLoading}
-        onChange={(evt) => {
+        onChange={({ target }) => {
           if (inputError === "Description") setInputError("");
-          setDescription(evt.target.value);
+          setValue("description", target.value);
         }}
       />
       {/* SIZE */}
@@ -45,9 +36,9 @@ const TattooInputs: React.FC<TattooInputsProps> = ({
         label="Size of Tattoo"
         value={size}
         disabled={isLoading}
-        onChange={(evt) => {
+        onChange={({ target }) => {
           if (inputError === "Size") setInputError("");
-          setSize(evt.target.value);
+          setValue("size", target.value);
         }}
       />
       {/* PLACEMENT */}
@@ -57,9 +48,9 @@ const TattooInputs: React.FC<TattooInputsProps> = ({
         label="Tattoo Placement"
         value={placement}
         disabled={isLoading}
-        onChange={(evt) => {
+        onChange={({ target }) => {
           if (inputError === "Placement") setInputError("");
-          setPlacement(evt.target.value);
+          setValue("placement", target.value);
         }}
       />
       {/* COLOR */}
@@ -68,9 +59,9 @@ const TattooInputs: React.FC<TattooInputsProps> = ({
         options={["Black & Grey", "Colored"]}
         value={color}
         disabled={isLoading}
-        onChange={(evt) => {
+        onChange={({ target }) => {
           if (inputError === "Color") setInputError("");
-          setColor(evt.target.value);
+          setValue("color", target.value);
         }}
       />
     </>

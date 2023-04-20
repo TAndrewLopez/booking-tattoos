@@ -12,16 +12,8 @@ const ContactInputs: React.FC<ContactInputsProps> = ({
   setInputError,
   isLoading,
 }) => {
-  const {
-    name,
-    setName,
-    preferredPronouns,
-    setPreferredPronouns,
-    email,
-    setEmail,
-    phoneNumber,
-    setPhoneNumber,
-  } = useFormStore();
+  const { name, setValue, preferredPronouns, email, phoneNumber } =
+    useFormStore();
 
   return (
     <>
@@ -32,9 +24,9 @@ const ContactInputs: React.FC<ContactInputsProps> = ({
         label="Name"
         disabled={isLoading}
         value={name}
-        onChange={(evt) => {
+        onChange={({ target }) => {
           if (inputError && inputError === "Name") setInputError("");
-          setName(evt.target.value);
+          setValue("name", target.value);
         }}
       />
 
@@ -45,9 +37,9 @@ const ContactInputs: React.FC<ContactInputsProps> = ({
         label="Preferred Pronouns (optional)"
         disabled={isLoading}
         value={preferredPronouns}
-        onChange={(evt) => {
+        onChange={({ target }) => {
           if (inputError && inputError === "Pronouns") setInputError("");
-          setPreferredPronouns(evt.target.value);
+          setValue("preferredPronouns", target.value);
         }}
       />
 
@@ -59,9 +51,9 @@ const ContactInputs: React.FC<ContactInputsProps> = ({
         type="email"
         disabled={isLoading}
         value={email}
-        onChange={(evt) => {
+        onChange={({ target }) => {
           if (inputError && inputError === "Email") setInputError("");
-          setEmail(evt.target.value);
+          setValue("email", target.value);
         }}
       />
 
@@ -72,9 +64,9 @@ const ContactInputs: React.FC<ContactInputsProps> = ({
         label="Phone Number"
         disabled={isLoading}
         value={phoneNumber}
-        onChange={(evt) => {
+        onChange={({ target }) => {
           if (inputError && inputError === "Number") setInputError("");
-          setPhoneNumber(evt.target.value);
+          setValue("phoneNumber", target.value);
         }}
       />
     </>

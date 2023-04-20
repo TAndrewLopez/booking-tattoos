@@ -9,15 +9,8 @@ export interface FormStoreInterface {
   size: string;
   placement: string;
   color: string;
-  setName: (val: string) => void;
-  setPreferredPronouns: (val: string) => void;
-  setEmail: (val: string) => void;
-  setPhoneNumber: (val: string) => void;
-  setDescription: (val: string) => void;
-  setSize: (val: string) => void;
-  setPlacement: (val: string) => void;
-  setColor: (val: string) => void;
   resetStore: () => void;
+  setValue: (key: string, val: string) => void;
 }
 
 const useFormStore = create<FormStoreInterface>((set) => ({
@@ -40,37 +33,9 @@ const useFormStore = create<FormStoreInterface>((set) => ({
       placement: "",
       color: "",
     })),
-  setName: (val: string) =>
+  setValue: (key: string, val: string) =>
     set(() => ({
-      name: val,
-    })),
-  setPreferredPronouns: (val: string) =>
-    set(() => ({
-      preferredPronouns: val,
-    })),
-  setEmail: (val: string) =>
-    set(() => ({
-      email: val,
-    })),
-  setPhoneNumber: (val: string) =>
-    set(() => ({
-      phoneNumber: val,
-    })),
-  setDescription: (val: string) =>
-    set(() => ({
-      description: val,
-    })),
-  setSize: (val: string) =>
-    set(() => ({
-      size: val,
-    })),
-  setPlacement: (val: string) =>
-    set(() => ({
-      placement: val,
-    })),
-  setColor: (val: string) =>
-    set(() => ({
-      color: val,
+      [key]: val,
     })),
 }));
 
