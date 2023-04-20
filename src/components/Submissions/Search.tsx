@@ -15,7 +15,7 @@ const SubSearch: React.FC<SubSearchProps> = ({ search, setSearch }) => {
       <input
         id="search"
         type="search"
-        placeholder="Search client by name or email"
+        placeholder="Search name or email"
         className="w-full p-2 outline-none placeholder:text-sm"
         value={search}
         onChange={(evt) => setSearch(evt.target.value)}

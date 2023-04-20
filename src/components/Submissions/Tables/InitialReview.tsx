@@ -3,9 +3,13 @@ import { type Dispatch, type SetStateAction } from "react";
 interface InitialReviewProps {
   editEnabled: boolean;
   accepted: boolean | null;
+  reason: string;
+  referral: string;
   consultation: boolean;
   sessions: string;
   setAccepted: Dispatch<SetStateAction<boolean | null>>;
+  setReason: Dispatch<SetStateAction<string>>;
+  setReferral: Dispatch<SetStateAction<string>>;
   setConsultation: Dispatch<SetStateAction<boolean>>;
   setSessions: Dispatch<SetStateAction<string>>;
 }
@@ -39,9 +43,13 @@ const TATTOO_REFERRALS: Referral[] = [
 const InitialReview: React.FC<InitialReviewProps> = ({
   editEnabled,
   accepted,
+  reason,
+  referral,
   consultation,
   sessions,
   setAccepted,
+  setReason,
+  setReferral,
   setConsultation,
   setSessions,
 }) => {
@@ -67,7 +75,7 @@ const InitialReview: React.FC<InitialReviewProps> = ({
                     hover:text-white 
                     disabled:cursor-not-allowed 
                     ${
-                      accepted
+                      accepted === true
                         ? "bg-emerald-900 text-white"
                         : "bg-emerald-200 text-emerald-900 hover:bg-emerald-900 disabled:bg-neutral-400 disabled:text-neutral-50"
                     }
@@ -144,7 +152,12 @@ const InitialReview: React.FC<InitialReviewProps> = ({
                   <label htmlFor="reason">Reason:</label>
                 </td>
                 <td className="p-1 text-right">
-                  <select id="reason">
+                  <select
+                    id="reason"
+                    disabled={!editEnabled}
+                    value={reason}
+                    onChange={(evt) => setReason(evt.target.value)}
+                  >
                     {REJECTION_REASON.map(({ value, reason }, i) => (
                       <option value={value} key={`${reason}${i}`}>
                         {reason}
@@ -158,7 +171,12 @@ const InitialReview: React.FC<InitialReviewProps> = ({
                   <label htmlFor="referral">Referral:</label>
                 </td>
                 <td className="p-1 text-right">
-                  <select id="referral">
+                  <select
+                    id="referral"
+                    disabled={!editEnabled}
+                    value={referral}
+                    onChange={(evt) => setReferral(evt.target.value)}
+                  >
                     {TATTOO_REFERRALS.map(({ name, value }, i) => (
                       <option value={value} key={`${name}${i}`}>
                         {name}

@@ -3,21 +3,21 @@ import { generateTattooRequestConfirmationEmailContent } from "@/utils/emailGene
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
-import { data as testData } from "../../testData";
+// import { data as testData } from "../../testData";
 
 export const appointmentRouter = createTRPCRouter({
-  seed: publicProcedure.mutation(async ({ ctx }) => {
-    try {
-      await ctx.prisma.appointment.deleteMany();
-      return ctx.prisma.appointment.createMany({ data: testData });
-    } catch (error) {
-      throw new TRPCError({
-        code: "INTERNAL_SERVER_ERROR",
-        message: "An unexpected error occurred, please try again later.",
-        cause: error,
-      });
-    }
-  }),
+  // seed: publicProcedure.mutation(async ({ ctx }) => {
+  //   try {
+  //     await ctx.prisma.appointment.deleteMany();
+  //     return ctx.prisma.appointment.createMany({ data: testData });
+  //   } catch (error) {
+  //     throw new TRPCError({
+  //       code: "INTERNAL_SERVER_ERROR",
+  //       message: "An unexpected error occurred, please try again later.",
+  //       cause: error,
+  //     });
+  //   }
+  // }),
   getAll: protectedProcedure.query(({ ctx }) => {
     return ctx.prisma.appointment.findMany({
       include: {
@@ -46,7 +46,6 @@ export const appointmentRouter = createTRPCRouter({
       },
     });
   }),
-
   create: publicProcedure
     .input(
       z.object({
@@ -98,7 +97,7 @@ export const appointmentRouter = createTRPCRouter({
         });
       }
     }),
-  updateAppointment: protectedProcedure
+  updateContactAndTattooInformation: protectedProcedure
     .input(
       z.object({
         id: z.string(),
@@ -110,12 +109,12 @@ export const appointmentRouter = createTRPCRouter({
         size: z.string(),
         placement: z.string(),
         color: z.string(),
-        accepted: z.boolean().optional(),
-        requiresConsultation: z.boolean().optional(),
-        consultationDate: z.date().optional(),
-        sessionsAmount: z.string().optional(),
-        sessionDates: z.string().array(),
-        depositPaid: z.boolean().optional(),
+        // accepted: z.boolean().optional(),
+        // requiresConsultation: z.boolean().optional(),
+        // consultationDate: z.date().optional(),
+        // sessionsAmount: z.string().optional(),
+        // sessionDates: z.string().array(),
+        // depositPaid: z.boolean().optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -133,12 +132,6 @@ export const appointmentRouter = createTRPCRouter({
             size: input.size,
             placement: input.placement,
             color: input.color,
-            accepted: input.accepted,
-            requiresConsultation: input.requiresConsultation,
-            consultationDate: input.consultationDate,
-            sessionsAmount: input.sessionsAmount,
-            sessionDates: input.sessionDates,
-            depositPaid: input.depositPaid,
           },
         });
       } catch (error) {
@@ -149,6 +142,78 @@ export const appointmentRouter = createTRPCRouter({
         });
       }
     }),
+  updateAcceptedAppointment: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        accepted: z.boolean().optional(),
+        requiresConsultation: z.boolean().optional(),
+        consultationDate: z.date().optional(),
+        sessionsAmount: z.string().optional(),
+        sessionDates: z.string().array(),
+        depositPaid: z.boolean().optional(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      try {
+        return ctx.prisma.appointment.update({
+          where: {
+            id: input.id,
+          },
+          data: {
+            accepted: input.accepted,
+            requiresConsultation: input.requiresConsultation,
+            consultationDate: input.consultationDate,
+            sessionsAmount: input.sessionsAmount,
+            sessionDates: input.sessionDates,
+            depositPaid: input.depositPaid,
+            rejectionReason: null,
+            tattooReferral: null,
+          },
+        });
+      } catch (error) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "An unexpected error occurred, please try again later.",
+          cause: error,
+        });
+      }
+    }),
+  updateRejectedAppointment: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        accepted: z.boolean().optional(),
+        rejectionReason: z.string().optional(),
+        tattooReferral: z.string().optional(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      try {
+        return ctx.prisma.appointment.update({
+          where: {
+            id: input.id,
+          },
+          data: {
+            accepted: input.accepted,
+            requiresConsultation: null,
+            consultationDate: null,
+            sessionsAmount: null,
+            sessionDates: [""],
+            depositPaid: null,
+            rejectionReason: input.rejectionReason,
+            tattooReferral: input.tattooReferral,
+          },
+        });
+      } catch (error) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "An unexpected error occurred, please try again later.",
+          cause: error,
+        });
+      }
+    }),
+
   addReferenceImage: protectedProcedure
     .input(
       z.object({

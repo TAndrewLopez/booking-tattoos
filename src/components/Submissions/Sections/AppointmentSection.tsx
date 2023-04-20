@@ -12,11 +12,15 @@ interface AppointmentSectionProps {
   sessions: string;
   consultationDate: string;
   deposit: boolean;
+  reason: string;
+  referral: string;
   setAccepted: Dispatch<SetStateAction<boolean | null>>;
   setConsultation: Dispatch<SetStateAction<boolean>>;
   setSessions: Dispatch<SetStateAction<string>>;
   setConsultationDate: Dispatch<SetStateAction<string>>;
   setDeposit: Dispatch<SetStateAction<boolean>>;
+  setReason: Dispatch<SetStateAction<string>>;
+  setReferral: Dispatch<SetStateAction<string>>;
   setImage: Dispatch<SetStateAction<File | null>>;
   uploadImage: () => Promise<void>;
   deleteImage: () => Promise<void>;
@@ -31,11 +35,15 @@ const AppointmentSection: React.FC<AppointmentSectionProps> = ({
   sessions,
   consultationDate,
   deposit,
+  reason,
+  referral,
   setAccepted,
   setConsultation,
   setSessions,
   setConsultationDate,
   setDeposit,
+  setReason,
+  setReferral,
   setImage,
   uploadImage,
   deleteImage,
@@ -48,9 +56,13 @@ const AppointmentSection: React.FC<AppointmentSectionProps> = ({
           <InitialReview
             editEnabled={editEnabled}
             accepted={accepted}
+            reason={reason}
+            referral={referral}
             consultation={consultation}
             sessions={sessions}
             setAccepted={setAccepted}
+            setReason={setReason}
+            setReferral={setReferral}
             setConsultation={setConsultation}
             setSessions={setSessions}
           />

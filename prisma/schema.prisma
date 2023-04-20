@@ -76,6 +76,8 @@ model Appointment {
     sessionsAmount       String?
     sessionDates         String[]
     depositPaid          Boolean?
+    rejectionReason      String?
+    tattooReferral       String?
     referenceImageURL    String?
     firebaseRef          String?
     createdAt            DateTime  @default(now())
