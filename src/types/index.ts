@@ -12,6 +12,7 @@ export type AppointmentStateInterface = {
   accepted: boolean | null;
   consultation: boolean;
   sessions: string;
+  sessionDates: string[];
   consultationDate: string;
   deposit: boolean;
   reason: string;

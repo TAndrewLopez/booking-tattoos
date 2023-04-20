@@ -24,10 +24,12 @@ const ReferenceImage: React.FC<ReferenceImageProps> = ({
           onClick={() => void deleteImage()}
           disabled={!imageURL || !editEnabled}
         >
-          <FiTrash
-            size={18}
-            className={editEnabled ? "text-neutral-700" : "text-neutral-400"}
-          />
+          {imageURL && (
+            <FiTrash
+              size={18}
+              className={editEnabled ? "text-neutral-700" : "text-neutral-400"}
+            />
+          )}
         </button>
       </div>
       {imageURL ? (

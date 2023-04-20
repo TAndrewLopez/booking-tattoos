@@ -85,13 +85,13 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
       accepted: null,
       consultation: false,
       sessions: "0",
+      sessionDates: [],
       consultationDate: "",
       deposit: false,
       reason: "",
       referral: "",
     });
 
-  const [appointmentDates, setAppointmentDates] = useState([]);
   const [notes, setNotes] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [editEnabled, setEditEnabled] = useState(false);
@@ -107,6 +107,7 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
         accepted,
         consultation,
         sessions,
+        sessionDates,
         consultationDate,
         deposit,
         reason,
@@ -135,8 +136,8 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
               ? new Date(new Date(`${consultationDate} 11:30:00`).toISOString())
               : undefined,
             sessionsAmount: sessions,
+            sessionDates,
             depositPaid: deposit,
-            sessionDates: [""],
           });
           setAppointmentState((prev) => ({
             ...prev,
@@ -263,6 +264,7 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
       accepted: data.accepted,
       consultation: data.requiresConsultation || false,
       sessions: data.sessionsAmount || "0",
+      sessionDates: data.sessionDates,
       consultationDate: "",
       deposit: data.depositPaid || false,
       reason: data.rejectionReason || "",
@@ -288,6 +290,7 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
     data.accepted,
     data.requiresConsultation,
     data.sessionsAmount,
+    data.sessionDates,
     data.consultationDate,
     data.depositPaid,
     data.rejectionReason,

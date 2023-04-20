@@ -128,7 +128,9 @@ const InitialReview: React.FC<InitialReviewProps> = ({
                     className="w-1/4 text-right"
                     id="sessions"
                     type="number"
+                    disabled={!editEnabled}
                     value={sessions}
+                    min={0}
                     onChange={({ target }) =>
                       setAppointmentState((prev) => ({
                         ...prev,

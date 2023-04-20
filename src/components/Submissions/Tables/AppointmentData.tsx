@@ -3,7 +3,6 @@ import { type Dispatch, type SetStateAction } from "react";
 
 interface AppointmentDataProps {
   editEnabled: boolean;
-
   appointmentState: AppointmentStateInterface;
   setAppointmentState: Dispatch<SetStateAction<AppointmentStateInterface>>;
   refImage: boolean;
@@ -17,6 +16,7 @@ const AppointmentData: React.FC<AppointmentDataProps> = ({
     consultationDate,
     deposit,
     sessions,
+    sessionDates,
   },
   setAppointmentState,
   refImage,
@@ -53,17 +53,23 @@ const AppointmentData: React.FC<AppointmentDataProps> = ({
                 </td>
               </tr>
             )}
-            {/* <tr>
-              <td className="text-sm">Appointment Date</td>
-              <td className="text-right">
-                <input type="datetime-local" />
-              </td>
-            </tr> */}
             {sessionsArray.map((item, i) => (
               <tr key={`${item as string}${i}`}>
-                <td className="text-sm">Appointment Date</td>
+                <td className="text-sm">Appt. Date {`${i + 1}`}</td>
                 <td className="text-right">
-                  <input type="datetime-local" />
+                  <input
+                    type="datetime-local"
+                    disabled={!editEnabled}
+                    value={sessionDates[i] || ""}
+                    onChange={({ target }) => {
+                      const dates = [...sessionDates];
+                      dates[i] = target.value;
+                      setAppointmentState((prev) => ({
+                        ...prev,
+                        sessionDates: [...dates],
+                      }));
+                    }}
+                  />
                 </td>
               </tr>
             ))}
