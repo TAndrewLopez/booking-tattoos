@@ -1,17 +1,10 @@
+import type { AppointmentStateInterface } from "@/types";
 import { type Dispatch, type SetStateAction } from "react";
 
 interface InitialReviewProps {
   editEnabled: boolean;
-  accepted: boolean | null;
-  reason: string;
-  referral: string;
-  consultation: boolean;
-  sessions: string;
-  setAccepted: Dispatch<SetStateAction<boolean | null>>;
-  setReason: Dispatch<SetStateAction<string>>;
-  setReferral: Dispatch<SetStateAction<string>>;
-  setConsultation: Dispatch<SetStateAction<boolean>>;
-  setSessions: Dispatch<SetStateAction<string>>;
+  appointmentState: AppointmentStateInterface;
+  setAppointmentState: Dispatch<SetStateAction<AppointmentStateInterface>>;
 }
 
 type Rejection = {
@@ -42,16 +35,8 @@ const TATTOO_REFERRALS: Referral[] = [
 
 const InitialReview: React.FC<InitialReviewProps> = ({
   editEnabled,
-  accepted,
-  reason,
-  referral,
-  consultation,
-  sessions,
-  setAccepted,
-  setReason,
-  setReferral,
-  setConsultation,
-  setSessions,
+  appointmentState: { accepted, consultation, sessions, reason, referral },
+  setAppointmentState,
 }) => {
   return (
     <>
@@ -62,12 +47,12 @@ const InitialReview: React.FC<InitialReviewProps> = ({
             <td className="p-1">
               <button
                 onClick={() =>
-                  setAccepted(() => {
-                    if (accepted) {
-                      return null;
-                    } else {
-                      return true;
-                    }
+                  setAppointmentState((prev) => {
+                    const accepted = prev.accepted ? null : true;
+                    return {
+                      ...prev,
+                      accepted,
+                    };
                   })
                 }
                 className={`
@@ -88,12 +73,12 @@ const InitialReview: React.FC<InitialReviewProps> = ({
             <td className="p-1 text-right">
               <button
                 onClick={() =>
-                  setAccepted(() => {
-                    if (accepted === false) {
-                      return null;
-                    } else {
-                      return false;
-                    }
+                  setAppointmentState((prev) => {
+                    const accepted = prev.accepted === false ? null : false;
+                    return {
+                      ...prev,
+                      accepted,
+                    };
                   })
                 }
                 className={`
@@ -125,7 +110,12 @@ const InitialReview: React.FC<InitialReviewProps> = ({
                     type="checkbox"
                     disabled={!editEnabled}
                     checked={consultation}
-                    onChange={() => setConsultation(!consultation)}
+                    onChange={() =>
+                      setAppointmentState((prev) => ({
+                        ...prev,
+                        consultation: !consultation,
+                      }))
+                    }
                   />
                 </td>
               </tr>
@@ -139,7 +129,12 @@ const InitialReview: React.FC<InitialReviewProps> = ({
                     id="sessions"
                     type="number"
                     value={sessions}
-                    onChange={(evt) => setSessions(evt.target.value)}
+                    onChange={({ target }) =>
+                      setAppointmentState((prev) => ({
+                        ...prev,
+                        sessions: target.value,
+                      }))
+                    }
                   />
                 </td>
               </tr>
@@ -156,7 +151,12 @@ const InitialReview: React.FC<InitialReviewProps> = ({
                     id="reason"
                     disabled={!editEnabled}
                     value={reason}
-                    onChange={(evt) => setReason(evt.target.value)}
+                    onChange={({ target }) =>
+                      setAppointmentState((prev) => ({
+                        ...prev,
+                        reason: target.value,
+                      }))
+                    }
                   >
                     {REJECTION_REASON.map(({ value, reason }, i) => (
                       <option value={value} key={`${reason}${i}`}>
@@ -175,7 +175,12 @@ const InitialReview: React.FC<InitialReviewProps> = ({
                     id="referral"
                     disabled={!editEnabled}
                     value={referral}
-                    onChange={(evt) => setReferral(evt.target.value)}
+                    onChange={({ target }) =>
+                      setAppointmentState((prev) => ({
+                        ...prev,
+                        referral: target.value,
+                      }))
+                    }
                   >
                     {TATTOO_REFERRALS.map(({ name, value }, i) => (
                       <option value={value} key={`${name}${i}`}>

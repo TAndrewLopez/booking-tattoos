@@ -1,6 +1,7 @@
 import Button from "../Form/Inputs/Button";
 
 interface CardHeaderProps {
+  setDefaultStates: () => void;
   displaySection: string;
   setDisplaySection: (val: string) => void;
   editEnabled: boolean;
@@ -8,6 +9,7 @@ interface CardHeaderProps {
 }
 
 const CardHeader: React.FC<CardHeaderProps> = ({
+  setDefaultStates,
   displaySection,
   setDisplaySection,
   editEnabled,
@@ -82,6 +84,7 @@ const CardHeader: React.FC<CardHeaderProps> = ({
             type={editEnabled ? "error" : "details"}
             label={editEnabled ? "Cancel" : "Edit"}
             onClick={() => {
+              if (editEnabled) setDefaultStates();
               setEditEnabled(!editEnabled);
             }}
           />

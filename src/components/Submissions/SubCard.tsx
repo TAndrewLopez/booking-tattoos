@@ -1,6 +1,6 @@
 import Button from "@/components/Form/Inputs/Button";
 import { storage } from "@/lib/firebase";
-import type { Appointment } from "@/types";
+import type { Appointment, AppointmentStateInterface } from "@/types";
 import { api } from "@/utils/api";
 import {
   deleteObject,
@@ -63,41 +63,58 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
     }
   );
 
+  // CONTACT STATES
+  const [contactState, setContactState] = useState({
+    name: "",
+    preferredPronouns: "",
+    email: "",
+    number: "",
+  });
+
+  // TATTOO STATES
+  const [tattooState, setTattooState] = useState({
+    description: "",
+    size: "",
+    placement: "",
+    color: "",
+  });
+
+  // APPOINTMENT STATES
+  const [appointmentState, setAppointmentState] =
+    useState<AppointmentStateInterface>({
+      accepted: null,
+      consultation: false,
+      sessions: "0",
+      consultationDate: "",
+      deposit: false,
+      reason: "",
+      referral: "",
+    });
+
+  const [appointmentDates, setAppointmentDates] = useState([]);
+  const [notes, setNotes] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [editEnabled, setEditEnabled] = useState(false);
   const [displaySection, setDisplaySection] = useState("Contact");
-
-  // CONTACT STATES
-  const [name, setName] = useState("");
-  const [preferredPronouns, setPreferredPronouns] = useState("");
-  const [email, setEmail] = useState("");
-  const [number, setNumber] = useState("");
-
-  // TATTOO STATES
-  const [description, setDescription] = useState("");
-  const [size, setSize] = useState("");
-  const [placement, setPlacement] = useState("");
-  const [color, setColor] = useState("");
-
-  // APPOINTMENT STATES
-  const [accepted, setAccepted] = useState<boolean | null>(null);
-  const [consultation, setConsultation] = useState(false);
-  const [sessions, setSessions] = useState("0");
-  const [consultationDate, setConsultationDate] = useState("");
-  const [deposit, setDeposit] = useState(false);
   const [image, setImage] = useState<File | null>(null);
-  const [reason, setReason] = useState("");
-  const [referral, setReferral] = useState("");
-
-  // NOTES STATES
-  const [notes, setNotes] = useState("");
 
   const handleUpdateAppointment = useCallback(
     (evt: SyntheticEvent) => {
       evt.preventDefault();
+      const { name, preferredPronouns, email, number } = contactState;
+      const { description, placement, size, color } = tattooState;
+      const {
+        accepted,
+        consultation,
+        sessions,
+        consultationDate,
+        deposit,
+        reason,
+        referral,
+      } = appointmentState;
+
       try {
         setIsLoading(true);
-        console.log("Updating Form Information");
         updateFormInformation.mutate({
           id: data.id,
           name,
@@ -121,8 +138,11 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
             depositPaid: deposit,
             sessionDates: [""],
           });
-          setReason("");
-          setReferral("");
+          setAppointmentState((prev) => ({
+            ...prev,
+            reason: "",
+            referral: "",
+          }));
         }
         if (accepted === false) {
           updateRejectedApt.mutate({
@@ -131,8 +151,11 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
             rejectionReason: reason,
             tattooReferral: referral,
           });
-          setConsultation(false);
-          setSessions("0");
+          setAppointmentState((prev) => ({
+            ...prev,
+            consultation: false,
+            sessions: "0",
+          }));
         }
         if (notes.length) {
           createNote.mutate({
@@ -153,27 +176,15 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
     },
     [
       data.id,
-      name,
-      preferredPronouns,
-      email,
-      number,
-      description,
-      placement,
-      size,
-      color,
-      notes,
-      updateFormInformation,
-      updateAcceptedApt,
-      updateRejectedApt,
+      contactState,
+      tattooState,
+      appointmentState,
       createNote,
-      consultation,
-      consultationDate,
-      accepted,
+      updateAcceptedApt,
+      updateFormInformation,
+      updateRejectedApt,
+      notes,
       userId,
-      sessions,
-      reason,
-      referral,
-      deposit,
     ]
   );
 
@@ -198,7 +209,7 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
     if (!image) return;
     try {
       setIsLoading(true);
-      const firebaseRef = `referenceImages/${image.name + uuid.v4()}`;
+      const firebaseRef = `referenceImages/${image?.name + uuid.v4()}`;
       const imageRef = ref(storage, firebaseRef);
       const result = await uploadBytes(imageRef, image);
       const referenceImageURL = await getDownloadURL(result.ref);
@@ -214,7 +225,7 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
     } finally {
       setIsLoading(false);
     }
-  }, [image, addReferenceImage, data.id]);
+  }, [data.id, image, addReferenceImage]);
 
   const handleDeleteImage = useCallback(async () => {
     if (!data.firebaseRef) return;
@@ -232,29 +243,39 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
     }
   }, [data?.firebaseRef, removeReferenceImage, data?.id]);
 
-  // INITIAL VALUES
-  useEffect(() => {
-    setName(data.name);
-    setPreferredPronouns(data.preferredPronouns);
-    setEmail(data.email);
-    setNumber(data.phoneNumber);
-    setDescription(data.description);
-    setSize(data.size);
-    setPlacement(data.placement);
-    setColor(data.color);
+  const setDefaultStates = useCallback(() => {
+    // FORM STATES
+    setContactState({
+      name: data.name,
+      preferredPronouns: data.preferredPronouns,
+      email: data.email,
+      number: data.phoneNumber,
+    });
 
-    setAccepted(data.accepted);
-    if (data.requiresConsultation) setConsultation(data.requiresConsultation);
+    setTattooState({
+      description: data.description,
+      size: data.size,
+      placement: data.placement,
+      color: data.color,
+    });
+
+    setAppointmentState({
+      accepted: data.accepted,
+      consultation: data.requiresConsultation || false,
+      sessions: data.sessionsAmount || "0",
+      consultationDate: "",
+      deposit: data.depositPaid || false,
+      reason: data.rejectionReason || "",
+      referral: data.tattooReferral || "",
+    });
+
     if (data.consultationDate)
-      setConsultationDate(
-        moment(data.consultationDate.toISOString()).format("yyyy-MM-DD")
-      );
-    if (data.sessionsAmount) setSessions(data.sessionsAmount ?? "0");
-    if (data.depositPaid) setDeposit(data.depositPaid);
-
-    // REJECTION STATES
-    if (data.rejectionReason) setReason(data.rejectionReason);
-    if (data.tattooReferral) setReferral(data.tattooReferral);
+      setAppointmentState((prev) => ({
+        ...prev,
+        consultationDate: moment(
+          data.consultationDate?.toISOString() ?? ""
+        ).format("yyyy-MM-DD"),
+      }));
   }, [
     data.name,
     data.preferredPronouns,
@@ -271,26 +292,16 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
     data.depositPaid,
     data.rejectionReason,
     data.tattooReferral,
-    setName,
-    setPreferredPronouns,
-    setEmail,
-    setNumber,
-    setDescription,
-    setSize,
-    setPlacement,
-    setColor,
-    setAccepted,
-    setConsultation,
-    setSessions,
-    setConsultationDate,
-    setDeposit,
-    setReason,
-    setReferral,
   ]);
+
+  useEffect(() => {
+    setDefaultStates();
+  }, [setDefaultStates]);
 
   return (
     <div className="h-fit w-full max-w-3xl rounded-lg border border-gray-200 bg-white shadow-sm shadow-blue-200">
       <SubCardHeader
+        setDefaultStates={setDefaultStates}
         displaySection={displaySection}
         editEnabled={editEnabled}
         setDisplaySection={setDisplaySection}
@@ -299,52 +310,25 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
 
       {displaySection === "Contact" && (
         <ContactSection
-          data={data}
           editEnabled={editEnabled}
-          name={name}
-          preferredPronouns={preferredPronouns}
-          email={email}
-          number={number}
-          setName={setName}
-          setPreferredPronouns={setPreferredPronouns}
-          setEmail={setEmail}
-          setNumber={setNumber}
+          contactState={contactState}
+          setContactState={setContactState}
         />
       )}
 
       {displaySection === "Tattoo" && (
         <TattooSection
-          data={data}
           editEnabled={editEnabled}
-          description={description}
-          size={size}
-          placement={placement}
-          color={color}
-          setDescription={setDescription}
-          setSize={setSize}
-          setPlacement={setPlacement}
-          setColor={setColor}
+          tattooState={tattooState}
+          setTattooState={setTattooState}
         />
       )}
 
       {displaySection === "Appointment" && (
         <AppointmentSection
-          data={data}
           editEnabled={editEnabled}
-          accepted={accepted}
-          consultation={consultation}
-          sessions={sessions}
-          consultationDate={consultationDate}
-          deposit={deposit}
-          reason={reason}
-          referral={referral}
-          setAccepted={setAccepted}
-          setConsultation={setConsultation}
-          setSessions={setSessions}
-          setConsultationDate={setConsultationDate}
-          setDeposit={setDeposit}
-          setReason={setReason}
-          setReferral={setReferral}
+          appointmentState={appointmentState}
+          setAppointmentState={setAppointmentState}
           setImage={setImage}
           uploadImage={uploadImage}
           deleteImage={handleDeleteImage}

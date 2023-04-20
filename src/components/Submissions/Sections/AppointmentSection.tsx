@@ -1,26 +1,13 @@
-import { type Appointment } from "@/types";
 import type { Dispatch, SetStateAction } from "react";
 import AppointmentData from "../Tables/AppointmentData";
 import InitialReview from "../Tables/InitialReview";
 import ReferenceImage from "../Tables/ReferenceImage";
+import type { AppointmentStateInterface } from "@/types";
 
 interface AppointmentSectionProps {
-  data: Appointment;
   editEnabled: boolean;
-  accepted: boolean | null;
-  consultation: boolean;
-  sessions: string;
-  consultationDate: string;
-  deposit: boolean;
-  reason: string;
-  referral: string;
-  setAccepted: Dispatch<SetStateAction<boolean | null>>;
-  setConsultation: Dispatch<SetStateAction<boolean>>;
-  setSessions: Dispatch<SetStateAction<string>>;
-  setConsultationDate: Dispatch<SetStateAction<string>>;
-  setDeposit: Dispatch<SetStateAction<boolean>>;
-  setReason: Dispatch<SetStateAction<string>>;
-  setReferral: Dispatch<SetStateAction<string>>;
+  appointmentState: AppointmentStateInterface;
+  setAppointmentState: Dispatch<SetStateAction<AppointmentStateInterface>>;
   setImage: Dispatch<SetStateAction<File | null>>;
   uploadImage: () => Promise<void>;
   deleteImage: () => Promise<void>;
@@ -28,56 +15,31 @@ interface AppointmentSectionProps {
 }
 
 const AppointmentSection: React.FC<AppointmentSectionProps> = ({
-  data,
   editEnabled,
-  accepted,
-  consultation,
-  sessions,
-  consultationDate,
-  deposit,
-  reason,
-  referral,
-  setAccepted,
-  setConsultation,
-  setSessions,
-  setConsultationDate,
-  setDeposit,
-  setReason,
-  setReferral,
+  appointmentState,
+  setAppointmentState,
   setImage,
   uploadImage,
   deleteImage,
   imageURL,
 }) => {
+  const { accepted } = appointmentState;
   return (
     <section className="space-y-2 p-3">
       <div className="grid gap-2 sm:grid-cols-2">
         <div className="col-span-1 flex flex-col border border-dashed border-gray-200 p-1">
           <InitialReview
             editEnabled={editEnabled}
-            accepted={accepted}
-            reason={reason}
-            referral={referral}
-            consultation={consultation}
-            sessions={sessions}
-            setAccepted={setAccepted}
-            setReason={setReason}
-            setReferral={setReferral}
-            setConsultation={setConsultation}
-            setSessions={setSessions}
+            appointmentState={appointmentState}
+            setAppointmentState={setAppointmentState}
           />
         </div>
         <div className="col-span-1 flex flex-col border border-dashed border-gray-200 p-1">
           <AppointmentData
             editEnabled={editEnabled}
-            consultation={consultation}
-            accepted={accepted}
-            consultationDate={consultationDate}
-            deposit={deposit}
-            sessions={sessions}
-            setConsultationDate={setConsultationDate}
-            setDeposit={setDeposit}
-            refImage={data.referenceImageURL ? true : false}
+            appointmentState={appointmentState}
+            setAppointmentState={setAppointmentState}
+            refImage={imageURL ? true : false}
           />
         </div>
       </div>

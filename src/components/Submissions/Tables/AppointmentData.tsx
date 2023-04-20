@@ -1,26 +1,24 @@
+import type { AppointmentStateInterface } from "@/types";
 import { type Dispatch, type SetStateAction } from "react";
 
 interface AppointmentDataProps {
   editEnabled: boolean;
-  accepted: boolean | null;
-  consultation: boolean;
-  consultationDate: string;
-  deposit: boolean;
-  sessions: string;
-  setConsultationDate: Dispatch<SetStateAction<string>>;
-  setDeposit: Dispatch<SetStateAction<boolean>>;
+
+  appointmentState: AppointmentStateInterface;
+  setAppointmentState: Dispatch<SetStateAction<AppointmentStateInterface>>;
   refImage: boolean;
 }
 
 const AppointmentData: React.FC<AppointmentDataProps> = ({
   editEnabled,
-  accepted,
-  consultation,
-  consultationDate,
-  deposit,
-  sessions,
-  setConsultationDate,
-  setDeposit,
+  appointmentState: {
+    accepted,
+    consultation,
+    consultationDate,
+    deposit,
+    sessions,
+  },
+  setAppointmentState,
   refImage,
 }) => {
   const sessionsArray = new Array(Number(sessions)).fill("null");
@@ -45,9 +43,12 @@ const AppointmentData: React.FC<AppointmentDataProps> = ({
                     type="date"
                     disabled={!editEnabled}
                     value={consultationDate}
-                    onChange={(evt) => {
-                      setConsultationDate(evt.target.value);
-                    }}
+                    onChange={({ target }) =>
+                      setAppointmentState((prev) => ({
+                        ...prev,
+                        consultationDate: target.value,
+                      }))
+                    }
                   />
                 </td>
               </tr>
@@ -79,7 +80,12 @@ const AppointmentData: React.FC<AppointmentDataProps> = ({
                   type="checkbox"
                   disabled={!editEnabled}
                   checked={deposit}
-                  onChange={() => setDeposit(!deposit)}
+                  onChange={() =>
+                    setAppointmentState((prev) => ({
+                      ...prev,
+                      deposit: !deposit,
+                    }))
+                  }
                 />
               </td>
             </tr>

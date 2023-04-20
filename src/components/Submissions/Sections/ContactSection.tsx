@@ -1,30 +1,28 @@
-import { type Appointment } from "@/types";
 import type { Dispatch, SetStateAction } from "react";
 import Input from "../../Form/Inputs/Input";
 
 interface ContactSectionProps {
-  data: Appointment;
   editEnabled: boolean;
-  name: string;
-  preferredPronouns: string;
-  email: string;
-  number: string;
-  setName: Dispatch<SetStateAction<string>>;
-  setPreferredPronouns: Dispatch<SetStateAction<string>>;
-  setEmail: Dispatch<SetStateAction<string>>;
-  setNumber: Dispatch<SetStateAction<string>>;
+  contactState: {
+    name: string;
+    preferredPronouns: string;
+    email: string;
+    number: string;
+  };
+  setContactState: Dispatch<
+    SetStateAction<{
+      name: string;
+      preferredPronouns: string;
+      email: string;
+      number: string;
+    }>
+  >;
 }
 
 const ContactSection: React.FC<ContactSectionProps> = ({
   editEnabled,
-  name,
-  preferredPronouns,
-  email,
-  number,
-  setName,
-  setPreferredPronouns,
-  setEmail,
-  setNumber,
+  contactState: { name, preferredPronouns, email, number },
+  setContactState,
 }) => {
   return (
     <section className="space-y-2 p-3">
@@ -33,36 +31,39 @@ const ContactSection: React.FC<ContactSectionProps> = ({
         label="Name"
         disabled={!editEnabled}
         value={name}
-        onChange={(evt) => {
-          setName(evt.target.value);
-        }}
+        onChange={({ target }) =>
+          setContactState((prev) => ({ ...prev, name: target.value }))
+        }
       />
       <Input
         id="Pronouns"
         label="Preferred Pronouns"
         disabled={!editEnabled}
         value={preferredPronouns}
-        onChange={(evt) => {
-          setPreferredPronouns(evt.target.value);
-        }}
+        onChange={({ target }) =>
+          setContactState((prev) => ({
+            ...prev,
+            preferredPronouns: target.value,
+          }))
+        }
       />
       <Input
         id="Email"
         label="Email"
         disabled={!editEnabled}
         value={email}
-        onChange={(evt) => {
-          setEmail(evt.target.value);
-        }}
+        onChange={({ target }) =>
+          setContactState((prev) => ({ ...prev, email: target.value }))
+        }
       />
       <Input
         id="Number"
         label="Phone Number"
         disabled={!editEnabled}
         value={number}
-        onChange={(evt) => {
-          setNumber(evt.target.value);
-        }}
+        onChange={({ target }) =>
+          setContactState((prev) => ({ ...prev, number: target.value }))
+        }
       />
     </section>
   );
