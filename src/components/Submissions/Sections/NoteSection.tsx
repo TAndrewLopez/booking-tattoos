@@ -5,20 +5,20 @@ import { type Dispatch, type SetStateAction } from "react";
 import { FiTrash } from "react-icons/fi";
 
 interface NoteSectionProps {
+  data: Appointment;
   editEnabled: boolean;
   userId: string;
   notes: string;
   setNotes: Dispatch<SetStateAction<string>>;
-  data: Appointment;
   handleDelete: (noteId: string) => void;
 }
 
 const NoteSection: React.FC<NoteSectionProps> = ({
+  data,
   editEnabled,
   userId,
   notes,
   setNotes,
-  data,
   handleDelete,
 }) => {
   return (
