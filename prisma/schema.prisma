@@ -103,11 +103,12 @@ model AppointmentNotes {
 }
 
 model CalendarEvent {
-    id          String   @id @default(auto()) @map("_id") @db.ObjectId
-    title       String
-    date        DateTime
-    description String
-    label       String
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
+    id            String   @id @default(auto()) @map("_id") @db.ObjectId
+    title         String
+    date          DateTime
+    description   String
+    label         String
+    createdAt     DateTime @default(now())
+    updatedAt     DateTime @updatedAt
+    appointmentId String?  @db.ObjectId
 }

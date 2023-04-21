@@ -13,6 +13,7 @@ export const calendarEventRouter = createTRPCRouter({
   create: protectedProcedure
     .input(
       z.object({
+        appointmentId: z.string().optional(),
         title: z.string(),
         date: z.date(),
         description: z.string(),

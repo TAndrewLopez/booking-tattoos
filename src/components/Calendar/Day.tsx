@@ -1,4 +1,3 @@
-import useAppointmentModal from "@/hooks/useAppointmentModal";
 import useCalendarStore from "@/hooks/useCalendarStore";
 import useEventModal from "@/hooks/useEventModal";
 import { api } from "@/utils/api";
@@ -22,16 +21,9 @@ const Day: React.FC<DayProps> = ({ day, rowIndex }) => {
       enabled: sessionData?.user !== undefined,
     }
   );
-  const { data: consultations } = api.appointment.getConsultations.useQuery(
-    undefined,
-    {
-      enabled: sessionData?.user !== undefined,
-    }
-  );
 
   const { labels, setDaySelected } = useCalendarStore();
   const { openModal: openEventModal, setSelectedEvent } = useEventModal();
-  const { setSelectedAppointment } = useAppointmentModal();
 
   const filteredCalEvents = useMemo(() => {
     if (!calendarEvents) return null;
@@ -42,14 +34,6 @@ const Day: React.FC<DayProps> = ({ day, rowIndex }) => {
         .includes(evt.label)
     );
   }, [labels, calendarEvents]);
-
-  const daysConsultation = useMemo(() => {
-    return consultations?.filter(
-      (evt) =>
-        moment(evt.consultationDate).format("MM-DD-YY") ===
-        day.format("MM-DD-YY")
-    );
-  }, [consultations, day]);
 
   const daysCalEvents = useMemo(() => {
     return filteredCalEvents?.filter(
@@ -82,19 +66,6 @@ const Day: React.FC<DayProps> = ({ day, rowIndex }) => {
           openEventModal();
         }}
       >
-        {daysConsultation?.map((aptEvt) => (
-          <div
-            onClick={(e) => {
-              e.stopPropagation();
-              setSelectedAppointment(aptEvt);
-            }}
-            className="mb-1 mr-3 truncate rounded bg-orange-200 p-1 text-sm text-gray-600"
-            key={aptEvt.id}
-          >
-            {`${aptEvt.name} Consultation`}
-          </div>
-        ))}
-
         {daysCalEvents?.map((calEvt) => (
           <div
             onClick={(e) => {

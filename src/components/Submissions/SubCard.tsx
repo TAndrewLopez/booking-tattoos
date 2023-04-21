@@ -48,6 +48,9 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
     api.appointment.updateRejectedAppointment.useMutation({
       onSuccess: () => void refetchAppointments(),
     });
+  const clearApt = api.appointment.clearAppointment.useMutation({
+    onSuccess: () => void refetchAppointments(),
+  });
   const createNote = api.appointmentNotes.create.useMutation({
     onSuccess: () => void refetchAppointments(),
   });
@@ -158,6 +161,11 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
             sessions: "0",
           }));
         }
+        if (accepted === null) {
+          clearApt.mutate({
+            id: data.id,
+          });
+        }
         if (notes.length) {
           createNote.mutate({
             userId,
@@ -184,6 +192,7 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
       updateAcceptedApt,
       updateFormInformation,
       updateRejectedApt,
+      clearApt,
       notes,
       userId,
     ]
