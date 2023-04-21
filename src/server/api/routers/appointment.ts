@@ -129,15 +129,14 @@ export const appointmentRouter = createTRPCRouter({
         id: z.string(),
         accepted: z.boolean().optional(),
         requiresConsultation: z.boolean().optional(),
-        consultationDate: z.date().optional(),
+        consultationDate: z.string().optional(),
         sessionsAmount: z.string().optional(),
-        sessionDates: z.string().array(),
         depositPaid: z.boolean().optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
       try {
-        return ctx.prisma.appointment.update({
+        const updatedAppointment = await ctx.prisma.appointment.update({
           where: {
             id: input.id,
           },
@@ -146,12 +145,25 @@ export const appointmentRouter = createTRPCRouter({
             requiresConsultation: input.requiresConsultation,
             consultationDate: input.consultationDate,
             sessionsAmount: input.sessionsAmount,
-            sessionDates: input.sessionDates,
             depositPaid: input.depositPaid,
             rejectionReason: null,
             tattooReferral: null,
           },
         });
+
+        // if (input.consultationDate) {
+        //   await ctx.prisma.calendarEvent.create({
+        //     data: {
+        //       appointmentId: input.id,
+        //       date: input.consultationDate,
+        //       title: `${updatedAppointment.name} Consultation`,
+        //       description: `${updatedAppointment.description} on ${updatedAppointment.placement}`,
+        //       label: "indigo",
+        //     },
+        //   });
+        // }
+
+        return updatedAppointment;
       } catch (error) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
@@ -171,7 +183,7 @@ export const appointmentRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       try {
-        return ctx.prisma.appointment.update({
+        const updatedAppointment = await ctx.prisma.appointment.update({
           where: {
             id: input.id,
           },
@@ -180,12 +192,17 @@ export const appointmentRouter = createTRPCRouter({
             requiresConsultation: null,
             consultationDate: null,
             sessionsAmount: null,
-            sessionDates: [""],
             depositPaid: null,
             rejectionReason: input.rejectionReason,
             tattooReferral: input.tattooReferral,
           },
         });
+        await ctx.prisma.calendarEvent.deleteMany({
+          where: {
+            appointmentId: input.id,
+          },
+        });
+        return updatedAppointment;
       } catch (error) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
@@ -202,7 +219,7 @@ export const appointmentRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       try {
-        return ctx.prisma.appointment.update({
+        const updatedAppointment = await ctx.prisma.appointment.update({
           where: {
             id: input.id,
           },
@@ -211,12 +228,17 @@ export const appointmentRouter = createTRPCRouter({
             requiresConsultation: null,
             consultationDate: null,
             sessionsAmount: null,
-            sessionDates: [""],
             depositPaid: null,
             rejectionReason: null,
             tattooReferral: null,
           },
         });
+        await ctx.prisma.calendarEvent.deleteMany({
+          where: {
+            appointmentId: input.id,
+          },
+        });
+        return updatedAppointment;
       } catch (error) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",

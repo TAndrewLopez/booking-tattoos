@@ -61,7 +61,7 @@ model VerificationToken {
 
 // CUSTOM DATA MODELS
 model Appointment {
-    id                   String    @id @default(auto()) @map("_id") @db.ObjectId
+    id                   String   @id @default(auto()) @map("_id") @db.ObjectId
     name                 String
     preferredPronouns    String
     email                String
@@ -72,18 +72,17 @@ model Appointment {
     color                String
     accepted             Boolean?
     requiresConsultation Boolean?
-    consultationDate     DateTime?
     sessionsAmount       String?
-    sessionDates         String[]
     depositPaid          Boolean?
     rejectionReason      String?
     tattooReferral       String?
     referenceImageURL    String?
     firebaseRef          String?
-    createdAt            DateTime  @default(now())
-    updatedAt            DateTime  @updatedAt
+    createdAt            DateTime @default(now())
+    updatedAt            DateTime @updatedAt
 
-    notes AppointmentNotes[]
+    appointmentDates CalendarEvent[]
+    notes            AppointmentNotes[]
 
     user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId String? @db.ObjectId
@@ -96,19 +95,21 @@ model AppointmentNotes {
     updatedAt DateTime @updatedAt
 
     appointmentId String?      @db.ObjectId
-    Appointment   Appointment? @relation(fields: [appointmentId], references: [id])
+    Appointment   Appointment? @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
 
     userId String? @db.ObjectId
     user   User?   @relation(fields: [userId], references: [id])
 }
 
 model CalendarEvent {
-    id            String   @id @default(auto()) @map("_id") @db.ObjectId
+    id            String       @id @default(auto()) @map("_id") @db.ObjectId
+    type          String?
     title         String
     date          DateTime
     description   String
     label         String
-    createdAt     DateTime @default(now())
-    updatedAt     DateTime @updatedAt
-    appointmentId String?  @db.ObjectId
+    createdAt     DateTime     @default(now())
+    updatedAt     DateTime     @updatedAt
+    appointmentId String?      @db.ObjectId
+    Appointment   Appointment? @relation(fields: [appointmentId], references: [id])
 }

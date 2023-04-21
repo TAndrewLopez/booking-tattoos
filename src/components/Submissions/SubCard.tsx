@@ -88,7 +88,6 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
       accepted: null,
       consultation: false,
       sessions: "0",
-      sessionDates: [],
       consultationDate: "",
       deposit: false,
       reason: "",
@@ -110,13 +109,19 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
         accepted,
         consultation,
         sessions,
-        sessionDates,
         consultationDate,
         deposit,
         reason,
         referral,
       } = appointmentState;
 
+      if (!name) return toast.error("Name field is missing.");
+      if (!email) return toast.error("Email field is missing.");
+      if (!number) return toast.error("Phone number field is missing.");
+      if (!description) return toast.error("Description field is missing.");
+      if (!size) return toast.error("Size field is missing.");
+      if (!placement) return toast.error("Placement field is missing.");
+      if (!color) return toast.error("Color field is missing.");
       try {
         setIsLoading(true);
         updateFormInformation.mutate({
@@ -136,10 +141,9 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
             accepted,
             requiresConsultation: consultation,
             consultationDate: consultationDate
-              ? new Date(new Date(`${consultationDate} 11:30:00`).toISOString())
+              ? new Date(`${consultationDate} 11:30:00`).toISOString()
               : undefined,
             sessionsAmount: sessions,
-            sessionDates,
             depositPaid: deposit,
           });
           setAppointmentState((prev) => ({
@@ -273,7 +277,6 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
       accepted: data.accepted,
       consultation: data.requiresConsultation || false,
       sessions: data.sessionsAmount || "0",
-      sessionDates: data.sessionDates,
       consultationDate: "",
       deposit: data.depositPaid || false,
       reason: data.rejectionReason || "",
@@ -283,9 +286,9 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
     if (data.consultationDate)
       setAppointmentState((prev) => ({
         ...prev,
-        consultationDate: moment(
-          data.consultationDate?.toISOString() ?? ""
-        ).format("yyyy-MM-DD"),
+        consultationDate: moment(data.consultationDate ?? "").format(
+          "yyyy-MM-DD"
+        ),
       }));
   }, [
     data.name,
@@ -299,7 +302,6 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
     data.accepted,
     data.requiresConsultation,
     data.sessionsAmount,
-    data.sessionDates,
     data.consultationDate,
     data.depositPaid,
     data.rejectionReason,

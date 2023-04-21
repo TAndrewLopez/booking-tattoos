@@ -16,7 +16,6 @@ const AppointmentData: React.FC<AppointmentDataProps> = ({
     consultationDate,
     deposit,
     sessions,
-    sessionDates,
   },
   setAppointmentState,
   refImage,
@@ -39,7 +38,7 @@ const AppointmentData: React.FC<AppointmentDataProps> = ({
                 <td className="text-right">
                   <input
                     id="consultation-date"
-                    className="px-2 outline-dashed outline-1"
+                    className="px-2 outline-dashed outline-1 outline-gray-300"
                     type="date"
                     disabled={!editEnabled}
                     value={consultationDate}
@@ -53,17 +52,21 @@ const AppointmentData: React.FC<AppointmentDataProps> = ({
                 </td>
               </tr>
             )}
-            {sessionsArray.map((item, i) => (
+
+            {/* {sessionsArray.map((item, i) => (
               <tr key={`${item as string}${i}`}>
                 <td className="text-sm">Appt. Date {`${i + 1}`}</td>
                 <td className="text-right">
                   <input
-                    type="datetime-local"
+                    type="date"
+                    className="px-2 outline-dashed outline-1 outline-gray-300"
                     disabled={!editEnabled}
-                    value={sessionDates[i] || ""}
+                    value={sessionDates[i]?.slice(0, 10) || ""}
                     onChange={({ target }) => {
                       const dates = [...sessionDates];
-                      dates[i] = target.value;
+                      dates[i] = new Date(
+                        `${target.value} 12:30:00`
+                      ).toISOString();
                       setAppointmentState((prev) => ({
                         ...prev,
                         sessionDates: [...dates],
@@ -72,7 +75,8 @@ const AppointmentData: React.FC<AppointmentDataProps> = ({
                   />
                 </td>
               </tr>
-            ))}
+            ))} */}
+
             <tr>
               <td className="p-1 text-sm">
                 <label className="mr-2" htmlFor="deposit">
