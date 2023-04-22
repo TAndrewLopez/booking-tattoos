@@ -77,6 +77,26 @@ export const calendarEventRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       try {
+        const calendarEvent = await ctx.prisma.calendarEvent.findUnique({
+          where: {
+            id: input.id,
+          },
+        });
+
+        if (
+          calendarEvent?.appointmentId &&
+          calendarEvent.type === "consultation"
+        ) {
+          await ctx.prisma.appointment.update({
+            where: {
+              id: calendarEvent.appointmentId,
+            },
+            data: {
+              consultationDate: null,
+            },
+          });
+        }
+
         return ctx.prisma.calendarEvent.delete({
           where: {
             id: input.id,
