@@ -131,10 +131,10 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
         <NoteSection
           data={data}
           editEnabled={editEnabled}
-          userId={userId}
           notes={notes}
           setNotes={setNotes}
           handleDelete={handleDeleteNote}
+          userId={userId}
         />
       )}
 
