@@ -35,7 +35,7 @@ const TATTOO_REFERRALS: Referral[] = [
 
 const InitialReview: React.FC<InitialReviewProps> = ({
   editEnabled,
-  appointmentState: { accepted, consultation, sessions, reason, referral },
+  appointmentState: { accepted, requiresConsultation, sessions, reason, referral },
   setAppointmentState,
 }) => {
   return (
@@ -109,11 +109,11 @@ const InitialReview: React.FC<InitialReviewProps> = ({
                     id="consultation"
                     type="checkbox"
                     disabled={!editEnabled}
-                    checked={consultation}
+                    checked={requiresConsultation}
                     onChange={() =>
                       setAppointmentState((prev) => ({
                         ...prev,
-                        consultation: !consultation,
+                        requiresConsultation: !requiresConsultation,
                       }))
                     }
                   />

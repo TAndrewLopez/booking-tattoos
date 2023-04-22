@@ -10,7 +10,13 @@ interface AppointmentDataProps {
 
 const AppointmentData: React.FC<AppointmentDataProps> = ({
   editEnabled,
-  appointmentState: { accepted, consultation, deposit, sessions },
+  appointmentState: {
+    accepted,
+    requiresConsultation,
+    consultationDate,
+    deposit,
+    sessions,
+  },
   setAppointmentState,
   refImage,
 }) => {
@@ -22,7 +28,7 @@ const AppointmentData: React.FC<AppointmentDataProps> = ({
       {accepted ? (
         <table>
           <tbody>
-            {consultation && (
+            {requiresConsultation && (
               <tr>
                 <td className="p-1 text-sm">
                   <label className="mr-2" htmlFor="consultation-date">
@@ -35,10 +41,13 @@ const AppointmentData: React.FC<AppointmentDataProps> = ({
                     className="px-2 outline-dashed outline-1 outline-gray-300"
                     type="date"
                     disabled={!editEnabled}
+                    value={consultationDate.slice(0, 10)}
                     onChange={({ target }) =>
                       setAppointmentState((prev) => ({
                         ...prev,
-                        consultationDate: target.value,
+                        consultationDate: target.value
+                          ? new Date(`${target.value} 11:30:00`).toISOString()
+                          : "",
                       }))
                     }
                   />

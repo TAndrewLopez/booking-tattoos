@@ -73,7 +73,7 @@ const useSubmissions = ({
     name: "",
     preferredPronouns: "",
     email: "",
-    number: "",
+    phoneNumber: "",
   });
 
   // TATTOO STATES
@@ -88,110 +88,14 @@ const useSubmissions = ({
   const [appointmentState, setAppointmentState] =
     useState<AppointmentStateInterface>({
       accepted: null,
-      consultation: false,
+      requiresConsultation: false,
+      consultationDate: "",
       sessions: "0",
       appointmentDates: [],
       deposit: false,
       reason: "",
       referral: "",
     });
-
-  const handleUpdateAppointment = useCallback(
-    (evt: SyntheticEvent) => {
-      evt.preventDefault();
-      const { name, preferredPronouns, email, number } = contactState;
-      const { description, placement, size, color } = tattooState;
-      const { accepted, consultation, sessions, deposit, reason, referral } =
-        appointmentState;
-
-      if (!name) return toast.error("Name field is missing.");
-      if (!email) return toast.error("Email field is missing.");
-      if (!number) return toast.error("Phone number field is missing.");
-      if (!description) return toast.error("Description field is missing.");
-      if (!size) return toast.error("Size field is missing.");
-      if (!placement) return toast.error("Placement field is missing.");
-      if (!color) return toast.error("Color field is missing.");
-
-      // consultationDate: consultationDate
-      //   ? new Date(`${consultationDate} 11:30:00`).toISOString()
-      //   : undefined,
-
-      try {
-        setIsLoading(true);
-        updateFormInformation.mutate({
-          id: dataId,
-          name,
-          preferredPronouns,
-          email,
-          phoneNumber: number,
-          description,
-          placement,
-          size,
-          color,
-        });
-        if (accepted) {
-          updateAcceptedApt.mutate({
-            id: dataId,
-            accepted,
-            requiresConsultation: consultation,
-            sessionsAmount: sessions,
-            depositPaid: deposit,
-          });
-          setAppointmentState((prev) => ({
-            ...prev,
-            reason: "",
-            referral: "",
-          }));
-        }
-        if (accepted === false) {
-          updateRejectedApt.mutate({
-            id: dataId,
-            accepted,
-            rejectionReason: reason,
-            tattooReferral: referral,
-          });
-          setAppointmentState((prev) => ({
-            ...prev,
-            consultation: false,
-            sessions: "0",
-          }));
-        }
-        if (accepted === null) {
-          clearApt.mutate({
-            id: dataId,
-          });
-        }
-        if (notes.length) {
-          createNote.mutate({
-            userId,
-            appointmentId: dataId,
-            text: notes,
-          });
-          setNotes("");
-        }
-        setEditEnabled(false);
-        toast.success("Update successful.");
-      } catch (error) {
-        console.log(error);
-        toast.error("Something went wrong.");
-      } finally {
-        setIsLoading(false);
-      }
-    },
-    [
-      dataId,
-      contactState,
-      tattooState,
-      appointmentState,
-      createNote,
-      updateAcceptedApt,
-      updateFormInformation,
-      updateRejectedApt,
-      clearApt,
-      notes,
-      userId,
-    ]
-  );
 
   const handleDeleteNote = useCallback(
     (noteId: string) => {
@@ -247,6 +151,110 @@ const useSubmissions = ({
       setIsLoading(false);
     }
   }, [firebaseRef, removeReferenceImage, dataId]);
+
+  const handleUpdateAppointment = useCallback(
+    async (evt: SyntheticEvent) => {
+      evt.preventDefault();
+      const { name, preferredPronouns, email, phoneNumber } = contactState;
+      const { description, placement, size, color } = tattooState;
+      const {
+        accepted,
+        requiresConsultation,
+        consultationDate,
+        sessions,
+        deposit,
+        reason,
+        referral,
+      } = appointmentState;
+
+      if (!name) return toast.error("Name field is missing.");
+      if (!email) return toast.error("Email field is missing.");
+      if (!phoneNumber) return toast.error("Phone number field is missing.");
+      if (!description) return toast.error("Description field is missing.");
+      if (!size) return toast.error("Size field is missing.");
+      if (!placement) return toast.error("Placement field is missing.");
+      if (!color) return toast.error("Color field is missing.");
+
+      try {
+        setIsLoading(true);
+        updateFormInformation.mutate({
+          id: dataId,
+          name,
+          preferredPronouns,
+          email,
+          phoneNumber,
+          description,
+          placement,
+          size,
+          color,
+        });
+        if (accepted) {
+          updateAcceptedApt.mutate({
+            id: dataId,
+            accepted,
+            requiresConsultation,
+            consultationDate,
+            sessionsAmount: sessions,
+            depositPaid: deposit,
+          });
+          setAppointmentState((prev) => ({
+            ...prev,
+            reason: "",
+            referral: "",
+          }));
+        }
+        if (accepted === false) {
+          updateRejectedApt.mutate({
+            id: dataId,
+            rejectionReason: reason,
+            tattooReferral: referral,
+          });
+          setAppointmentState((prev) => ({
+            ...prev,
+            requiresConsultation: false,
+            sessions: "0",
+          }));
+        }
+        if (accepted === null) {
+          clearApt.mutate({
+            id: dataId,
+          });
+        }
+        if (image) await uploadImage();
+
+        if (notes.length) {
+          createNote.mutate({
+            userId,
+            appointmentId: dataId,
+            text: notes,
+          });
+          setNotes("");
+        }
+        setEditEnabled(false);
+        toast.success("Update successful.");
+      } catch (error) {
+        console.log(error);
+        toast.error("Something went wrong.");
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [
+      dataId,
+      contactState,
+      tattooState,
+      appointmentState,
+      createNote,
+      updateAcceptedApt,
+      updateFormInformation,
+      updateRejectedApt,
+      clearApt,
+      image,
+      uploadImage,
+      notes,
+      userId,
+    ]
+  );
 
   return {
     contactState,

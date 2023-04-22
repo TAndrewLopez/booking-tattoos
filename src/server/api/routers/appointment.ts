@@ -129,6 +129,7 @@ export const appointmentRouter = createTRPCRouter({
         id: z.string(),
         accepted: z.boolean().optional(),
         requiresConsultation: z.boolean().optional(),
+        consultationDate: z.string().optional(),
         sessionsAmount: z.string().optional(),
         depositPaid: z.boolean().optional(),
       })
@@ -142,6 +143,7 @@ export const appointmentRouter = createTRPCRouter({
           data: {
             accepted: input.accepted,
             requiresConsultation: input.requiresConsultation,
+            consultationDate: input.consultationDate,
             sessionsAmount: input.sessionsAmount,
             depositPaid: input.depositPaid,
             rejectionReason: null,
@@ -149,17 +151,40 @@ export const appointmentRouter = createTRPCRouter({
           },
         });
 
-        // if (input.consultationDate) {
-        //   await ctx.prisma.calendarEvent.create({
-        //     data: {
-        //       appointmentId: input.id,
-        //       date: input.consultationDate,
-        //       title: `${updatedAppointment.name} Consultation`,
-        //       description: `${updatedAppointment.description} on ${updatedAppointment.placement}`,
-        //       label: "indigo",
-        //     },
-        //   });
-        // }
+        const consultationEvent = await ctx.prisma.calendarEvent.findFirst({
+          where: {
+            appointmentId: updatedAppointment.id,
+            type: "consultation",
+          },
+        });
+
+        // IF !CONSULTATION EVENT AND THERE'S A PROVIDED CONSULTATION DATE => CREATE EVENT
+        if (!consultationEvent) {
+          if (updatedAppointment.consultationDate) {
+            const newConsultationEvent = await ctx.prisma.calendarEvent.create({
+              data: {
+                type: "consultation",
+                title: `${updatedAppointment.name} Consultation`,
+                date: new Date(updatedAppointment.consultationDate),
+                description: updatedAppointment.description,
+                appointmentId: updatedAppointment.id,
+                label: "indigo",
+              },
+            });
+            return { updatedAppointment, newConsultationEvent };
+          }
+        } else {
+          return { TEST: "FOUND AN EVENT" };
+        }
+
+        // IF THERES A CONSULTATION DATE
+
+        // CHECK IF ITS THAT SAME
+        // IF YES, NO CHANGES NEED TO BE MADE
+
+        // IF NOT => CHECK IF THERE IS A DATE
+        // IF YES UPDATE CALENDAR EVENT WITH NEW DATE
+        // IF NOT => DELETE CALENDAR EVENT11
 
         return updatedAppointment;
       } catch (error) {
@@ -174,7 +199,6 @@ export const appointmentRouter = createTRPCRouter({
     .input(
       z.object({
         id: z.string(),
-        accepted: z.boolean().optional(),
         rejectionReason: z.string().optional(),
         tattooReferral: z.string().optional(),
       })
@@ -186,7 +210,7 @@ export const appointmentRouter = createTRPCRouter({
             id: input.id,
           },
           data: {
-            accepted: input.accepted,
+            accepted: false,
             requiresConsultation: null,
             sessionsAmount: null,
             depositPaid: null,

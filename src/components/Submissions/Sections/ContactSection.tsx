@@ -7,21 +7,21 @@ interface ContactSectionProps {
     name: string;
     preferredPronouns: string;
     email: string;
-    number: string;
+    phoneNumber: string;
   };
   setContactState: Dispatch<
     SetStateAction<{
       name: string;
       preferredPronouns: string;
       email: string;
-      number: string;
+      phoneNumber: string;
     }>
   >;
 }
 
 const ContactSection: React.FC<ContactSectionProps> = ({
   editEnabled,
-  contactState: { name, preferredPronouns, email, number },
+  contactState: { name, preferredPronouns, email, phoneNumber },
   setContactState,
 }) => {
   return (
@@ -60,9 +60,9 @@ const ContactSection: React.FC<ContactSectionProps> = ({
         id="Number"
         label="Phone Number"
         disabled={!editEnabled}
-        value={number}
+        value={phoneNumber}
         onChange={({ target }) =>
-          setContactState((prev) => ({ ...prev, number: target.value }))
+          setContactState((prev) => ({ ...prev, phoneNumber: target.value }))
         }
       />
     </section>

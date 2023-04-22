@@ -1,4 +1,3 @@
-import Button from "@/components/Form/Inputs/Button";
 import useSubmission from "@/hooks/useSubmission";
 import type { Appointment } from "@/types";
 import { useCallback, useEffect } from "react";
@@ -46,7 +45,7 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
       name: data.name,
       preferredPronouns: data.preferredPronouns,
       email: data.email,
-      number: data.phoneNumber,
+      phoneNumber: data.phoneNumber,
     });
 
     setTattooState({
@@ -58,7 +57,8 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
 
     setAppointmentState({
       accepted: data.accepted,
-      consultation: data.requiresConsultation || false,
+      requiresConsultation: data.requiresConsultation || false,
+      consultationDate: data.consultationDate || "",
       sessions: data.sessionsAmount || "0",
       appointmentDates: [],
       deposit: data.depositPaid || false,
@@ -76,6 +76,7 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
     data.color,
     data.accepted,
     data.requiresConsultation,
+    data.consultationDate,
     data.sessionsAmount,
     data.depositPaid,
     data.rejectionReason,
@@ -140,13 +141,13 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
 
       {editEnabled && (
         <div className="flex items-center justify-center px-3 pb-3">
-          <Button
-            label={isLoading ? <ClipLoader color="blue" /> : "Save"}
-            type="submit"
+          <button
+            onClick={(evt) => void handleUpdateAppointment(evt)}
+            className="flex w-full items-center justify-center rounded-md bg-emerald-200 px-3 py-2 text-emerald-900 hover:bg-emerald-900 hover:text-white disabled:cursor-not-allowed disabled:bg-neutral-400 disabled:text-neutral-50"
             disabled={!editEnabled}
-            onClick={handleUpdateAppointment}
-            fullSize
-          />
+          >
+            {isLoading ? <ClipLoader size={24} color="blue" /> : "Save"}
+          </button>
         </div>
       )}
     </div>
