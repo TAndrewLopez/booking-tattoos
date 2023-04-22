@@ -10,13 +10,7 @@ interface AppointmentDataProps {
 
 const AppointmentData: React.FC<AppointmentDataProps> = ({
   editEnabled,
-  appointmentState: {
-    accepted,
-    consultation,
-    consultationDate,
-    deposit,
-    sessions,
-  },
+  appointmentState: { accepted, consultation, deposit, sessions },
   setAppointmentState,
   refImage,
 }) => {
@@ -41,7 +35,6 @@ const AppointmentData: React.FC<AppointmentDataProps> = ({
                     className="px-2 outline-dashed outline-1 outline-gray-300"
                     type="date"
                     disabled={!editEnabled}
-                    value={consultationDate}
                     onChange={({ target }) =>
                       setAppointmentState((prev) => ({
                         ...prev,
@@ -53,7 +46,7 @@ const AppointmentData: React.FC<AppointmentDataProps> = ({
               </tr>
             )}
 
-            {/* {sessionsArray.map((item, i) => (
+            {sessionsArray.map((item, i) => (
               <tr key={`${item as string}${i}`}>
                 <td className="text-sm">Appt. Date {`${i + 1}`}</td>
                 <td className="text-right">
@@ -61,21 +54,21 @@ const AppointmentData: React.FC<AppointmentDataProps> = ({
                     type="date"
                     className="px-2 outline-dashed outline-1 outline-gray-300"
                     disabled={!editEnabled}
-                    value={sessionDates[i]?.slice(0, 10) || ""}
-                    onChange={({ target }) => {
-                      const dates = [...sessionDates];
-                      dates[i] = new Date(
-                        `${target.value} 12:30:00`
-                      ).toISOString();
-                      setAppointmentState((prev) => ({
-                        ...prev,
-                        sessionDates: [...dates],
-                      }));
-                    }}
+                    // value={sessionDates[i]?.slice(0, 10) || ""}
+                    // onChange={({ target }) => {
+                    //   const dates = [...sessionDates];
+                    //   dates[i] = new Date(
+                    //     `${target.value} 12:30:00`
+                    //   ).toISOString();
+                    //   setAppointmentState((prev) => ({
+                    //     ...prev,
+                    //     sessionDates: [...dates],
+                    //   }));
+                    // }}
                   />
                 </td>
               </tr>
-            ))} */}
+            ))}
 
             <tr>
               <td className="p-1 text-sm">

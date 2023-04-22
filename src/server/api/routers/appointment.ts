@@ -129,7 +129,6 @@ export const appointmentRouter = createTRPCRouter({
         id: z.string(),
         accepted: z.boolean().optional(),
         requiresConsultation: z.boolean().optional(),
-        consultationDate: z.string().optional(),
         sessionsAmount: z.string().optional(),
         depositPaid: z.boolean().optional(),
       })
@@ -143,7 +142,6 @@ export const appointmentRouter = createTRPCRouter({
           data: {
             accepted: input.accepted,
             requiresConsultation: input.requiresConsultation,
-            consultationDate: input.consultationDate,
             sessionsAmount: input.sessionsAmount,
             depositPaid: input.depositPaid,
             rejectionReason: null,
@@ -190,7 +188,6 @@ export const appointmentRouter = createTRPCRouter({
           data: {
             accepted: input.accepted,
             requiresConsultation: null,
-            consultationDate: null,
             sessionsAmount: null,
             depositPaid: null,
             rejectionReason: input.rejectionReason,
@@ -226,7 +223,6 @@ export const appointmentRouter = createTRPCRouter({
           data: {
             accepted: null,
             requiresConsultation: null,
-            consultationDate: null,
             sessionsAmount: null,
             depositPaid: null,
             rejectionReason: null,
