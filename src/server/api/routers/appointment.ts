@@ -158,7 +158,6 @@ export const appointmentRouter = createTRPCRouter({
           },
         });
 
-        // IF !CONSULTATION EVENT AND THERE'S A PROVIDED CONSULTATION DATE => CREATE EVENT
         if (!consultationEvent) {
           if (updatedAppointment.consultationDate) {
             const newConsultationEvent = await ctx.prisma.calendarEvent.create({
@@ -174,19 +173,34 @@ export const appointmentRouter = createTRPCRouter({
             return { updatedAppointment, newConsultationEvent };
           }
         } else {
-          return { TEST: "FOUND AN EVENT" };
+          if (!input.consultationDate) {
+            const deletedConsultationEvent =
+              await ctx.prisma.calendarEvent.delete({
+                where: {
+                  id: consultationEvent.id,
+                },
+              });
+            return { updatedAppointment, deletedConsultationEvent };
+          }
+
+          const datesEqual =
+            updatedAppointment.consultationDate ===
+            consultationEvent.date.toISOString();
+          if (datesEqual) {
+            return updatedAppointment;
+          } else {
+            const updatedConsultationEvent =
+              await ctx.prisma.calendarEvent.update({
+                where: {
+                  id: consultationEvent.id,
+                },
+                data: {
+                  date: input.consultationDate,
+                },
+              });
+            return { updatedAppointment, updatedConsultationEvent };
+          }
         }
-
-        // IF THERES A CONSULTATION DATE
-
-        // CHECK IF ITS THAT SAME
-        // IF YES, NO CHANGES NEED TO BE MADE
-
-        // IF NOT => CHECK IF THERE IS A DATE
-        // IF YES UPDATE CALENDAR EVENT WITH NEW DATE
-        // IF NOT => DELETE CALENDAR EVENT11
-
-        return updatedAppointment;
       } catch (error) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
