@@ -145,7 +145,7 @@ const EventModal = () => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed left-0 top-0 flex h-screen w-full items-center justify-center">
+    <div className="fixed left-0 top-0 z-50 flex h-screen w-full items-center justify-center">
       <form className="w-[448px] rounded-lg bg-white shadow-2xl">
         {/* HEADER */}
         <header className="relative flex items-center justify-between bg-gray-100 px-4 py-2">

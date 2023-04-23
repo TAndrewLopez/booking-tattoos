@@ -162,6 +162,7 @@ const useSubmissions = ({
         requiresConsultation,
         consultationDate,
         sessions,
+        appointmentDates,
         deposit,
         reason,
         referral,
@@ -188,6 +189,7 @@ const useSubmissions = ({
           size,
           color,
         });
+        console.log({ appointmentDates });
         if (accepted) {
           updateAcceptedApt.mutate({
             id: dataId,
@@ -195,6 +197,7 @@ const useSubmissions = ({
             requiresConsultation,
             consultationDate,
             sessionsAmount: sessions,
+            appointmentDates: appointmentDates.filter((date) => date !== ""),
             depositPaid: deposit,
           });
           setAppointmentState((prev) => ({

@@ -5,7 +5,7 @@ interface AuthButtonProps {
   session: Session | null;
 }
 
-// TODO: UPDATE AUTH TO BE EMAIL CREDENTIALS INSTEAD OF GOOGLE LOGIN
+// TODO UPDATE AUTH TO BE EMAIL CREDENTIALS INSTEAD OF GOOGLE LOGIN
 
 const AuthButtons: React.FC<AuthButtonProps> = ({ session }) => {
   return (

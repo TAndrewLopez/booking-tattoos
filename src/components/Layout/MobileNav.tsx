@@ -58,7 +58,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
             >
               Calendar
             </Link>
-            <Link
+            {/* <Link
               onClick={handleMobileNav}
               href="/billing"
               className={`${
@@ -75,7 +75,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
               }`}
             >
               Messages
-            </Link>
+            </Link> */}
           </>
         )}
         <AuthButtons session={session} />

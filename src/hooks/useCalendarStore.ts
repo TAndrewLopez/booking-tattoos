@@ -4,6 +4,7 @@ import { create } from "zustand";
 
 export interface CalendarStoreInterface {
   monthIndex: number;
+  weekIndex: number;
   daySelected: moment.Moment;
   labels: LabelObj[];
   setMonthIndex: (val: number) => void;
@@ -14,6 +15,7 @@ export interface CalendarStoreInterface {
 
 const useCalendarStore = create<CalendarStoreInterface>((set) => ({
   monthIndex: moment().month(),
+  weekIndex: moment().week(),
   daySelected: moment(),
   labels: [],
   setMonthIndex: (val: number) =>

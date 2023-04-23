@@ -77,6 +77,11 @@ const Day: React.FC<DayProps> = ({ day, rowIndex }) => {
             key={calEvt.id}
           >
             {calEvt.title}
+            <br />
+            <p className="truncate">
+              {calEvt.date.toLocaleTimeString().slice(0, 5)}{" "}
+              {calEvt.date.toLocaleTimeString().slice(-2)}
+            </p>
           </div>
         ))}
       </div>

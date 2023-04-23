@@ -6,13 +6,8 @@ export type CalendarEvent = RouterOutputs["calendarEvents"]["getAll"][0];
 
 export type LabelObj = { label: string; checked: boolean };
 
-export type FilterConditions = {
+export type FilterCondition = {
   [key: string]: (apt: Appointment, value: string) => boolean;
-};
-
-type AppointmentItem = {
-  type: string;
-  date: string;
 };
 
 export type AppointmentStateInterface = {
@@ -20,7 +15,7 @@ export type AppointmentStateInterface = {
   requiresConsultation: boolean;
   consultationDate: string;
   sessions: string;
-  appointmentDates: AppointmentItem[];
+  appointmentDates: string[];
   deposit: boolean;
   reason: string;
   referral: string;

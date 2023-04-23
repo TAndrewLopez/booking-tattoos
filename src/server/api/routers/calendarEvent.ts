@@ -6,7 +6,7 @@ export const calendarEventRouter = createTRPCRouter({
   getAll: protectedProcedure.query(({ ctx }) => {
     return ctx.prisma.calendarEvent.findMany({
       orderBy: {
-        createdAt: "desc",
+        createdAt: "asc",
       },
     });
   }),

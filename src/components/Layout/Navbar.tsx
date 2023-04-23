@@ -52,7 +52,7 @@ const Navbar = () => {
             >
               Calendar
             </Link>
-            <Link
+            {/* <Link
               href="/billing"
               className={`
               ${pathname === "/billing" ? "border-b-2 border-sky-500" : ""}`}
@@ -65,7 +65,7 @@ const Navbar = () => {
               ${pathname === "/messages" ? "border-b-2 border-sky-500" : ""}`}
             >
               Messages
-            </Link>
+            </Link> */}
           </>
         )}
         <AuthButtons session={sessionData} />

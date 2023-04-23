@@ -8,6 +8,7 @@ export const appointmentRouter = createTRPCRouter({
   getAll: protectedProcedure.query(({ ctx }) => {
     return ctx.prisma.appointment.findMany({
       include: {
+        appointmentDates: true,
         notes: {
           include: {
             user: true,
@@ -131,6 +132,7 @@ export const appointmentRouter = createTRPCRouter({
         requiresConsultation: z.boolean().optional(),
         consultationDate: z.string().optional(),
         sessionsAmount: z.string().optional(),
+        appointmentDates: z.string().array().optional(),
         depositPaid: z.boolean().optional(),
       })
     )
@@ -149,6 +151,9 @@ export const appointmentRouter = createTRPCRouter({
             rejectionReason: null,
             tattooReferral: null,
           },
+          include: {
+            appointmentDates: true,
+          },
         });
 
         const consultationEvent = await ctx.prisma.calendarEvent.findFirst({
@@ -157,6 +162,50 @@ export const appointmentRouter = createTRPCRouter({
             type: "consultation",
           },
         });
+
+        const existingAppointmentDates =
+          updatedAppointment.appointmentDates.filter(
+            (apt) => apt.type === "appointment"
+          );
+
+        // IF THERE ARE APPOINTMENTS CHECK IF THEY NEED TO BE CREATED OR UPDATED
+        // FILTER FOR 'APPOINTMENTS' NOT CONSULTATIONS
+        // OTHERWISE NO APPOINTMENTS MEANS DELETE THEM FROM DATABASE
+        if (
+          !input.appointmentDates?.length &&
+          existingAppointmentDates.length
+        ) {
+          await ctx.prisma.calendarEvent.deleteMany({
+            where: {
+              appointmentId: updatedAppointment.id,
+              type: "appointment",
+            },
+          });
+        }
+
+        if (
+          input.appointmentDates?.length &&
+          !existingAppointmentDates.length
+        ) {
+          await Promise.all(
+            input.appointmentDates.map((date, i) =>
+              ctx.prisma.calendarEvent.create({
+                data: {
+                  appointmentId: updatedAppointment.id,
+                  date: date,
+                  description: updatedAppointment.description,
+                  type: "appointment",
+                  label: "green",
+                  title: `${updatedAppointment.name} Appt # ${i + 1}`,
+                },
+              })
+            )
+          );
+        }
+
+        if (input.appointmentDates?.length && existingAppointmentDates.length) {
+          return { title: "UPDATE THE APPOINTMENTS" };
+        }
 
         if (!consultationEvent) {
           if (updatedAppointment.consultationDate) {
