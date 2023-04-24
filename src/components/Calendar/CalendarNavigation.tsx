@@ -30,24 +30,24 @@ const CalendarNavigation: React.FC<CalendarNavigationProps> = ({
       {handleResetMonth && (
         <button
           onClick={handleResetMonth}
-          className="mr-5 rounded border px-4 py-2"
+          className="mr-5 rounded border px-4 py-2 transition hover:bg-neutral-50"
         >
           Today
         </button>
       )}
 
-      <button onClick={handlePrevMonth}>
-        <BiChevronLeft
-          size={30}
-          className="mx-2 cursor-pointer text-gray-600"
-        />
+      <button
+        className="flex h-8 w-8 items-center justify-center rounded-full transition hover:bg-neutral-100"
+        onClick={handlePrevMonth}
+      >
+        <BiChevronLeft size={30} className="cursor-pointer text-gray-600" />
       </button>
 
-      <button onClick={handleNextMonth}>
-        <BiChevronRight
-          size={30}
-          className="mx-2 cursor-pointer text-gray-600"
-        />
+      <button
+        className="flex h-8 w-8 items-center justify-center rounded-full transition hover:bg-neutral-100"
+        onClick={handleNextMonth}
+      >
+        <BiChevronRight size={30} className="cursor-pointer text-gray-600" />
       </button>
     </>
   );

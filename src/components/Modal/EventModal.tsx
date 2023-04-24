@@ -151,7 +151,7 @@ const EventModal = () => {
         <header className="relative flex items-center justify-between bg-gray-100 px-4 py-2">
           <MdDragHandle className="text-gray-500" size={24} />
           <p className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">
-            Create Event
+            {selectedEvent ? "Update Event" : "Create Event"}
           </p>
           <div className="flex items-center gap-3">
             {selectedEvent && (

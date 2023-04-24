@@ -58,7 +58,7 @@ const SmallCalendar: React.FC<SmallCalendarProps> = ({ view, setView }) => {
             "MMMM YYYY"
           )}
         </p>
-        <div>
+        <div className="flex">
           <CalendarNavigation
             view={view}
             setView={setView}

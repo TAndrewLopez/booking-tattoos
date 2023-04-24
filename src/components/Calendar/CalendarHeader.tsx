@@ -31,9 +31,11 @@ const CalendarHeader: React.FC<CalendarHeaderProp> = ({ view, setView }) => {
   };
 
   return (
-    <header className="relative flex items-center px-4 py-2">
-      <AiTwotoneCalendar size={30} className="mr-2" />
-      <h1 className="font-base mr-10 text-xl text-gray-500">Calendar</h1>
+    <header className="relative flex items-center py-2 md:px-4">
+      <AiTwotoneCalendar size={30} className="mr-2 hidden md:block" />
+      <h1 className="font-base mr-10 hidden text-xl text-gray-500 md:block">
+        Calendar
+      </h1>
       <CalendarNavigation
         view={view}
         setView={setView}
@@ -41,7 +43,7 @@ const CalendarHeader: React.FC<CalendarHeaderProp> = ({ view, setView }) => {
         handlePrevMonth={handlePrevMonth}
         handleNextMonth={handleNextMonth}
       />
-      <h2 className="ml-4 text-xl font-semibold text-gray-500">
+      <h2 className="ml-4 font-semibold text-gray-500 md:text-xl">
         {moment(new Date(moment().year(), monthIndex)).format("MMMM YYYY")}
       </h2>
       {/* <button className="absolute right-4">

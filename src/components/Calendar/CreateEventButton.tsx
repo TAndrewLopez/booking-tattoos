@@ -6,7 +6,7 @@ const CreateEventButton = () => {
   return (
     <button
       onClick={openModal}
-      className="flex items-center rounded-full border p-2 shadow-md hover:shadow-2xl"
+      className="flex items-center rounded-full border p-2 shadow-md transition hover:bg-sky-50 hover:shadow-2xl"
     >
       <BsPlus className="text-blue-500" size={28} />
       <span className="pl-3 pr-7">Create</span>

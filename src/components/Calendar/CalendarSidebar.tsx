@@ -10,7 +10,7 @@ interface CalendarSidebarProps {
 
 const CalendarSidebar: React.FC<CalendarSidebarProps> = ({ view, setView }) => {
   return (
-    <aside className="w-64 border p-5">
+    <aside className="hidden w-64 border p-5 md:block">
       <CreateEventButton />
       <SmallCalendar view={view} setView={setView} />
       <CalendarLabels />

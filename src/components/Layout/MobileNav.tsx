@@ -20,7 +20,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
 }) => {
   return (
     <div
-      className={`fixed right-0 top-0 z-50 flex h-full w-full items-center justify-center bg-[#e3d8e9] duration-300 ease-in
+      className={`fixed right-0 top-0 z-50 flex h-full w-full items-center justify-center bg-neutral-100 duration-300 ease-in
       ${showMobileNav ? "translate-x-0" : "translate-x-full"}`}
     >
       <div className="absolute top-0 flex w-full justify-between p-4">
