@@ -64,12 +64,22 @@ const AppointmentData: React.FC<AppointmentDataProps> = ({
                     type="date"
                     className="px-2 outline-dashed outline-1 outline-gray-300"
                     disabled={!editEnabled}
-                    value={appointmentDates[i]?.slice(0, 10) || ""}
+                    value={appointmentDates[i]?.date?.slice(0, 10) || ""}
                     onChange={({ target }) => {
                       const dates = [...appointmentDates];
                       dates[i] = target.value
-                        ? new Date(`${target.value} 12:30:00`).toISOString()
-                        : "";
+                        ? {
+                            ...dates[i],
+                            type: "appointment",
+                            date: new Date(
+                              `${target.value} 12:30:00`
+                            ).toISOString(),
+                          }
+                        : {
+                            ...dates[i],
+                            type: "appointment",
+                            date: "",
+                          };
                       setAppointmentState((prev) => ({
                         ...prev,
                         appointmentDates: [...dates],

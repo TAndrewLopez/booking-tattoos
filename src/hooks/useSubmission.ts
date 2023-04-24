@@ -1,10 +1,10 @@
+import { storage } from "@/lib/firebase";
 import type { AppointmentStateInterface } from "@/types";
 import { api } from "@/utils/api";
 import { useSession } from "next-auth/react";
-import { type SyntheticEvent, useCallback, useState } from "react";
+import { useCallback, useState, type SyntheticEvent } from "react";
 import toast from "react-hot-toast";
 import * as uuid from "uuid";
-import { storage } from "@/lib/firebase";
 
 import {
   deleteObject,
@@ -189,7 +189,7 @@ const useSubmissions = ({
           size,
           color,
         });
-        console.log({ appointmentDates });
+        console.log(appointmentDates);
         if (accepted) {
           updateAcceptedApt.mutate({
             id: dataId,
@@ -197,7 +197,7 @@ const useSubmissions = ({
             requiresConsultation,
             consultationDate,
             sessionsAmount: sessions,
-            appointmentDates: appointmentDates.filter((date) => date !== ""),
+            appointmentDates: appointmentDates.filter((apt) => apt.date !== ""),
             depositPaid: deposit,
           });
           setAppointmentState((prev) => ({

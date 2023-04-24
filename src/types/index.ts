@@ -10,12 +10,18 @@ export type FilterCondition = {
   [key: string]: (apt: Appointment, value: string) => boolean;
 };
 
+type AppointmentItem = {
+  id?: string;
+  date: string;
+  type: string;
+};
+
 export type AppointmentStateInterface = {
   accepted: boolean | null;
   requiresConsultation: boolean;
   consultationDate: string;
   sessions: string;
-  appointmentDates: string[];
+  appointmentDates: AppointmentItem[];
   deposit: boolean;
   reason: string;
   referral: string;

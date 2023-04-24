@@ -60,10 +60,13 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
       requiresConsultation: data.requiresConsultation || false,
       consultationDate: data.consultationDate || "",
       sessions: data.sessionsAmount || "0",
-      appointmentDates:
-        data.appointmentDates
-          .filter((apt) => apt.type === "appointment")
-          .map((dateObj) => dateObj.date.toISOString()) || [],
+      appointmentDates: data.appointmentDates
+        .filter((apt) => apt.type === "appointment")
+        .map((apt) => ({
+          id: apt.id,
+          date: apt.date.toISOString(),
+          type: "appointment",
+        })),
       deposit: data.depositPaid || false,
       reason: data.rejectionReason || "",
       referral: data.tattooReferral || "",

@@ -35,7 +35,13 @@ const TATTOO_REFERRALS: Referral[] = [
 
 const InitialReview: React.FC<InitialReviewProps> = ({
   editEnabled,
-  appointmentState: { accepted, requiresConsultation, sessions, reason, referral },
+  appointmentState: {
+    accepted,
+    requiresConsultation,
+    sessions,
+    reason,
+    referral,
+  },
   setAppointmentState,
 }) => {
   return (
@@ -125,7 +131,7 @@ const InitialReview: React.FC<InitialReviewProps> = ({
                 </td>
                 <td className="p-1 text-right">
                   <input
-                    className="w-1/4 text-right"
+                    className="w-1/6 pr-2 text-right outline-dashed outline-1 outline-gray-300"
                     id="sessions"
                     type="number"
                     disabled={!editEnabled}

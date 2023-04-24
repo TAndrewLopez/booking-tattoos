@@ -132,7 +132,14 @@ export const appointmentRouter = createTRPCRouter({
         requiresConsultation: z.boolean().optional(),
         consultationDate: z.string().optional(),
         sessionsAmount: z.string().optional(),
-        appointmentDates: z.string().array().optional(),
+        appointmentDates: z
+          .object({
+            id: z.string().optional(),
+            date: z.string(),
+            type: z.string(),
+          })
+          .array()
+          .optional(),
         depositPaid: z.boolean().optional(),
       })
     )
@@ -168,9 +175,6 @@ export const appointmentRouter = createTRPCRouter({
             (apt) => apt.type === "appointment"
           );
 
-        // IF THERE ARE APPOINTMENTS CHECK IF THEY NEED TO BE CREATED OR UPDATED
-        // FILTER FOR 'APPOINTMENTS' NOT CONSULTATIONS
-        // OTHERWISE NO APPOINTMENTS MEANS DELETE THEM FROM DATABASE
         if (
           !input.appointmentDates?.length &&
           existingAppointmentDates.length
@@ -188,11 +192,11 @@ export const appointmentRouter = createTRPCRouter({
           !existingAppointmentDates.length
         ) {
           await Promise.all(
-            input.appointmentDates.map((date, i) =>
+            input.appointmentDates.map((apt, i) =>
               ctx.prisma.calendarEvent.create({
                 data: {
                   appointmentId: updatedAppointment.id,
-                  date: date,
+                  date: new Date(apt.date),
                   description: updatedAppointment.description,
                   type: "appointment",
                   label: "green",
@@ -204,7 +208,42 @@ export const appointmentRouter = createTRPCRouter({
         }
 
         if (input.appointmentDates?.length && existingAppointmentDates.length) {
-          return { title: "UPDATE THE APPOINTMENTS" };
+          await Promise.all(
+            input.appointmentDates.map(async (apt, i) => {
+              if (apt.id && apt.date) {
+                await ctx.prisma.calendarEvent.update({
+                  where: {
+                    id: apt.id,
+                  },
+                  data: {
+                    date: new Date(apt.date),
+                    title: `${updatedAppointment.name} Appt # ${i + 1}`,
+                  },
+                });
+              }
+
+              if (apt.id && !apt.date) {
+                await ctx.prisma.calendarEvent.delete({
+                  where: {
+                    id: apt.id,
+                  },
+                });
+              }
+
+              if (!apt.id && apt.date) {
+                await ctx.prisma.calendarEvent.create({
+                  data: {
+                    appointmentId: updatedAppointment.id,
+                    date: new Date(apt.date),
+                    description: updatedAppointment.description,
+                    type: "appointment",
+                    label: "green",
+                    title: `${updatedAppointment.name} Appt # ${i + 1}`,
+                  },
+                });
+              }
+            })
+          );
         }
 
         if (!consultationEvent) {
@@ -250,6 +289,7 @@ export const appointmentRouter = createTRPCRouter({
             return { updatedAppointment, updatedConsultationEvent };
           }
         }
+        return updatedAppointment;
       } catch (error) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
@@ -277,6 +317,7 @@ export const appointmentRouter = createTRPCRouter({
             requiresConsultation: null,
             sessionsAmount: null,
             depositPaid: null,
+            consultationDate: null,
             rejectionReason: input.rejectionReason,
             tattooReferral: input.tattooReferral,
           },
