@@ -1,10 +1,20 @@
 import useCalendarStore from "@/hooks/useCalendarStore";
 import { getMonth } from "@/utils/calendar";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, {
+  type Dispatch,
+  type SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import CalendarNavigation from "./CalendarNavigation";
 
-const SmallCalendar = () => {
+interface SmallCalendarProps {
+  view: boolean;
+  setView: Dispatch<SetStateAction<boolean>>;
+}
+
+const SmallCalendar: React.FC<SmallCalendarProps> = ({ view, setView }) => {
   const [currentMonthIndex, setCurrentMonthIndex] = useState(moment().month());
   const [currentMonth, setCurrentMonth] = useState(getMonth());
   const { monthIndex, setMonthIndex, daySelected, setDaySelected } =
@@ -50,6 +60,8 @@ const SmallCalendar = () => {
         </p>
         <div>
           <CalendarNavigation
+            view={view}
+            setView={setView}
             handlePrevMonth={handlePrevMonth}
             handleNextMonth={handleNextMonth}
           />

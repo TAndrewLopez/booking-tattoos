@@ -21,7 +21,7 @@ const Calendar = () => {
     <div className="flex h-full flex-col">
       <CalendarHeader view={view} setView={setView} />
       <div className="flex flex-1">
-        <CalendarSidebar />
+        <CalendarSidebar view={view} setView={setView} />
         {view ? <Week month={currentMonth} /> : <Month month={currentMonth} />}
       </div>
     </div>
