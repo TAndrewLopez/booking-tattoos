@@ -89,6 +89,7 @@ const EventModal = () => {
         } else {
           // CREATE NEW EVENT
           createEvent.mutate({
+            userId: sessionData?.user.id,
             title,
             date: new Date(aptTime),
             description,
@@ -117,6 +118,7 @@ const EventModal = () => {
       createEvent,
       selectedEvent,
       updateEvent,
+      sessionData?.user.id,
     ]
   );
 
@@ -143,6 +145,8 @@ const EventModal = () => {
   }, [selectedEvent, daySelected]);
 
   if (!isOpen) return null;
+
+  console.log(selectedEvent?.userId);
 
   return (
     <div className="fixed left-0 top-0 z-50 flex h-screen w-full items-center justify-center">
@@ -221,7 +225,14 @@ const EventModal = () => {
         </div>
 
         {/* FOOTER */}
-        <footer className="mt-5 flex justify-end border-t p-3">
+        <footer className="mt-5 flex items-center justify-end border-t p-3">
+          {selectedEvent?.User?.name && (
+            <p className="grow text-xs text-neutral-500">
+              <span className="font-semibold">Created By: </span>
+              {selectedEvent.User.name}{" "}
+              {moment(selectedEvent.createdAt).fromNow()}
+            </p>
+          )}
           <button
             onClick={(evt) => void handleSubmit(evt)}
             type="submit"

@@ -1,5 +1,6 @@
 import type { Dispatch, SetStateAction } from "react";
 import Input from "../../Form/Inputs/Input";
+import { formatPhoneNumber } from "@/utils/validation";
 
 interface ContactSectionProps {
   editEnabled: boolean;
@@ -60,7 +61,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({
         id="Number"
         label="Phone Number"
         disabled={!editEnabled}
-        value={phoneNumber}
+        value={!editEnabled ? formatPhoneNumber(phoneNumber) : phoneNumber}
         onChange={({ target }) =>
           setContactState((prev) => ({ ...prev, phoneNumber: target.value }))
         }

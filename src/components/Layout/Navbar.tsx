@@ -16,7 +16,11 @@ const Navbar = () => {
   }, [showMobileNav]);
 
   return (
-    <div className="relative z-50 flex items-center justify-between p-4">
+    <div
+      className={`fixed top-0 z-50 flex w-full items-center justify-between p-4 ${
+        pathname !== "/" ? "bg-white" : ""
+      }`}
+    >
       <div className={`${pathname === "/" ? "text-white" : ""}`}>
         <Link className="font-domine text-2xl" href="/">
           Raquel Cude
@@ -58,14 +62,14 @@ const Navbar = () => {
               ${pathname === "/billing" ? "border-b-2 border-sky-500" : ""}`}
             >
               Billing
-            </Link>
+            </Link> */}
             <Link
               href="/messages"
               className={`
               ${pathname === "/messages" ? "border-b-2 border-sky-500" : ""}`}
             >
               Messages
-            </Link> */}
+            </Link>
           </>
         )}
         <AuthButtons session={sessionData} />

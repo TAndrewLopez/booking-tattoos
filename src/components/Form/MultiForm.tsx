@@ -3,7 +3,7 @@ import TattooInputs from "@/components/Form/Inputs/TattooInputs";
 import useAppointmentModal from "@/hooks/useAppointmentModal";
 import useFormStore from "@/hooks/useFormStore";
 import { api } from "@/utils/api";
-import { stripPhoneNumber } from "@/utils/validation";
+import { formatPhoneNumber, stripPhoneNumber } from "@/utils/validation";
 import { useCallback, useState, type SyntheticEvent } from "react";
 import toast from "react-hot-toast";
 import MultiFormButtons from "./MultiFormButtons";
@@ -95,9 +95,12 @@ const MultiForm = () => {
             <ReviewAptEntries
               values={[
                 { label: "Name", value: name },
-                { label: "Preferred Pronouns", value: preferredPronouns },
+                { label: "Pronouns", value: preferredPronouns },
                 { label: "Email", value: email },
-                { label: "Phone Number", value: phoneNumber },
+                {
+                  label: "Phone Number",
+                  value: formatPhoneNumber(phoneNumber),
+                },
                 { label: "Description", value: description },
                 { label: "Size", value: size },
                 { label: "Placement", value: placement },
@@ -106,11 +109,9 @@ const MultiForm = () => {
             />
           )}
           <div
-            className={`
-          flex w-full flex-row-reverse p-3
-          ${page === 0 ? "justify-end" : ""}
-          ${page > 0 ? "justify-between" : ""}
-        `}
+            className={`flex w-full flex-row-reverse ${
+              page === 0 ? "justify-end" : ""
+            } ${page > 0 ? "justify-between" : ""}`}
           >
             <MultiFormButtons
               isLoading={isLoading}

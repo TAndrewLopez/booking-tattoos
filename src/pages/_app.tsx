@@ -7,7 +7,6 @@ import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { type AppType } from "next/app";
 import { Toaster } from "react-hot-toast";
-// import AppointmentModal from "@/components/Modal/AppointmentModal";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -17,7 +16,6 @@ const MyApp: AppType<{ session: Session | null }> = ({
     <SessionProvider session={session}>
       <Layout>
         <RequestModal />
-        {/* <AppointmentModal /> */}
         <EventModal />
         <Toaster />
         <Component {...pageProps} />

@@ -6,7 +6,7 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ page }) => {
   return (
-    <div className="md:cols-span-1 relative mb-4 min-h-[100px] md:mb-0 md:mr-4 md:h-full">
+    <div className="md:cols-span-1 relative mb-4 min-h-[100px] w-full md:mb-0 md:mr-4 md:h-full">
       <div className="absolute bottom-0 left-0 right-0 top-0 z-10 bg-black/30" />
       <Image
         fill

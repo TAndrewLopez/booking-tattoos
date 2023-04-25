@@ -3,7 +3,7 @@ import { getSession } from "next-auth/react";
 
 const Messages: NextPage = () => {
   return (
-    <main className="p-4">
+    <main className="relative top-20 p-4">
       <p className="font-bold">Messages</p>
       <p>Work with web sockets to allow users to live chat</p>
     </main>

@@ -6,8 +6,6 @@ import CalendarSidebar from "./CalendarSidebar";
 import Month from "./Month";
 import Week from "./Week";
 
-// TODO : STYLE FOR MOBILE VIEW
-
 const Calendar = () => {
   const [currentMonth, setCurrentMonth] = useState(getMonth());
   const [view, setView] = useState(false);

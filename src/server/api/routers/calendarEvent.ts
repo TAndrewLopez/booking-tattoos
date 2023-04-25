@@ -5,6 +5,9 @@ import { createTRPCRouter, protectedProcedure } from "../trpc";
 export const calendarEventRouter = createTRPCRouter({
   getAll: protectedProcedure.query(({ ctx }) => {
     return ctx.prisma.calendarEvent.findMany({
+      include: {
+        User: true,
+      },
       orderBy: {
         date: "asc",
       },
@@ -13,6 +16,7 @@ export const calendarEventRouter = createTRPCRouter({
   create: protectedProcedure
     .input(
       z.object({
+        userId: z.string().optional(),
         appointmentId: z.string().optional(),
         title: z.string(),
         date: z.date(),
@@ -24,6 +28,7 @@ export const calendarEventRouter = createTRPCRouter({
       try {
         return ctx.prisma.calendarEvent.create({
           data: {
+            userId: input.userId,
             title: input.title,
             date: input.date,
             description: input.description,

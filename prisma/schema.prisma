@@ -120,3 +120,9 @@ model CalendarEvent {
     User   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId String? @db.ObjectId
 }
+
+// model CalEventLabel {
+//     id    String @id @default(auto()) @map("_id") @db.ObjectId
+//     color String
+//     name  String
+// }

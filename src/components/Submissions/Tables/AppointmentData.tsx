@@ -98,7 +98,7 @@ const AppointmentData: React.FC<AppointmentDataProps> = ({
               </td>
               <td className="text-right">
                 <input
-                  className="h-4 w-4"
+                  className="mr-2 h-4 w-4"
                   id="deposit"
                   type="checkbox"
                   disabled={!editEnabled}
@@ -120,7 +120,7 @@ const AppointmentData: React.FC<AppointmentDataProps> = ({
               </td>
               <td className="text-right">
                 <input
-                  className="h-4 w-4"
+                  className="mr-2 h-4 w-4"
                   id="references"
                   type="checkbox"
                   disabled={!editEnabled}

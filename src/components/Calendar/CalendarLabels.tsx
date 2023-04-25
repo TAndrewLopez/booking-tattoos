@@ -2,7 +2,7 @@ import useCalendarStore from "@/hooks/useCalendarStore";
 import { type LabelObj } from "@/types";
 import { api } from "@/utils/api";
 import { useSession } from "next-auth/react";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const CalendarLabels = () => {
   const { data: sessionData } = useSession();
@@ -11,6 +11,7 @@ const CalendarLabels = () => {
   });
 
   const { labels, setLabels, updateLabel } = useCalendarStore();
+  const [editEnabled, setEditEnabled] = useState(false);
 
   const handleUpdateLabel = useCallback(
     (updatedLabel: LabelObj) => {
@@ -30,7 +31,15 @@ const CalendarLabels = () => {
 
   return (
     <>
-      <p className="mt-10 font-bold text-gray-500">Labels</p>
+      <div className="mt-10 flex items-center justify-between">
+        <p className="font-bold text-gray-500">Labels</p>
+        <p
+          onClick={() => setEditEnabled(!editEnabled)}
+          className="cursor-pointer text-sm text-blue-500 hover:text-blue-700 hover:underline"
+        >
+          {editEnabled ? "Done" : "Edit"}
+        </p>
+      </div>
       {labels.map(({ label: lbl, checked }, i) => (
         <label
           className={`mt-3 flex items-center rounded bg-${lbl}-200 px-2 py-1`}

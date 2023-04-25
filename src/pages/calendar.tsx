@@ -4,7 +4,7 @@ import { getSession } from "next-auth/react";
 
 const Schedule: NextPage = () => {
   return (
-    <main className="h-[93%] p-1 md:p-4">
+    <main className="relative top-20 h-[93%] p-1 md:p-4">
       <Calendar />
     </main>
   );

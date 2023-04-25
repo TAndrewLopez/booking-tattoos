@@ -17,7 +17,7 @@ const SubSidebar: React.FC<SubSidebarProps> = ({
   setSearch,
 }) => {
   return (
-    <aside className="sticky top-4 hidden h-fit w-1/5 min-w-[300px] rounded border p-4 shadow-lg md:block">
+    <aside className="sticky top-[72px] hidden h-fit w-1/5 min-w-[300px] rounded border p-4 shadow-lg md:block">
       <h3 className="border-b text-xl font-bold">Search:</h3>
       <Search search={search} setSearch={setSearch} />
 

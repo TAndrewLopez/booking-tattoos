@@ -67,7 +67,7 @@ const Submissions: NextPage = () => {
   }, [searchName, filteredSubmissions]);
 
   return (
-    <main className="flex gap-5 p-4">
+    <main className="relative top-20 flex gap-5 p-4">
       {/* SEARCH AND FILTER FEATURES */}
       <SubSidebar
         search={searchName}

@@ -128,6 +128,7 @@ const useSubmissions = ({
         referenceImageURL,
       });
       toast.success("Image uploaded successfully!");
+      setImage(null);
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong.");
