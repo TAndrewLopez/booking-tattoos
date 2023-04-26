@@ -1,9 +1,12 @@
 import useAppointmentModal from "@/hooks/useAppointmentModal";
 import { type NextPage } from "next";
 import { useCallback } from "react";
+import { GrInstagram } from "react-icons/gr";
+import { SlGlobe } from "react-icons/sl";
 
 const Home: NextPage = () => {
   const { isOpen, openModal, closeModal } = useAppointmentModal();
+
   const toggleModal = useCallback(() => {
     if (isOpen) return closeModal();
     openModal();
@@ -23,7 +26,7 @@ const Home: NextPage = () => {
 
           <button
             onClick={toggleModal}
-            className="text-shade-1 bg-accent hover:bg-highlight hover:text-shade-9 inline-flex items-center justify-center rounded-lg px-5 py-3 text-center text-base font-medium transition hover:border-2 hover:font-extrabold focus:ring-4 focus:ring-blue-300"
+            className="text-shade-1 bg-accent hover:bg-highlight hover:text-shade-9 inline-flex items-center justify-center rounded-lg border-2 border-white/0 px-5 py-3 text-center text-base font-medium transition hover:border-2 hover:border-white/100 hover:font-extrabold focus:ring-4 focus:ring-blue-300"
           >
             Request Tattoo
             <svg
@@ -39,6 +42,21 @@ const Home: NextPage = () => {
               ></path>
             </svg>
           </button>
+        </div>
+        <div className="fixed bottom-4 z-50 flex cursor-pointer gap-5">
+          <SlGlobe
+            title="Personal Site"
+            className="h-6 w-6 text-neutral-100 transition hover:text-blue-300 md:h-8 md:w-8"
+            onClick={() => window.open("https://raquelcude.com/", "_blank")}
+          />
+          <GrInstagram
+            title="Instagram"
+            size={24}
+            className="h-6 w-6 text-neutral-100 transition hover:text-blue-300 md:h-8 md:w-8"
+            onClick={() =>
+              window.open("https://www.instagram.com/raquelcood/", "_blank")
+            }
+          />
         </div>
       </div>
     </main>

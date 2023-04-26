@@ -11,6 +11,9 @@ export default {
   ],
   theme: {
     extend: {
+      colors: {
+        chatPrimary: "#3e3c61",
+      },
       fontFamily: {
         domine: ["Domine", "serif"],
         openSans: ["'Open Sans', sans-serif"],

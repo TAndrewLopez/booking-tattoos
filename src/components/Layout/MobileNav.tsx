@@ -66,7 +66,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
               }`}
             >
               Billing
-            </Link> */}
+            </Link>
             <Link
               onClick={handleMobileNav}
               href="/messages"
@@ -75,7 +75,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
               }`}
             >
               Messages
-            </Link>
+            </Link> */}
           </>
         )}
         <AuthButtons session={session} />

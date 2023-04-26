@@ -25,22 +25,22 @@ const NoteSection: React.FC<NoteSectionProps> = ({
     <section className="space-y-2 p-3">
       {data.notes.map((note) => (
         <div
-          className={`flex w-full rounded-md px-6 py-3
-      ${editEnabled ? "bg-neutral-200" : "bg-neutral-700 text-white"}
-      `}
+          className={`flex w-full rounded-md px-6 py-3 ${
+            editEnabled ? "bg-neutral-200" : "bg-neutral-700 text-white"
+          }`}
           key={note.id}
         >
           <div className="flex grow items-center">
             <p>{note.text}</p>
           </div>
-          <div className="grid grid-cols-2 text-xs">
+          <div className="grid grid-cols-2 items-center text-xs">
             <div className="col-span-1">
-              <p className="hidden font-semibold md:block">Created At:</p>
-              <p className="hidden font-semibold md:block">Created By:</p>
+              <p className="hidden font-semibold md:block">Created:</p>
+              <p className="hidden font-semibold md:block">Author:</p>
             </div>
             <div className="col-span-1">
               <p className="hidden truncate md:block">
-                {moment(note.createdAt).format("MMMM DD hh:ss A")}
+                {moment(note.createdAt).format("MM/DD hh:ss A")}
               </p>
               <p className="hidden truncate md:block">{note.user?.name}</p>
             </div>
