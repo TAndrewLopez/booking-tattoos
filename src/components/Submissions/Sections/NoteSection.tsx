@@ -31,7 +31,7 @@ const NoteSection: React.FC<NoteSectionProps> = ({
           key={note.id}
         >
           <div className="flex grow items-center">
-            <p>{note.text}</p>
+            <p className="pr-1">{note.text}</p>
           </div>
           <div className="grid grid-cols-2 items-center text-xs">
             <div className="col-span-1">
