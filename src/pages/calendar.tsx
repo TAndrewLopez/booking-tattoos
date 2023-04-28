@@ -1,5 +1,5 @@
 import Calendar from "@/components/Calendar/Calendar";
-import { type NextPage, type NextPageContext } from "next";
+import type { NextPage, NextPageContext } from "next";
 import { getSession } from "next-auth/react";
 
 const Schedule: NextPage = () => {

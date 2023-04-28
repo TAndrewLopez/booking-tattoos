@@ -1,5 +1,5 @@
 import useAppointmentModal from "@/hooks/useAppointmentModal";
-import { type NextPage } from "next";
+import type { NextPage } from "next";
 import { useCallback } from "react";
 import { GrInstagram } from "react-icons/gr";
 import { SlGlobe } from "react-icons/sl";

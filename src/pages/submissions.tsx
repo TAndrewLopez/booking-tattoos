@@ -1,7 +1,7 @@
 import SubCard from "@/components/Submissions/SubCard";
 import SubSidebar from "@/components/Submissions/SubSidebar";
 import useAppointmentData from "@/hooks/useAppointmentData";
-import { type NextPage, type NextPageContext } from "next";
+import type { NextPage, NextPageContext } from "next";
 import { getSession, useSession } from "next-auth/react";
 
 const Submissions: NextPage = () => {

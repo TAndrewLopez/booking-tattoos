@@ -1,4 +1,4 @@
-import { type NextPage, type NextPageContext } from "next";
+import type { NextPage, NextPageContext } from "next";
 import { getSession } from "next-auth/react";
 
 const Billing: NextPage = () => {

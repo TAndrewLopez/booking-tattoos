@@ -48,7 +48,9 @@ const TicketModal = () => {
         <div className="w-full p-4">
           <form className="flex flex-col gap-3">
             <select
-              className="rounded bg-neutral-200 p-4 text-neutral-700"
+              className={`rounded bg-neutral-200 p-4 text-neutral-700
+              ${inputError === "category" ? "border-2 border-red-600" : ""}
+              `}
               disabled={isLoading}
               value={category}
               onChange={({ target }) => {
@@ -67,6 +69,7 @@ const TicketModal = () => {
 
             <select
               className={`rounded bg-neutral-200 p-4 
+              ${inputError === "priority" ? "border-2 border-red-600" : ""}
               ${priority === "low" ? "text-green-600" : ""}
               ${priority === "medium" ? "text-yellow-600" : ""}
               ${priority === "high" ? "text-red-600" : ""}

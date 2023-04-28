@@ -1,6 +1,6 @@
 import Chat from "@/components/Messages/Chat";
 import ChatSidebar from "@/components/Messages/ChatSidebar";
-import { type NextPage, type NextPageContext } from "next";
+import type { NextPage, NextPageContext } from "next";
 import { getSession } from "next-auth/react";
 
 const Messages: NextPage = () => {
