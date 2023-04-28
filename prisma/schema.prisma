@@ -49,6 +49,7 @@ model User {
     appointments     Appointment[]
     appointmentNotes AppointmentNotes[]
     calendarEvents   CalendarEvent[]
+    tickets          Ticket[]
 }
 
 model VerificationToken {
@@ -126,3 +127,17 @@ model CalendarEvent {
 //     color String
 //     name  String
 // }
+
+// DEV MODEL
+model Ticket {
+    id          String   @id @default(auto()) @map("_id") @db.ObjectId
+    category    String
+    priority    String
+    description String
+    steps       String
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    userId String? @db.ObjectId
+    user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}

@@ -10,8 +10,8 @@ interface CalendarNavigationProps {
 }
 
 const CalendarNavigation: React.FC<CalendarNavigationProps> = ({
-  view,
-  setView,
+  // view,
+  // setView,
   handleResetMonth,
   handlePrevMonth,
   handleNextMonth,

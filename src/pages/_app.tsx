@@ -1,6 +1,7 @@
 import Layout from "@/components/Layout/Layout";
 import EventModal from "@/components/Modal/EventModal";
 import RequestModal from "@/components/Modal/RequestModal";
+import TicketModal from "@/components/Modal/TicketModal";
 import "@/styles/globals.css";
 import { api } from "@/utils/api";
 import { type Session } from "next-auth";
@@ -19,6 +20,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <EventModal />
         <Toaster />
         <Component {...pageProps} />
+        <TicketModal />
       </Layout>
     </SessionProvider>
   );

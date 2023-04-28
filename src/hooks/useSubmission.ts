@@ -190,7 +190,6 @@ const useSubmissions = ({
           size,
           color,
         });
-        console.log(appointmentDates);
         if (accepted) {
           updateAcceptedApt.mutate({
             id: dataId,

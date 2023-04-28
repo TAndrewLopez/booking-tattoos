@@ -109,9 +109,9 @@ const MultiForm = () => {
             />
           )}
           <div
-            className={`flex w-full flex-row-reverse ${
-              page === 0 ? "justify-end" : ""
-            } ${page > 0 ? "justify-between" : ""}`}
+            className={`flex w-full 
+            ${page === 0 ? "justify-end " : "flex-row-reverse"} 
+            ${page > 0 ? "justify-between" : ""}`}
           >
             <MultiFormButtons
               isLoading={isLoading}
