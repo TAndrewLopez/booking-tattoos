@@ -29,7 +29,7 @@ const LoginModal = () => {
   return (
     <>
       <form className="flex w-[300px] flex-col gap-5">
-        <h1 className="text-shade-1 bg-gradient-to-r from-sky-500 to-white bg-clip-text text-4xl font-extrabold text-transparent">
+        <h1 className="text-shade-1 bg-gradient-to-r from-white to-sky-500 bg-clip-text text-4xl font-extrabold text-transparent">
           Account Login
         </h1>
         <Input

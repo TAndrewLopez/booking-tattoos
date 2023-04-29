@@ -20,9 +20,8 @@ const Navbar = () => {
 
   return (
     <div
-      className={`fixed top-0 z-50 flex w-full items-center justify-between p-4 ${
-        pathname !== "/" ? "bg-white" : ""
-      }`}
+      className={`fixed top-0 z-50 flex w-full items-center justify-between p-4 shadow-md
+      ${pathname !== "/" ? "bg-white" : ""}`}
     >
       <div className={`${pathname === "/" ? "text-white" : ""}`}>
         <Link className="font-domine text-2xl" href="/">
@@ -41,6 +40,22 @@ const Navbar = () => {
         >
           Home
         </Link>
+
+        {/* {isOpen ? (
+          <button onClick={hideModal}>Form</button>
+        ) : (
+          <button
+            onClick={() => {
+              if (pathname !== "/") {
+                void router.push("/");
+              }
+              showModal();
+            }}
+          >
+            Login
+          </button>
+        )} */}
+
         {sessionData?.user && (
           <>
             <Link
@@ -74,18 +89,31 @@ const Navbar = () => {
               Messages
             </Link> */}
 
-            {isOpen ? (
+            {/* <button
+              onClick={() => {
+                if (pathname !== "/") {
+                  void router.push("/");
+                }
+                showModal();
+              }}
+            >
+              Login
+            </button> */}
+
+            {/* {isOpen ? (
               <button onClick={hideModal}>Form</button>
             ) : (
               <button
                 onClick={() => {
-                  if (pathname !== "/") router.push("/");
+                  if (pathname !== "/") {
+                    void router.push("/");
+                  }
                   showModal();
                 }}
               >
                 Login
               </button>
-            )}
+            )} */}
           </>
         )}
         <AuthButtons session={sessionData} />

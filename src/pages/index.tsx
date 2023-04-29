@@ -17,13 +17,13 @@ const Home: NextPage = () => {
   }, [isOpen, openModal, closeModal]);
 
   return (
-    <main className="absolute left-0 top-0 z-40 h-full w-full bg-[url('/images/shop.jpg')] bg-cover bg-center bg-no-repeat p-4">
+    <main className="absolute left-0 top-0 z-40 h-full w-full overflow-x-hidden bg-[url('/images/shop.jpg')] bg-cover bg-center bg-no-repeat p-4">
       <div className="absolute left-0 top-0 z-40 h-full w-full bg-black/60"></div>
       <div className="flex h-full w-full items-center justify-center">
         {/* CONTENT */}
         <div
           className={`absolute top-1/2 z-50 flex -translate-y-1/2 flex-col items-center p-5 text-center text-white duration-300
-          ${visible ? "-translate-x-[1500px]" : "translate-x-0"}
+          ${visible ? "-translate-x-[1000px] opacity-0" : "translate-x-0"}
           `}
         >
           <HomeContent toggleModal={toggleModal} />
@@ -31,7 +31,7 @@ const Home: NextPage = () => {
         {/* LOGIN MODAL */}
         <div
           className={`absolute top-1/2 z-50 flex -translate-y-1/2 flex-col items-center p-5 text-center text-white duration-300
-          ${!visible ? "-translate-x-[1500px]" : "translate-x-0"}
+          ${!visible ? "translate-x-[1000px] opacity-0" : "translate-x-0"}
           `}
         >
           <LoginModal />
