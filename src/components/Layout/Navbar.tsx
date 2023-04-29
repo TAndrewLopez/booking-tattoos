@@ -11,7 +11,7 @@ const Navbar = () => {
   const router = useRouter();
   const { pathname } = router;
   const { data: sessionData } = useSession();
-  const { isOpen, showModal, hideModal } = useLoginModal();
+  // const { isOpen, showModal, hideModal } = useLoginModal();
   const [showMobileNav, setShowMobileNav] = useState(false);
 
   const handleMobileNav = useCallback(() => {
