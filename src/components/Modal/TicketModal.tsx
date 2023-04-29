@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useSession } from "next-auth/react";
 import Input from "../Form/Inputs/Input";
 import TextArea from "../Form/Inputs/TextArea";
-import useTicket from "@/hooks/useTicket";
+import useTicketState from "@/hooks/useTicketState";
 
 const TicketModal = () => {
   const { data: sessionData } = useSession();
@@ -16,7 +16,7 @@ const TicketModal = () => {
     inputError,
     handleCreateTicket,
     resetStates,
-  } = useTicket();
+  } = useTicketState();
 
   if (!sessionData?.user) return null;
 

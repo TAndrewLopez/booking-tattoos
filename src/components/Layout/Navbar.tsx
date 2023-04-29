@@ -1,3 +1,4 @@
+import useLoginModal from "@/hooks/useLoginModal";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -7,8 +8,10 @@ import AuthButtons from "../Auth/AuthButtons";
 import MobileNav from "./MobileNav";
 
 const Navbar = () => {
-  const { pathname } = useRouter();
+  const router = useRouter();
+  const { pathname } = router;
   const { data: sessionData } = useSession();
+  const { isOpen, showModal, hideModal } = useLoginModal();
   const [showMobileNav, setShowMobileNav] = useState(false);
 
   const handleMobileNav = useCallback(() => {
@@ -70,6 +73,19 @@ const Navbar = () => {
             >
               Messages
             </Link> */}
+
+            {isOpen ? (
+              <button onClick={hideModal}>Form</button>
+            ) : (
+              <button
+                onClick={() => {
+                  if (pathname !== "/") router.push("/");
+                  showModal();
+                }}
+              >
+                Login
+              </button>
+            )}
           </>
         )}
         <AuthButtons session={sessionData} />

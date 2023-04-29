@@ -19,7 +19,7 @@ interface useSubmissionProps {
   firebaseRef: string | null;
 }
 
-const useSubmissions = ({
+const useSubmissionState = ({
   dataId,
   userId,
   firebaseRef,
@@ -280,4 +280,4 @@ const useSubmissions = ({
     handleDeleteImage,
   };
 };
-export default useSubmissions;
+export default useSubmissionState;

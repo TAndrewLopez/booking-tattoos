@@ -1,4 +1,4 @@
-import useSubmission from "@/hooks/useSubmission";
+import useSubmissionState from "@/hooks/useSubmissionState";
 import type { Appointment } from "@/types";
 import { useCallback, useEffect } from "react";
 import { ClipLoader } from "react-spinners";
@@ -33,7 +33,7 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
     handleDeleteNote,
     uploadImage,
     handleDeleteImage,
-  } = useSubmission({
+  } = useSubmissionState({
     dataId: data.id,
     userId,
     firebaseRef: data.firebaseRef,

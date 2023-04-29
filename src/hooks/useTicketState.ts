@@ -9,7 +9,7 @@ import {
 } from "react";
 import { toast } from "react-hot-toast";
 
-const useTicket = () => {
+const useTicketState = () => {
   const { data: sessionData } = useSession();
   const createTicket = api.ticket.createTicket.useMutation({});
 
@@ -97,4 +97,4 @@ const useTicket = () => {
   };
 };
 
-export default useTicket;
+export default useTicketState;
