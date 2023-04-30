@@ -79,6 +79,7 @@ model Appointment {
     sessionsAmount       String?
     depositPaid          Boolean?
     rejectionReason      String?
+    otherReason          String?
     tattooReferral       String?
     referenceImageURL    String?
     firebaseRef          String?

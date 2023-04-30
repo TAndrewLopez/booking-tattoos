@@ -156,6 +156,7 @@ export const appointmentRouter = createTRPCRouter({
             sessionsAmount: input.sessionsAmount,
             depositPaid: input.depositPaid,
             rejectionReason: null,
+            otherReason: null,
             tattooReferral: null,
           },
           include: {
@@ -303,6 +304,7 @@ export const appointmentRouter = createTRPCRouter({
       z.object({
         id: z.string(),
         rejectionReason: z.string().optional(),
+        otherReason: z.string().optional(),
         tattooReferral: z.string().optional(),
       })
     )
@@ -319,6 +321,7 @@ export const appointmentRouter = createTRPCRouter({
             depositPaid: null,
             consultationDate: null,
             rejectionReason: input.rejectionReason,
+            otherReason: input.otherReason,
             tattooReferral: input.tattooReferral,
           },
         });
@@ -354,6 +357,7 @@ export const appointmentRouter = createTRPCRouter({
             sessionsAmount: null,
             depositPaid: null,
             rejectionReason: null,
+            otherReason: null,
             tattooReferral: null,
           },
         });

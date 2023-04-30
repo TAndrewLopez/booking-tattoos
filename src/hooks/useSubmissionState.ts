@@ -94,6 +94,7 @@ const useSubmissionState = ({
       appointmentDates: [],
       deposit: false,
       reason: "",
+      other: "",
       referral: "",
     });
 
@@ -166,6 +167,7 @@ const useSubmissionState = ({
         appointmentDates,
         deposit,
         reason,
+        other,
         referral,
       } = appointmentState;
 
@@ -203,6 +205,7 @@ const useSubmissionState = ({
           setAppointmentState((prev) => ({
             ...prev,
             reason: "",
+            other: "",
             referral: "",
           }));
         }
@@ -210,6 +213,7 @@ const useSubmissionState = ({
           updateRejectedApt.mutate({
             id: dataId,
             rejectionReason: reason,
+            otherReason: other,
             tattooReferral: referral,
           });
           setAppointmentState((prev) => ({

@@ -23,6 +23,7 @@ export type AppointmentStateInterface = {
   appointmentDates: AppointmentItem[];
   deposit: boolean;
   reason: string;
+  other: string;
   referral: string;
 };
 

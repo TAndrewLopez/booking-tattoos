@@ -1,8 +1,8 @@
-import useLoginModal from "@/hooks/useLoginModal";
+// import useLoginModal from "@/hooks/useLoginModal";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import AuthButtons from "../Auth/AuthButtons";
 import MobileNav from "./MobileNav";
@@ -13,14 +13,25 @@ const Navbar = () => {
   const { data: sessionData } = useSession();
   // const { isOpen, showModal, hideModal } = useLoginModal();
   const [showMobileNav, setShowMobileNav] = useState(false);
+  const [yScrollPosition, setYScrollPosition] = useState(0);
 
   const handleMobileNav = useCallback(() => {
     setShowMobileNav(!showMobileNav);
   }, [showMobileNav]);
 
+  useEffect(() => {
+    const handleScrollEvent = () =>
+      window ? setYScrollPosition(window.scrollY) : null;
+
+    if (document) document.addEventListener("scroll", handleScrollEvent);
+
+    return () => document.removeEventListener("scroll", handleScrollEvent);
+  }, []);
+
   return (
     <div
-      className={`fixed top-0 z-50 flex w-full items-center justify-between p-4 shadow-md
+      className={`fixed top-0 z-50 flex w-full items-center justify-between p-4 
+      ${yScrollPosition > 30 ? "shadow-lg" : ""}
       ${pathname !== "/" ? "bg-white" : ""}`}
     >
       <div className={`${pathname === "/" ? "text-white" : ""}`}>

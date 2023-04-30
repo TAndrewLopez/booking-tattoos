@@ -44,13 +44,13 @@ const SubFilter: React.FC<SubFilterProps> = ({ filters, setFilters }) => {
             title="True"
             className="flex h-4 w-4 items-center justify-center truncate"
           >
-            T
+            Y
           </p>
           <p
             title="False"
             className="flex h-4 w-4 items-center justify-center truncate"
           >
-            F
+            N
           </p>
         </div>
       </div>

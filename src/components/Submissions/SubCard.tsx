@@ -69,6 +69,7 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
         })),
       deposit: data.depositPaid || false,
       reason: data.rejectionReason || "",
+      other: data.otherReason || "",
       referral: data.tattooReferral || "",
     });
   }, [
@@ -87,6 +88,7 @@ const SubCard: React.FC<SubCardProps> = ({ userId, data }) => {
     data.appointmentDates,
     data.depositPaid,
     data.rejectionReason,
+    data.otherReason,
     data.tattooReferral,
     setAppointmentState,
     setContactState,

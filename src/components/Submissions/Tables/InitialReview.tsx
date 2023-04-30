@@ -22,6 +22,7 @@ const REJECTION_REASON: Rejection[] = [
   { reason: "Fine line tattoo", value: "fine-line" },
   { reason: "Portrait tattoo", value: "portrait" },
   { reason: "Text/Scripts", value: "script" },
+  { reason: "Other", value: "other" },
 ];
 
 const TATTOO_REFERRALS: Referral[] = [
@@ -40,6 +41,7 @@ const InitialReview: React.FC<InitialReviewProps> = ({
     requiresConsultation,
     sessions,
     reason,
+    other,
     referral,
   },
   setAppointmentState,
@@ -154,9 +156,10 @@ const InitialReview: React.FC<InitialReviewProps> = ({
                 <td className="p-1 text-sm">
                   <label htmlFor="reason">Reason:</label>
                 </td>
-                <td className="p-1 text-right">
+                <td className="p-1">
                   <select
                     id="reason"
+                    className="w-full px-2 outline-dashed outline-1 outline-gray-300"
                     disabled={!editEnabled}
                     value={reason}
                     onChange={({ target }) =>
@@ -174,13 +177,36 @@ const InitialReview: React.FC<InitialReviewProps> = ({
                   </select>
                 </td>
               </tr>
+              {reason === "other" && (
+                <tr>
+                  <td className="p-1 text-sm">
+                    <label htmlFor="other">Other:</label>
+                  </td>
+                  <td className="p-1">
+                    <input
+                      type="text"
+                      placeholder="Enter reason"
+                      className="w-full bg-white px-2.5 outline-dashed outline-1 outline-gray-300 disabled:text-neutral-500"
+                      disabled={!editEnabled}
+                      value={other}
+                      onChange={({ target }) =>
+                        setAppointmentState((prev) => ({
+                          ...prev,
+                          other: target.value,
+                        }))
+                      }
+                    />
+                  </td>
+                </tr>
+              )}
               <tr>
                 <td className="p-1 text-sm">
                   <label htmlFor="referral">Referral:</label>
                 </td>
-                <td className="p-1 text-right">
+                <td className="p-1">
                   <select
                     id="referral"
+                    className="w-full px-2 outline-dashed outline-1 outline-gray-300"
                     disabled={!editEnabled}
                     value={referral}
                     onChange={({ target }) =>
