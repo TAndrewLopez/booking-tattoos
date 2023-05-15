@@ -1,4 +1,4 @@
-import Input from "@/components/Form/Inputs/Input";
+import Input from "@/components/FormInputs/Input";
 import type { Dispatch, SetStateAction } from "react";
 
 interface TattooSectionProps {

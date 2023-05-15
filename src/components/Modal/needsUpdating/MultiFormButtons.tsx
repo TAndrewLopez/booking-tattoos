@@ -7,8 +7,8 @@ import React, {
 } from "react";
 import { toast } from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
-import { validateEmail, validateNumber } from "../../utils/validation";
-import Button from "./Inputs/Button";
+import { validateEmail, validateNumber } from "@/utils/validation";
+import Button from "../../FormInputs/Button";
 
 interface MultiFormButtonsProps {
   isLoading: boolean;

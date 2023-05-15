@@ -1,5 +1,5 @@
-import ContactInputs from "@/components/Form/Inputs/ContactInputs";
-import TattooInputs from "@/components/Form/Inputs/TattooInputs";
+import ContactInputs from "@/components/FormInputs/ContactInputs";
+import TattooInputs from "@/components/FormInputs/TattooInputs";
 import useAppointmentModal from "@/hooks/useAppointmentModal";
 import useFormStore from "@/hooks/useFormStore";
 import { api } from "@/utils/api";

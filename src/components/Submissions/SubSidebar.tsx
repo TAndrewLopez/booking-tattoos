@@ -2,7 +2,7 @@ import type { Dispatch, SetStateAction } from "react";
 import Search from "./Search";
 import Filter from "./Filter";
 import { BiFilterAlt } from "react-icons/bi";
-import useAppointmentState from "@/hooks/useAppointmentState";
+import useAppointmentState from "@/hooks/global/useAdminUtility";
 
 interface SubSidebarProps {
   filters: string[];

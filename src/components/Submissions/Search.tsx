@@ -1,3 +1,4 @@
+import useLayout from "@/hooks/global/useLayout";
 import { type Dispatch, type SetStateAction } from "react";
 import { FiSearch } from "react-icons/fi";
 
@@ -7,6 +8,8 @@ interface SubSearchProps {
 }
 
 const SubSearch: React.FC<SubSearchProps> = ({ search, setSearch }) => {
+  const { isMobile } = useLayout();
+
   return (
     <div className="my-5 hidden items-center gap-2 rounded border-2 px-2 py-1 md:flex">
       <label htmlFor="search">

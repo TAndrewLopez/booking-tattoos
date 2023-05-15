@@ -1,5 +1,5 @@
 import type { Dispatch, SetStateAction } from "react";
-import Input from "../../Form/Inputs/Input";
+import Input from "../../FormInputs/Input";
 import { formatPhoneNumber } from "@/utils/validation";
 
 interface ContactSectionProps {

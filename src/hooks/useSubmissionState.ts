@@ -25,7 +25,6 @@ const useSubmissionState = ({
   firebaseRef,
 }: useSubmissionProps) => {
   const { data: sessionData } = useSession();
-
   const { refetch: refetchAppointments } = api.appointment.getAll.useQuery(
     undefined,
     {

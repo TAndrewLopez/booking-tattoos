@@ -1,3 +1,4 @@
+import useLayout from "@/hooks/global/useLayout";
 import { type Dispatch, type SetStateAction, useCallback } from "react";
 
 interface SubFilterProps {
@@ -6,6 +7,8 @@ interface SubFilterProps {
 }
 
 const SubFilter: React.FC<SubFilterProps> = ({ filters, setFilters }) => {
+  const { isMobile } = useLayout();
+
   const toggleFilterOption = useCallback(
     (val: string) => {
       // IF VAL EXIST IN ARRAY, REMOVE VALUE

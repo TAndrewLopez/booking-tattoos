@@ -1,13 +1,9 @@
 import Layout from "@/components/Layout/Layout";
-import EventModal from "@/components/Modal/EventModal";
-import RequestModal from "@/components/Modal/RequestModal";
-import TicketModal from "@/components/Modal/TicketModal";
-import "@/styles/globals.css";
-import { api } from "@/utils/api";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
+import { api } from "@/utils/api";
 import { type AppType } from "next/app";
-import { Toaster } from "react-hot-toast";
+import "@/styles/globals.css";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -16,11 +12,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   return (
     <SessionProvider session={session}>
       <Layout>
-        <RequestModal />
-        <EventModal />
-        <Toaster />
         <Component {...pageProps} />
-        <TicketModal />
       </Layout>
     </SessionProvider>
   );

@@ -1,8 +1,8 @@
-interface HomeContentProps {
-  toggleModal: () => void;
-}
+import useLayout from "@/hooks/global/useLayout";
 
-const HomeContent: React.FC<HomeContentProps> = ({ toggleModal }) => {
+const HomeContent: React.FC = () => {
+  const { setModalName } = useLayout();
+
   return (
     <>
       <h1 className="mb-4 text-3xl font-extrabold text-white md:text-5xl lg:text-6xl">
@@ -12,7 +12,7 @@ const HomeContent: React.FC<HomeContentProps> = ({ toggleModal }) => {
         </p>
       </h1>
       <button
-        onClick={toggleModal}
+        onClick={() => setModalName("request")}
         className="text-shade-1 bg-accent hover:bg-highlight hover:text-shade-9 inline-flex items-center justify-center rounded-lg border-2 border-white/0 px-5 py-3 text-center text-base font-medium transition hover:border-2 hover:border-white/100 hover:font-extrabold focus:ring-4 focus:ring-blue-300"
       >
         Request Tattoo

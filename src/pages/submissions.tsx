@@ -1,6 +1,6 @@
 import SubCard from "@/components/Submissions/SubCard";
 import SubSidebar from "@/components/Submissions/SubSidebar";
-import useAppointmentState from "@/hooks/useAppointmentState";
+import useAdminUtility from "@/hooks/global/useAdminUtility";
 import type { NextPage, NextPageContext } from "next";
 import { getSession, useSession } from "next-auth/react";
 
@@ -16,7 +16,7 @@ const Submissions: NextPage = () => {
     searchNameSubmissions,
     setFilters,
     setSearchName,
-  } = useAppointmentState();
+  } = useAdminUtility();
 
   return (
     <main className="relative top-20 flex gap-5 p-4">

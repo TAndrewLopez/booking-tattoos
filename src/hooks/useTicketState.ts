@@ -1,12 +1,7 @@
 import { type TicketInterface } from "@/types";
 import { api } from "@/utils/api";
 import { useSession } from "next-auth/react";
-import {
-  type SyntheticEvent,
-  useCallback,
-  useState,
-  type SetStateAction,
-} from "react";
+import { type SyntheticEvent, useCallback, useState } from "react";
 import { toast } from "react-hot-toast";
 
 const useTicketState = () => {
@@ -34,10 +29,7 @@ const useTicketState = () => {
   };
 
   const handleCreateTicket = useCallback(
-    (
-      evt: SyntheticEvent,
-      setOpen: (value: SetStateAction<boolean>) => void
-    ) => {
+    (evt: SyntheticEvent, setModalName: (name: string) => void) => {
       evt.preventDefault();
       const { category, priority, description, steps } = ticketState;
 
@@ -76,7 +68,7 @@ const useTicketState = () => {
           priority: "",
         });
         toast.success("Ticket was created successfully.");
-        setOpen(false);
+        setModalName("");
       } catch (error) {
         console.log(error);
         toast.error("Something went wrong.");

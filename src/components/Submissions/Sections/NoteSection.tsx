@@ -1,4 +1,4 @@
-import TextArea from "@/components/Form/Inputs/TextArea";
+import TextArea from "@/components/FormInputs/TextArea";
 import { type Appointment } from "@/types";
 import moment from "moment";
 import { type Dispatch, type SetStateAction } from "react";

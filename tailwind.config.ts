@@ -11,6 +11,9 @@ export default {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        shop: "url('/images/shop.jpg')",
+      },
       colors: {
         chatPrimary: "#3e3c61",
       },

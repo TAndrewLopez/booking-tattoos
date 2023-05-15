@@ -3,7 +3,7 @@ import { api } from "@/utils/api";
 import { useSession } from "next-auth/react";
 import { useMemo, useState } from "react";
 
-const useAppointmentState = () => {
+const useAdminUtility = () => {
   const { data: sessionData } = useSession();
   const { data: aptData } = api.appointment.getAll.useQuery(undefined, {
     enabled: sessionData?.user !== undefined,
@@ -73,4 +73,4 @@ const useAppointmentState = () => {
     filteredSearchNameSubmissions,
   };
 };
-export default useAppointmentState;
+export default useAdminUtility;
