@@ -34,6 +34,33 @@ export const appointmentRouter = createTRPCRouter({
       },
     });
   }),
+  getSingleAppointment: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      try {
+        const existingAppointment = await ctx.prisma.appointment.findUnique({
+          where: {
+            id: input.id,
+          },
+          include: {
+            appointmentDates: true,
+            notes: true,
+          },
+        });
+        if (!existingAppointment) return {};
+        return existingAppointment;
+      } catch (error) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "An unexpected error occurred, please try again later.",
+          cause: error,
+        });
+      }
+    }),
   create: publicProcedure
     .input(
       z.object({
@@ -60,6 +87,9 @@ export const appointmentRouter = createTRPCRouter({
             size: input.size,
             placement: input.placement,
             color: input.color,
+          },
+          include: {
+            appointmentDates: true,
           },
         });
         await transporter.sendMail({

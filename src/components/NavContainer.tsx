@@ -16,7 +16,11 @@ const Navbar = () => {
       className={`fixed top-0 flex w-full items-center justify-between p-4
       ${yScrollPosition > 30 ? "shadow-lg" : ""}
       ${pathname === "/" ? "text-white" : "bg-white"}
-      ${modalName === "mobile" || modalName === "request" ? "z-20" : "z-50 "}
+      ${
+        modalName === "mobile" || modalName === "request" || modalName === "bug"
+          ? "z-20"
+          : "z-50 "
+      }
       `}
     >
       <div className={`${pathname === "/" ? "text-white" : ""}`}>

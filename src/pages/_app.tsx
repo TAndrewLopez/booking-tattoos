@@ -1,4 +1,4 @@
-import Layout from "@/components/Layout/Layout";
+import Layout from "@/components/Layout";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { api } from "@/utils/api";

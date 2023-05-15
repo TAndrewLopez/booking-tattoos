@@ -1,6 +1,7 @@
 import SubCard from "@/components/Submissions/SubCard";
 import SubSidebar from "@/components/Submissions/SubSidebar";
 import useAdminUtility from "@/hooks/global/useAdminUtility";
+import { motion } from "framer-motion";
 import type { NextPage, NextPageContext } from "next";
 import { getSession, useSession } from "next-auth/react";
 
@@ -28,7 +29,20 @@ const Submissions: NextPage = () => {
         setFilters={setFilters}
       />
 
-      <div className="flex w-full flex-wrap gap-5">
+      <motion.div
+        initial={{
+          opacity: 0.3,
+          x: "100%",
+        }}
+        animate={{
+          opacity: 1,
+          x: 0,
+          transition: {
+            delay: 0.3,
+          },
+        }}
+        className="flex w-full flex-wrap gap-5"
+      >
         {/* UNFILTERED APPOINTMENT DATA */}
         {!filters.length &&
           !searchName.length &&
@@ -74,7 +88,7 @@ const Submissions: NextPage = () => {
               key={data.id}
             />
           ))}
-      </div>
+      </motion.div>
     </main>
   );
 };

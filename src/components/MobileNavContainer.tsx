@@ -3,8 +3,8 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { AiOutlineClose } from "react-icons/ai";
-import AuthButtons from "../Auth/AuthButtons";
-import ModalLeftSlider from "../Modal/ModalLeftSlider";
+import AuthButtons from "./AuthButtons";
+import ModalLeftSlider from "./Modal/ModalLeftSlider";
 
 const MobileNav: React.FC = () => {
   const { data: session } = useSession();
@@ -18,7 +18,7 @@ const MobileNav: React.FC = () => {
           <p className="font-domine text-2xl">Raquel Cude</p>
           <AiOutlineClose onClick={() => setModalName("")} size={24} />
         </div>
-        <nav className="flex flex-col items-center gap-4">
+        <nav className="relative flex flex-col items-center gap-4">
           <Link
             href="/"
             className={`${pathname === "/" ? "border-b-2 border-sky-500" : ""}`}
@@ -53,6 +53,8 @@ const MobileNav: React.FC = () => {
               </Link>
 
               <AuthButtons session={session} />
+
+              {/* <div className="fixed bottom-4 w-full bg-red-200 p-6">footer</div> */}
             </>
           ) : (
             <Link href="/" onClick={() => setModalName("auth")}>

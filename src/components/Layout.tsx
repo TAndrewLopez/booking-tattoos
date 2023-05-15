@@ -1,13 +1,13 @@
 import Head from "next/head";
 import { type ReactNode } from "react";
 import { Toaster } from "react-hot-toast";
-import AuthForm from "../Modal/AuthModal";
-import BugModal from "../Modal/BugModal";
-import RequestModal from "../Modal/RequestModal";
-import ReportBugIcon from "../ReportBugIcon";
+import AuthForm from "./Modal/AuthModal";
+import BugModal from "./Modal/BugModal";
+import RequestModal from "./Modal/RequestModal";
+import ReportBugIcon from "./ReportBugIcon";
 import MobileNav from "./MobileNavContainer";
 import NavContainer from "./NavContainer";
-import EventModal from "../Modal/EventModal";
+import EventModal from "./Modal/EventModal";
 
 interface LayoutProps {
   children: ReactNode;

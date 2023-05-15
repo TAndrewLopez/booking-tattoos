@@ -1,4 +1,4 @@
-import HomeContent from "@/components/Content/HomeContent";
+import HomeContent from "@/components/HomeContent";
 import useLayout from "@/hooks/global/useLayout";
 import { AnimatePresence, motion } from "framer-motion";
 import type { NextPage } from "next";

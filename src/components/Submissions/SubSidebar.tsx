@@ -3,6 +3,7 @@ import Search from "./Search";
 import Filter from "./Filter";
 import { BiFilterAlt } from "react-icons/bi";
 import useAppointmentState from "@/hooks/global/useAdminUtility";
+import { motion } from "framer-motion";
 
 interface SubSidebarProps {
   filters: string[];
@@ -19,7 +20,17 @@ const SubSidebar: React.FC<SubSidebarProps> = ({
 }) => {
   const { aptData } = useAppointmentState();
   return (
-    <aside className="sticky top-[80px] hidden h-fit w-1/5 min-w-[300px] rounded border p-4 shadow-lg md:block">
+    <motion.aside
+      initial={{
+        x: "-100%",
+        opacity: 0,
+      }}
+      animate={{
+        x: 0,
+        opacity: 1,
+      }}
+      className="sticky top-[80px] hidden h-fit w-1/5 min-w-[300px] rounded border p-4 shadow-lg md:block"
+    >
       <h3 className="border-b text-xl font-bold">Search:</h3>
       <Search search={search} setSearch={setSearch} />
 
@@ -42,7 +53,7 @@ const SubSidebar: React.FC<SubSidebarProps> = ({
           Total Submissions: <span>{aptData?.length}</span>
         </p>
       </div>
-    </aside>
+    </motion.aside>
   );
 };
 
