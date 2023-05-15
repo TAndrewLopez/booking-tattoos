@@ -3,8 +3,8 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { AiOutlineClose } from "react-icons/ai";
-import ModalLeftSlider from "../Modal/ModalLeftSlider";
 import AuthButtons from "../Auth/AuthButtons";
+import ModalLeftSlider from "../Modal/ModalLeftSlider";
 
 const MobileNav: React.FC = () => {
   const { data: session } = useSession();
@@ -55,7 +55,9 @@ const MobileNav: React.FC = () => {
               <AuthButtons session={session} />
             </>
           ) : (
-            <span onClick={() => setModalName("auth")}>Login</span>
+            <Link href="/" onClick={() => setModalName("auth")}>
+              Login
+            </Link>
           )}
         </nav>
       </div>
@@ -64,11 +66,3 @@ const MobileNav: React.FC = () => {
 };
 
 export default MobileNav;
-
-{
-  /* <ModalTrigger
-  label="login"
-  modal="auth"
-  onClick={() => setModalName("auth")}
-/> */
-}

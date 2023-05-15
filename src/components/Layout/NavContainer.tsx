@@ -14,9 +14,9 @@ const Navbar = () => {
   return (
     <nav
       className={`fixed top-0 flex w-full items-center justify-between p-4
-      ${isMobile ? "z-20" : "z-50"}
       ${yScrollPosition > 30 ? "shadow-lg" : ""}
       ${pathname === "/" ? "text-white" : "bg-white"}
+      ${modalName === "mobile" || modalName === "request" ? "z-20" : "z-50 "}
       `}
     >
       <div className={`${pathname === "/" ? "text-white" : ""}`}>
@@ -27,7 +27,6 @@ const Navbar = () => {
 
       {isMobile ? (
         <RxHamburgerMenu
-          className="md:hidden"
           color={`${pathname === "/" ? "white" : ""}`}
           onClick={() => setModalName("mobile")}
           size={24}

@@ -9,8 +9,8 @@ const Home: NextPage = () => {
   const { modalName } = useLayout();
 
   return (
-    <main className="absolute left-0 top-0 h-full w-full overflow-x-hidden bg-shop bg-cover bg-center bg-no-repeat p-4">
-      <div className="absolute left-0 top-0 z-0 h-full w-full bg-black/60"></div>
+    <main className="absolute inset-0 overflow-x-hidden bg-shop bg-cover bg-center bg-no-repeat p-4">
+      <div className="absolute inset-0 bg-black/60"></div>
 
       {/* CONTENT */}
       <AnimatePresence>
