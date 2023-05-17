@@ -90,6 +90,11 @@ export const appointmentRouter = createTRPCRouter({
           },
           include: {
             appointmentDates: true,
+            notes: {
+              include: {
+                user: true,
+              },
+            },
           },
         });
         await transporter.sendMail({

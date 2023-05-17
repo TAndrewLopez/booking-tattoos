@@ -64,6 +64,15 @@ const Navbar = () => {
               >
                 Calendar
               </Link>
+              {sessionData.user.role === "dev" && (
+                <Link
+                  href="/dashboard"
+                  className={`
+              ${pathname === "/dashboard" ? "border-b-2 border-sky-500" : ""}`}
+                >
+                  Dashboard
+                </Link>
+              )}
               <ModalTrigger label="Logout" onClick={() => void signOut()} />
             </>
           ) : (

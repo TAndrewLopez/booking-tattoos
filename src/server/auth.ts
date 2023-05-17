@@ -10,6 +10,7 @@ import {
 } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { type Role } from "@prisma/client";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -22,7 +23,7 @@ declare module "next-auth" {
     user: {
       id: string;
       // ...other properties
-      // role: UserRole;
+      role: Role;
     } & DefaultSession["user"];
   }
 
@@ -39,17 +40,24 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    session({ session, user }) {
-      // if (session.user) {
-      //   session.user.id = user.id;
-      //   // session.user.role = user.role; <-- put other properties on the session here
-      // }
-      // return session;
+    async session({ session }) {
+      const dbUser = await prisma.user.findUnique({
+        where: {
+          email: session.user.email as string,
+        },
+      });
 
       // UPDATED SESSION TO CONTAIN ALL USER INFORMATION
-      return { ...session, user: { ...session.user, ...user } };
+      return { ...session, user: { ...session.user, ...dbUser } };
     },
   },
+  session: {
+    strategy: "jwt",
+  },
+  jwt: {
+    secret: env.NEXTAUTH_JWT_SECRET,
+  },
+  secret: env.NEXTAUTH_SECRET,
   adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({

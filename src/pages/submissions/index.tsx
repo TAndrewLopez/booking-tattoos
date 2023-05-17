@@ -1,13 +1,14 @@
 import SubCard from "@/components/Submissions/SubCard";
 import SubSidebar from "@/components/Submissions/SubSidebar";
 import useAdminUtility from "@/hooks/global/useAdminUtility";
+import useLayout from "@/hooks/global/useLayout";
 import { motion } from "framer-motion";
 import type { NextPage, NextPageContext } from "next";
 import { getSession, useSession } from "next-auth/react";
 
 const Submissions: NextPage = () => {
   const { data: sessionData } = useSession();
-
+  const { isMobile } = useLayout();
   const {
     aptData,
     filteredSearchNameSubmissions,
@@ -22,12 +23,14 @@ const Submissions: NextPage = () => {
   return (
     <main className="relative top-20 flex gap-5 p-4">
       {/* SEARCH AND FILTER FEATURES */}
-      <SubSidebar
-        search={searchName}
-        setSearch={setSearchName}
-        filters={filters}
-        setFilters={setFilters}
-      />
+      {!isMobile && (
+        <SubSidebar
+          search={searchName}
+          setSearch={setSearchName}
+          filters={filters}
+          setFilters={setFilters}
+        />
+      )}
 
       <motion.div
         initial={{
@@ -41,7 +44,7 @@ const Submissions: NextPage = () => {
             delay: 0.3,
           },
         }}
-        className="flex w-full flex-wrap gap-5"
+        className="flex w-full flex-wrap justify-center gap-5 gap-x-14 overflow-x-hidden"
       >
         {/* UNFILTERED APPOINTMENT DATA */}
         {!filters.length &&

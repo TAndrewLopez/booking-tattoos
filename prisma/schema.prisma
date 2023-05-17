@@ -36,6 +36,11 @@ model Session {
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+enum Role {
+    admin
+    dev
+}
+
 model User {
     id               String             @id @default(auto()) @map("_id") @db.ObjectId
     name             String?
@@ -43,6 +48,7 @@ model User {
     emailVerified    DateTime?
     image            String?
     hashedPassword   String?
+    role             Role               @default(admin)
     createdAt        DateTime           @default(now())
     updatedAt        DateTime           @updatedAt
     accounts         Account[]

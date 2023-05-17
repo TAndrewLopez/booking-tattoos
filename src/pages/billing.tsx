@@ -26,4 +26,5 @@ export async function getServerSideProps(context: NextPageContext) {
     props: {},
   };
 }
+
 export default Billing;
