@@ -32,4 +32,7 @@ export const ticketRouter = createTRPCRouter({
         });
       }
     }),
+  getAllTickets: protectedProcedure.query(async ({ ctx }) => {
+    return ctx.prisma.ticket.findMany();
+  }),
 });
