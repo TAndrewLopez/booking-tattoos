@@ -1,6 +1,5 @@
 import SubCard from "@/components/Submissions/SubCard";
 import SubmissionSidebar from "@/components/Submissions/SubmissionSidebar";
-import useLayout from "@/hooks/global/useLayout";
 import useAdminUtility from "@/hooks/useAdminUtility";
 import { motion } from "framer-motion";
 import type { NextPage, NextPageContext } from "next";
@@ -20,7 +19,6 @@ import { getSession, useSession } from "next-auth/react";
 
 const Submissions: NextPage = () => {
   const { data: sessionData } = useSession();
-  const { isMobile } = useLayout();
   const {
     aptData,
     filteredSearchNameSubmissions,
