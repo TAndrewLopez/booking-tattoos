@@ -4,7 +4,11 @@ import { api } from "@/utils/api";
 import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useState } from "react";
 
-const CalendarLabels = () => {
+interface CalendarLabelsProps {
+  lightText?: boolean;
+}
+
+const CalendarLabels = ({ lightText }: CalendarLabelsProps) => {
   const { data: sessionData } = useSession();
   const { data: calEvents } = api.calendarEvents.getAll.useQuery(undefined, {
     enabled: sessionData?.user !== undefined,
@@ -32,7 +36,13 @@ const CalendarLabels = () => {
   return (
     <>
       <div className="mt-10 flex items-center justify-between">
-        <p className="font-bold text-gray-500">Labels</p>
+        <p
+          className={`font-bold text-gray-500
+        ${lightText ? "text-white/70" : "text-neutral-700/70"}
+        `}
+        >
+          Labels
+        </p>
         <p
           onClick={() => setEditEnabled(!editEnabled)}
           className="cursor-pointer text-sm text-blue-500 hover:text-blue-700 hover:underline"

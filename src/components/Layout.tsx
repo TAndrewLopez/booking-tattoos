@@ -23,6 +23,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     switch (router.pathname) {
       case "/dashboard":
         return "white";
+      case "/users":
+        return "white";
+      case "/tickets":
+        return "white";
       case "/submissions":
         return "white";
       default:

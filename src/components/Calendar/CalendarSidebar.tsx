@@ -13,7 +13,7 @@ const CalendarSidebar: React.FC<CalendarSidebarProps> = ({ lightText }) => {
       <div className="w-full rounded-xl bg-white bg-opacity-60 p-6 backdrop-blur-lg backdrop-filter">
         <CreateEventButton lightText={lightText} />
         <SmallCalendar lightText={lightText} />
-        <CalendarLabels />
+        <CalendarLabels lightText={lightText} />
       </div>
     </FromLeftSidebar>
   );

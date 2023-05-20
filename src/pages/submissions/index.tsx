@@ -47,17 +47,19 @@ const Submissions: NextPage = () => {
       />
 
       <motion.div
-        // initial={{
-        //   opacity: 0.3,
-        //   x: "100%",
-        // }}
-        // animate={{
-        //   opacity: 1,
-        //   x: 0,
-        //   transition: {
-        //     delay: 0.3,
-        //   },
-        // }}
+        initial={{
+          opacity: 0.3,
+          x: "150%",
+        }}
+        animate={{
+          opacity: 1,
+          x: 0,
+        }}
+        transition={{
+          delay: 0.25,
+          type: "spring",
+          duration: 0.3,
+        }}
         className="flex w-full flex-wrap justify-center gap-5 gap-x-14 overflow-x-hidden"
       >
         {!filters.length &&
