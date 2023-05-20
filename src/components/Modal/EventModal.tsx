@@ -1,5 +1,5 @@
-import useCalendarStore from "@/hooks/useCalendarStore";
-import useEventModal from "@/hooks/useEventModal";
+import useCalendarStore from "@/hooks/global/useCalendarStore";
+import useEventModal from "@/hooks/global/useEventModal";
 import { api } from "@/utils/api";
 import moment from "moment";
 import { useSession } from "next-auth/react";
@@ -224,10 +224,10 @@ const EventModal = () => {
 
         {/* FOOTER */}
         <footer className="mt-5 flex items-center justify-end border-t p-3">
-          {selectedEvent?.User?.name && (
+          {selectedEvent?.User && (
             <p className="grow text-xs text-neutral-500">
               <span className="font-semibold">Created By: </span>
-              {selectedEvent.User.name}{" "}
+              {selectedEvent?.User.name}{" "}
               {moment(selectedEvent.createdAt).fromNow()}
             </p>
           )}

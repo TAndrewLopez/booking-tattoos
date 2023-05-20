@@ -3,6 +3,11 @@ import { type NextPageContext } from "next";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
+/*
+  PAGE CONTENTS:
+   SINGLE SUBMISSION
+*/
+
 const SingleSubmission = () => {
   const router = useRouter();
   const { subID } = router.query;

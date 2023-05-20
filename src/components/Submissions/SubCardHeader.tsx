@@ -1,4 +1,4 @@
-import Button from "../FormInputs/Button";
+import Button from "../Inputs/Button";
 
 interface CardHeaderProps {
   setDefaultStates: () => void;

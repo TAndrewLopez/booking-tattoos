@@ -1,20 +1,14 @@
-import useCalendarStore from "@/hooks/useCalendarStore";
+import useCalendarStore from "@/hooks/global/useCalendarStore";
 import { getMonth } from "@/utils/calendar";
 import moment from "moment";
-import React, {
-  type Dispatch,
-  type SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+import React, { useEffect, useState } from "react";
 import CalendarNavigation from "./CalendarNavigation";
 
 interface SmallCalendarProps {
-  view: boolean;
-  setView: Dispatch<SetStateAction<boolean>>;
+  lightText?: boolean;
 }
 
-const SmallCalendar: React.FC<SmallCalendarProps> = ({ view, setView }) => {
+const SmallCalendar: React.FC<SmallCalendarProps> = ({ lightText }) => {
   const [currentMonthIndex, setCurrentMonthIndex] = useState(moment().month());
   const [currentMonth, setCurrentMonth] = useState(getMonth());
   const { monthIndex, setMonthIndex, daySelected, setDaySelected } =
@@ -36,9 +30,9 @@ const SmallCalendar: React.FC<SmallCalendarProps> = ({ view, setView }) => {
     if (today === currDay) {
       return "bg-blue-500 rounded-full text-white";
     } else if (currDay === selDay) {
-      return " bg-blue-100 rounded-full text-blue-600 font-semibold";
+      return " bg-blue-100 rounded-full text-neutral-700 font-semibold";
     } else {
-      return "";
+      return lightText ? "text-white/70" : "text-neutral-700/70";
     }
   };
 
@@ -53,21 +47,28 @@ const SmallCalendar: React.FC<SmallCalendarProps> = ({ view, setView }) => {
   return (
     <div className="mt-9">
       <header className="flex items-center justify-between">
-        <p className="text-sm font-semibold text-gray-500">
+        <p
+          className={`text-sm font-semibold
+          ${lightText ? "text-white/70" : "text-neutral-700/70"}
+        `}
+        >
           {moment(new Date(moment().year(), currentMonthIndex)).format(
             "MMMM YYYY"
           )}
         </p>
         <div className="flex">
           <CalendarNavigation
-            view={view}
-            setView={setView}
+            lightText={lightText}
             handlePrevMonth={handlePrevMonth}
             handleNextMonth={handleNextMonth}
           />
         </div>
       </header>
-      <div className="grid grid-cols-7 grid-rows-6">
+      <div
+        className={`grid grid-cols-7 grid-rows-6 font-semibold
+        ${lightText ? "text-white" : "text-neutral-700"}
+      `}
+      >
         {currentMonth[0]?.map((day, i) => (
           <span className="py-1 text-center text-sm" key={i}>
             {day.format("dd").charAt(0)}

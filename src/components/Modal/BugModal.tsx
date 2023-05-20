@@ -1,8 +1,8 @@
-import useTicketState from "@/hooks/useTicketState";
+import useCreateTicket from "@/hooks/useCreateTicket";
 import { GiSpottedBug } from "react-icons/gi";
-import TextArea from "../FormInputs/TextArea";
-import ModalLeftSlider from "./ModalLeftSlider";
-import Input from "../FormInputs/Input";
+import TextArea from "../Inputs/TextArea";
+import FromRightModal from "../AnimatedContainers/FromRightModal";
+import Input from "../Inputs/Input";
 import useLayout from "@/hooks/global/useLayout";
 import { AiOutlineClose } from "react-icons/ai";
 
@@ -16,9 +16,9 @@ const BugModal = () => {
     inputError,
     handleCreateTicket,
     resetStates,
-  } = useTicketState();
+  } = useCreateTicket();
   return (
-    <ModalLeftSlider containerName="bug">
+    <FromRightModal containerName="bug">
       <div className="fixed left-0 top-0 flex h-full w-full flex-col items-center justify-center bg-opacity-60 backdrop-blur-sm backdrop-filter">
         <div className="relative z-30 h-full w-full rounded-t bg-neutral-100 shadow-2xl shadow-sky-200 duration-300 ease-in-out md:h-[550px] md:w-[448px]">
           <div className="px-4 pb-4 pt-4 md:pb-0">
@@ -140,7 +140,7 @@ const BugModal = () => {
           </div>
         </div>
       </div>
-    </ModalLeftSlider>
+    </FromRightModal>
   );
 };
 

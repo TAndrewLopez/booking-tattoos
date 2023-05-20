@@ -1,4 +1,4 @@
-import useCalendarStore from "@/hooks/useCalendarStore";
+import useCalendarStore from "@/hooks/global/useCalendarStore";
 import { type LabelObj } from "@/types";
 import { api } from "@/utils/api";
 import { useSession } from "next-auth/react";
@@ -42,7 +42,7 @@ const CalendarLabels = () => {
       </div>
       {labels.map(({ label: lbl, checked }, i) => (
         <label
-          className={`mt-3 flex items-center rounded bg-${lbl}-200 px-2 py-1`}
+          className={`mt-3 flex items-center rounded bg-${lbl}-200 cursor-pointer px-2 py-1`}
           key={i}
         >
           <input

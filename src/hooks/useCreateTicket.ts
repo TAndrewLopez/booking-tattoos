@@ -4,9 +4,17 @@ import { useSession } from "next-auth/react";
 import { type SyntheticEvent, useCallback, useState } from "react";
 import { toast } from "react-hot-toast";
 
-const useTicketState = () => {
+const useCreateTicket = () => {
   const { data: sessionData } = useSession();
-  const createTicket = api.ticket.createTicket.useMutation({});
+  const { refetch: refetchTicketData } = api.ticket.getAllTickets.useQuery(
+    undefined,
+    {
+      enabled: sessionData?.user !== undefined,
+    }
+  );
+  const createTicket = api.ticket.createTicket.useMutation({
+    onSuccess: () => refetchTicketData(),
+  });
 
   const [isLoading, setIsLoading] = useState(false);
   const [inputError, setInputError] = useState("");
@@ -89,4 +97,4 @@ const useTicketState = () => {
   };
 };
 
-export default useTicketState;
+export default useCreateTicket;

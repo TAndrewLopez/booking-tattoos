@@ -1,20 +1,21 @@
-import type { Dispatch, SetStateAction } from "react";
 import CalendarLabels from "./CalendarLabels";
 import CreateEventButton from "./CreateEventButton";
 import SmallCalendar from "./SmallCalendar";
+import FromLeftSidebar from "../AnimatedContainers/FromLeftSidebar";
 
 interface CalendarSidebarProps {
-  view: boolean;
-  setView: Dispatch<SetStateAction<boolean>>;
+  lightText?: boolean;
 }
 
-const CalendarSidebar: React.FC<CalendarSidebarProps> = ({ view, setView }) => {
+const CalendarSidebar: React.FC<CalendarSidebarProps> = ({ lightText }) => {
   return (
-    <aside className="hidden w-64 border p-5 md:block">
-      <CreateEventButton />
-      <SmallCalendar view={view} setView={setView} />
-      <CalendarLabels />
-    </aside>
+    <FromLeftSidebar>
+      <div className="w-full rounded-xl bg-white bg-opacity-60 p-6 backdrop-blur-lg backdrop-filter">
+        <CreateEventButton lightText={lightText} />
+        <SmallCalendar lightText={lightText} />
+        <CalendarLabels />
+      </div>
+    </FromLeftSidebar>
   );
 };
 

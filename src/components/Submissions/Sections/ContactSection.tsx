@@ -1,6 +1,7 @@
 import type { Dispatch, SetStateAction } from "react";
-import Input from "../../FormInputs/Input";
+import Input from "../../Inputs/Input";
 import { formatPhoneNumber } from "@/utils/validation";
+import SubSection from "./SubSection";
 
 interface ContactSectionProps {
   editEnabled: boolean;
@@ -26,7 +27,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({
   setContactState,
 }) => {
   return (
-    <section className="space-y-2 p-3">
+    <SubSection>
       <Input
         id="Name"
         label="Name"
@@ -66,7 +67,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({
           setContactState((prev) => ({ ...prev, phoneNumber: target.value }))
         }
       />
-    </section>
+    </SubSection>
   );
 };
 

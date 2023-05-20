@@ -2,12 +2,12 @@ import useLayout from "@/hooks/global/useLayout";
 import { AnimatePresence, motion } from "framer-motion";
 import { type ReactNode } from "react";
 
-interface ModalLeftSliderProps {
+interface FromRightModalProps {
   containerName: string;
   children: ReactNode;
 }
 
-const ModalLeftSlider: React.FC<ModalLeftSliderProps> = ({
+const FromRightModal: React.FC<FromRightModalProps> = ({
   containerName,
   children,
 }) => {
@@ -38,4 +38,4 @@ const ModalLeftSlider: React.FC<ModalLeftSliderProps> = ({
   );
 };
 
-export default ModalLeftSlider;
+export default FromRightModal;

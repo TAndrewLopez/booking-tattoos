@@ -1,7 +1,6 @@
-import ContactInputs from "@/components/FormInputs/ContactInputs";
-import TattooInputs from "@/components/FormInputs/TattooInputs";
-import useAppointmentModal from "@/hooks/useAppointmentModal";
-import useFormStore from "@/hooks/useFormStore";
+import ContactInputs from "@/components/Inputs/Group/ContactInputs";
+import TattooInputs from "@/components/Inputs/Group/TattooInputs";
+import useFormStore from "@/hooks/global/useFormStore";
 import { api } from "@/utils/api";
 import { formatPhoneNumber, stripPhoneNumber } from "@/utils/validation";
 import { useCallback, useState, type SyntheticEvent } from "react";
@@ -9,10 +8,11 @@ import toast from "react-hot-toast";
 import MultiFormButtons from "./MultiFormButtons";
 import ReviewAptEntries from "./ReviewEntry";
 import Sidebar from "./Sidebar";
+import useLayout from "@/hooks/global/useLayout";
 
 const MultiForm = () => {
   const createAppointment = api.appointment.create.useMutation();
-  const { closeModal } = useAppointmentModal();
+  const { setModalName } = useLayout();
 
   // LOCAL STATE
   const [page, setPage] = useState(0);
@@ -49,7 +49,8 @@ const MultiForm = () => {
         });
         resetStore();
         setPage(0);
-        closeModal();
+        // closeModal();
+        setModalName("");
         toast.success("Form submitted successfully!");
       } catch (error) {
         console.log(error);
@@ -68,7 +69,8 @@ const MultiForm = () => {
       color,
       createAppointment,
       resetStore,
-      closeModal,
+      // closeModal,
+      setModalName,
     ]
   );
 

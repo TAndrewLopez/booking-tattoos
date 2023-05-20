@@ -3,7 +3,7 @@ import { type RouterOutputs } from "@/utils/api";
 export type User = RouterOutputs["user"]["getAllUsers"][0];
 export type Ticket = RouterOutputs["ticket"]["getAllTickets"][0];
 export type Appointment = RouterOutputs["appointment"]["create"];
-export type CalendarEvent = RouterOutputs["calendarEvents"]["create"];
+export type CalendarEvent = RouterOutputs["calendarEvents"]["getAll"][0];
 
 export type LabelObj = { label: string; checked: boolean };
 

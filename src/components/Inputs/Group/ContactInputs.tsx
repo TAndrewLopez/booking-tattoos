@@ -1,5 +1,5 @@
-import useFormStore from "@/hooks/useFormStore";
-import Input from "./Input";
+import useFormStore from "@/hooks/global/useFormStore";
+import Input from "../Input";
 
 interface ContactInputsProps {
   inputError?: string;

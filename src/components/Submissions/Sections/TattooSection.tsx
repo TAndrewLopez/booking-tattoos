@@ -1,5 +1,6 @@
-import Input from "@/components/FormInputs/Input";
+import Input from "@/components/Inputs/Input";
 import type { Dispatch, SetStateAction } from "react";
+import SubSection from "./SubSection";
 
 interface TattooSectionProps {
   editEnabled: boolean;
@@ -25,7 +26,7 @@ const TattooSection: React.FC<TattooSectionProps> = ({
   setTattooState,
 }) => {
   return (
-    <section className="space-y-2 p-3">
+    <SubSection>
       <Input
         id="Description"
         label="Description"
@@ -65,7 +66,7 @@ const TattooSection: React.FC<TattooSectionProps> = ({
           setTattooState((prev) => ({ ...prev, color: target.value }))
         }
       />
-    </section>
+    </SubSection>
   );
 };
 

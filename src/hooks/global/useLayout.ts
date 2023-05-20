@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { create } from "zustand";
 
@@ -26,14 +25,9 @@ const useLayoutStore = create<useLayoutStoreInterface>((set) => ({
 }));
 
 const useLayout = () => {
-  const { pathname } = useRouter();
   const { modalName, setModalName, isMobile, setIsMobile, isMobileNavOpen } =
     useLayoutStore();
   const [yScrollPosition, setYScrollPosition] = useState(0);
-
-  useEffect(() => {
-    setModalName("");
-  }, [setModalName, pathname]);
 
   useEffect(() => {
     const handleResize = () => {

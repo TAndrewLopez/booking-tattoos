@@ -1,13 +1,12 @@
 import { AiOutlineClose } from "react-icons/ai";
 import MultiForm from "./needsUpdating/MultiForm";
 import useLayout from "@/hooks/global/useLayout";
-import ModalLeftSlider from "./ModalLeftSlider";
+import FromRightModal from "../AnimatedContainers/FromRightModal";
 
 const RequestModal = () => {
   const { setModalName } = useLayout();
-
   return (
-    <ModalLeftSlider containerName="request">
+    <FromRightModal containerName="request">
       <div className="fixed left-0 top-0 flex h-full w-full flex-col items-center justify-center bg-opacity-60 backdrop-blur-sm backdrop-filter">
         <div className="relative h-full w-full shadow-2xl shadow-sky-200 md:h-auto md:w-3/6 md:max-w-3xl">
           <div className="relative flex h-full w-full flex-col overflow-y-auto rounded-lg border-0 bg-white shadow-lg outline-none focus:outline-none md:h-auto">
@@ -28,7 +27,7 @@ const RequestModal = () => {
           </div>
         </div>
       </div>
-    </ModalLeftSlider>
+    </FromRightModal>
   );
 };
 

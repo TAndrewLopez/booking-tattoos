@@ -3,16 +3,16 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { AiOutlineClose } from "react-icons/ai";
-import AuthButtons from "./AuthButtons";
-import ModalLeftSlider from "./Modal/ModalLeftSlider";
+import AuthButtons from "../AuthButtons";
+import FromRightModal from "../AnimatedContainers/FromRightModal";
 
-const MobileNav: React.FC = () => {
+const MobileNavModal: React.FC = () => {
   const { data: session } = useSession();
   const { setModalName } = useLayout();
   const { pathname } = useRouter();
 
   return (
-    <ModalLeftSlider containerName="mobile">
+    <FromRightModal containerName="mobile">
       <div className="item-center flex h-full w-full flex-col justify-center bg-neutral-100">
         <div className="absolute top-0 flex w-full justify-between p-4">
           <p className="font-domine text-2xl">Raquel Cude</p>
@@ -22,7 +22,7 @@ const MobileNav: React.FC = () => {
           <Link
             href="/"
             className={`${pathname === "/" ? "border-b-2 border-sky-500" : ""}`}
-            onClick={() => (pathname === "/" ? setModalName("") : null)}
+            onClick={() => setModalName("")}
           >
             Home
           </Link>
@@ -34,9 +34,7 @@ const MobileNav: React.FC = () => {
                 className={`${
                   pathname === "/submissions" ? "border-b-2 border-sky-500" : ""
                 }`}
-                onClick={() =>
-                  pathname === "/submissions" ? setModalName("") : null
-                }
+                onClick={() => setModalName("")}
               >
                 Submissions
               </Link>
@@ -45,9 +43,7 @@ const MobileNav: React.FC = () => {
                 className={`${
                   pathname === "/calendar" ? "border-b-2 border-sky-500" : ""
                 }`}
-                onClick={() =>
-                  pathname === "/calendar" ? setModalName("") : null
-                }
+                onClick={() => setModalName("")}
               >
                 Calendar
               </Link>
@@ -63,8 +59,8 @@ const MobileNav: React.FC = () => {
           )}
         </nav>
       </div>
-    </ModalLeftSlider>
+    </FromRightModal>
   );
 };
 
-export default MobileNav;
+export default MobileNavModal;

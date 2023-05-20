@@ -3,6 +3,7 @@ import AppointmentData from "../Tables/AppointmentData";
 import InitialReview from "../Tables/InitialReview";
 import ReferenceImage from "../Tables/ReferenceImage";
 import type { AppointmentStateInterface } from "@/types";
+import SubSection from "./SubSection";
 
 interface AppointmentSectionProps {
   editEnabled: boolean;
@@ -25,7 +26,7 @@ const AppointmentSection: React.FC<AppointmentSectionProps> = ({
 }) => {
   const { accepted } = appointmentState;
   return (
-    <section className="space-y-2 p-3">
+    <SubSection>
       <div className="grid gap-2 sm:grid-cols-2">
         <div className="col-span-1 flex flex-col border border-dashed border-gray-200 p-1">
           <InitialReview
@@ -54,7 +55,7 @@ const AppointmentSection: React.FC<AppointmentSectionProps> = ({
           imageURL={imageURL}
         />
       </div>
-    </section>
+    </SubSection>
   );
 };
 

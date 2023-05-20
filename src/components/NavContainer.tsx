@@ -5,36 +5,42 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { RxHamburgerMenu } from "react-icons/rx";
 
-const Navbar = () => {
+interface NavbarProps {
+  showLogo?: boolean;
+  style: "glass" | "white" | "default";
+  zIndex?: string;
+}
+
+const Navbar = ({ showLogo, style = "default", zIndex }: NavbarProps) => {
   const { data: sessionData } = useSession();
+  const role = sessionData?.user.role;
   const { modalName, setModalName, isMobile, yScrollPosition } = useLayout();
   const router = useRouter();
   const { pathname } = router;
 
   return (
     <nav
-      className={`fixed top-0 flex w-full items-center justify-between p-4
-      ${yScrollPosition > 30 ? "shadow-lg" : ""}
-      ${pathname === "/" ? "text-white" : "bg-white"}
+      className={`fixed top-0 flex w-full items-center p-4  
       ${
-        modalName === "mobile" || modalName === "request" || modalName === "bug"
-          ? "z-20"
-          : "z-50 "
+        style === "glass"
+          ? "bg-white bg-opacity-60 backdrop-blur-lg backdrop-filter"
+          : ""
       }
+      ${style === "white" ? "bg-white text-neutral-700" : ""}
+      ${style === "default" ? "text-white" : ""}
+      ${yScrollPosition > 30 ? "shadow-lg" : ""}
+      ${zIndex ? zIndex : ""}
+      ${showLogo ? "justify-between" : "justify-end"}
       `}
     >
-      <div className={`${pathname === "/" ? "text-white" : ""}`}>
+      {showLogo && (
         <Link className="font-domine text-2xl" href="/">
           Raquel Cude
         </Link>
-      </div>
+      )}
 
       {isMobile ? (
-        <RxHamburgerMenu
-          color={`${pathname === "/" ? "white" : ""}`}
-          onClick={() => setModalName("mobile")}
-          size={24}
-        />
+        <RxHamburgerMenu onClick={() => setModalName("mobile")} size={24} />
       ) : (
         <div className="flex items-center gap-4">
           <Link
@@ -46,7 +52,18 @@ const Navbar = () => {
           >
             Home
           </Link>
-          {sessionData?.user ? (
+          {role === "dev" && (
+            <Link
+              href="/dashboard"
+              className={
+                pathname === "/dashboard" ? "border-b-2 border-sky-500" : ""
+              }
+            >
+              Dashboard
+            </Link>
+          )}
+
+          {role === "admin" && (
             <>
               <Link
                 href="/submissions"
@@ -64,30 +81,17 @@ const Navbar = () => {
               >
                 Calendar
               </Link>
-              {sessionData.user.role === "dev" && (
-                <>
-                  <Link
-                    href="/dashboard"
-                    className={
-                      pathname === "/dashboard"
-                        ? "border-b-2 border-sky-500"
-                        : ""
-                    }
-                  >
-                    Dashboard
-                  </Link>
-                </>
-              )}
-              <ModalTrigger label="Logout" onClick={() => void signOut()} />
             </>
+          )}
+
+          {role ? (
+            <ModalTrigger label="Logout" onClick={() => void signOut()} />
           ) : (
-            <>
-              <ModalTrigger
-                label="login"
-                modal="auth"
-                onClick={() => setModalName("auth")}
-              />
-            </>
+            <ModalTrigger
+              label="login"
+              modal="auth"
+              onClick={() => setModalName("auth")}
+            />
           )}
         </div>
       )}

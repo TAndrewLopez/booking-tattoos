@@ -1,8 +1,9 @@
-import TextArea from "@/components/FormInputs/TextArea";
+import TextArea from "@/components/Inputs/TextArea";
 import { type Appointment } from "@/types";
 import moment from "moment";
 import { type Dispatch, type SetStateAction } from "react";
 import { FiTrash } from "react-icons/fi";
+import SubSection from "./SubSection";
 
 interface NoteSectionProps {
   editEnabled: boolean;
@@ -22,7 +23,7 @@ const NoteSection: React.FC<NoteSectionProps> = ({
   handleDelete,
 }) => {
   return (
-    <section className="space-y-2 p-3">
+    <SubSection>
       {data.notes.map((note) => (
         <div
           className={`flex w-full rounded-md px-6 py-3 ${
@@ -68,7 +69,7 @@ const NoteSection: React.FC<NoteSectionProps> = ({
         onChange={(evt) => setNotes(evt.target.value)}
         disabled={!editEnabled}
       />
-    </section>
+    </SubSection>
   );
 };
 

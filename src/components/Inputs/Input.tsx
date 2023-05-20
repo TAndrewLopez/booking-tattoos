@@ -27,7 +27,7 @@ const Input: React.FC<InputProps> = ({
         value={value}
         onChange={onChange}
         disabled={disabled}
-        className={`peer block w-full appearance-none rounded-md border-2 border-neutral-200 bg-neutral-200 px-6 pb-1 pt-6 text-base text-neutral-700 focus:outline-none focus:ring-0 disabled:border-neutral-700 disabled:bg-neutral-700 disabled:text-white
+        className={`peer block w-full appearance-none rounded-md border-2 border-neutral-200 bg-neutral-200 px-6 pb-1 pt-6 text-base text-neutral-700 focus:border-sky-400 focus:outline-none focus:ring-0 disabled:border-neutral-700 disabled:bg-neutral-700 disabled:text-white
         ${error ? "border-red-600" : ""}`}
       />
       <label

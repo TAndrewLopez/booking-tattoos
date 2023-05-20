@@ -1,4 +1,4 @@
-import useFormStore from "@/hooks/useFormStore";
+import useFormStore from "@/hooks/global/useFormStore";
 import React, {
   useMemo,
   type Dispatch,
@@ -8,7 +8,7 @@ import React, {
 import { toast } from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
 import { validateEmail, validateNumber } from "@/utils/validation";
-import Button from "../../FormInputs/Button";
+import Button from "../../Inputs/Button";
 
 interface MultiFormButtonsProps {
   isLoading: boolean;

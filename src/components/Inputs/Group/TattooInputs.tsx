@@ -1,6 +1,6 @@
-import useFormStore from "@/hooks/useFormStore";
-import Input from "./Input";
-import Select from "./Select";
+import useFormStore from "@/hooks/global/useFormStore";
+import Input from "../Input";
+import Select from "../Select";
 
 interface TattooInputsProps {
   inputError?: string;
